@@ -14,8 +14,8 @@ const Home = () => {
 
     const getUsers = async ()=>{
         const response = await axios.get('http://172.16.0.101:3001/users');
-        console.log('response', response)
-        if (response.status === 200) {
+  
+        if (response.data) {
             setData(response.data);
         }
     };

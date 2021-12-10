@@ -1,0 +1,11 @@
+patient table
+1.name
+2.gender
+3.dob
+4.allergies
+5.phone
+
+appointment
+
+
+dashboard
