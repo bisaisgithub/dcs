@@ -5,7 +5,7 @@ const patientRouter = Router();
 
 patientRouter.get('/patient', getPatients);
 
-patientRouter.post('/user', createPatient);
+patientRouter.post('/patient', createPatient);
 
 // userRouter.get('/user/:id', getUserByID);
 

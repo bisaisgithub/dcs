@@ -4,13 +4,15 @@ import db from "../config/db.js";
 
 
 export const getPatients = async (req, res)=>{
+    try {
+        console.log('getPatients called');
+        const response = await db('patient').orderBy('name', 'desc');
+        // console.log('response gerusers: ', response);
+        res.json(response.data);
+    } catch (error) {
+        console.log('catch error: ', error)
+    }
     
-    const response = await db('patient').orderBy('name', 'desc');
-    // console.log('response gerusers: ', response);
-    
-    // res.send(response);
-
-    res.json(response);
 };
 
 export const createPatient = async (req, res)=>{
@@ -25,7 +27,7 @@ export const createPatient = async (req, res)=>{
             gender: req.body.gender,
             dob: req.body.dob,
             allergen: req.body.allergen,
-            status: req.body.status,
+            status_: req.body.status_,
         });
         // console.log('insert succes: ', response);
         res.json({insertOk: true});
