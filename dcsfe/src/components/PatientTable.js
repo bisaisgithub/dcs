@@ -178,15 +178,28 @@ const PatientTable = () => {
                 </table>
             </div> */}
 
-            <div className='patient-table-container'>
-                <h1 className='patient-table-heading'>Patient Table</h1>
-                <button className='patient-table-button-add' onClick={()=>setIsOpen(true)}>New Patient</button><br/>
-                <button className='patient-table-button-search'>Search</button>
-                <input className='patient-table-search-input' type='text' placeholder='search'/>
+            <div className='patient-table-content-container'>
+                <div className='patient-table-head-container'>
+                    <h1 className='patient-table-heading'>Patient Table</h1>
+                    <div className='patient-table-head-input'>
+                        <div className='patient-table-head-search'>
+                            <button className='patient-table-button-search'>Search</button>
+                            <input className='patient-table-search-input' type='text' placeholder='Search'/>
+                        </div>
+                        <div className='patient-table-button-add-container'>
+                        <button className='patient-table-button-add' onClick={()=>setIsOpen(true)}>New Patient</button><br/>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                
+                
+
                 <table className='patient-table-table'>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
+                    <thead className='patient-table-table-thead'>
+                        <tr className='patient-table-table-thead-tr'>
+                            <th >Name</th>
                             <th>Mobile</th>
                             <th>Gender</th>
                             <th>Age</th>
