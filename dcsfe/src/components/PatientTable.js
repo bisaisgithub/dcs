@@ -192,7 +192,7 @@ const PatientTable = () => {
                             <th>Age</th>
                             <th>Allergen</th>
                             <th>Status</th>
-                            <th>Edit</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
