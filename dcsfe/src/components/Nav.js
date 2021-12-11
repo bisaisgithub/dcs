@@ -29,7 +29,7 @@ const Nav = () => {
                 <img src={prescription} className='nav__icon' alt='prescription-monkik.png'/>
                 <span>Prescription</span>
            </Link> 
-           <Link to='/' className='nav__link'>
+           <Link to='/dashboard' className='nav__link'>
                 <img  src={dashboard} className='nav__icon' alt='dashboard-Eucalyp.png' />
                 <span>Dashboard</span>
            </Link>

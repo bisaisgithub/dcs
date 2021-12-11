@@ -1,116 +1,4 @@
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box !important;
-}
-body{
-  background-color: whitesmoke;
-  font-family: sans-serif;
-}
-.patient-table-container{
-  padding: 0 10%;
-  margin: 40px auto 0 ;
-  padding-bottom: 35px;
-}
-.patient-table-heading{
-  font-size: 40px;
-  text-align: center;
-  color: #141212;
-  margin-bottom: 40px;
-}
-.patient-table-table{
-  width: 100%;
-  border-collapse: collapse;
-}
-.patient-table-table thead{
-  background-color: turquoise;
-}
-.patient-table-table thead tr th{
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.35px;
-  color: white;
-  opacity: 1;
-  padding: 12px;
-  vertical-align: top;
-  border: 1px solid #dee23685;
-}
-.patient-table-table tr td{
-  font-size: 14px;
-  letter-spacing: 0.35px;
-  font-weight: normal;
-  color: #f1f1f1;
-  background-color: #3c3f44;
-  padding: 8px;
-  text-align: center;
-}
-
-/* .modal-container{
-    border: 1px solid red;
-    position: fixed;
-    top:50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #FFF;
-    padding: 50px;
-    z-index: 1000;
-} */
-
-/* .react-datepicker {
-    font-size: 3em;
-  }
-  .react-datepicker__header {
-    padding-top: 0.8em;
-  }
-  .react-datepicker__month {
-    margin: 0.4em 1em;
-  }
-  .react-datepicker__day-name, .react-datepicker__day {
-    width: 1.9em;
-    line-height: 1.9em;
-    margin: 0.166em;
-  }
-  .react-datepicker__current-month {
-    font-size: 1em;
-  }
-  .react-datepicker__navigation {
-    top: 1em;
-    line-height: 1.7em;
-    border: 0.45em solid transparent;
-  }
-  .react-datepicker__navigation--previous {
-    border-right-color: #ccc;
-    left: 1em;
-  }
-  .react-datepicker__navigation--next {
-    border-left-color: #ccc;
-    right: 1em;
-  } */
-
-  .react-datepicker {
-    font-size: 1rem !important;
-    margin-left: -13px;
-  }
-  
-  .react-datepicker__current-month {
-    font-size: 1.3rem !important;
-  }
-  
-  /* .react-datepicker__header {
-    padding-top: 4px !important;
-  } */
-  
-  .react-datepicker__navigation {
-    top: 11px !important;
-  }
-  
-  .react-datepicker__day-name, .react-datepicker__day {
-    margin: 0.4rem !important;
-  }
-
-  /* responsive table css */
-
-  /* html {
+html {
     box-sizing: border-box;
   }
   
@@ -126,7 +14,7 @@ body{
   }
   
   a {
-    color: #3498db;
+    color: #26890d;
   }
   a:hover, a:focus {
     color: #046a38;
@@ -135,8 +23,7 @@ body{
   .container {
     margin: 5% 3%;
   }
-  /* @media (min-width: 48em) { */
-    @media (min-width: 31em) {
+  @media (min-width: 48em) {
     .container {
       margin: 2%;
     }
@@ -153,8 +40,7 @@ body{
     margin-bottom: 1.5em;
     border-spacing: 0;
   }
-  /* @media (min-width: 48em) { */
-    @media (min-width: 31em) {
+  @media (min-width: 48em) {
     .responsive-table {
       font-size: 0.9em;
     }
@@ -174,8 +60,7 @@ body{
     width: 1px;
     overflow: hidden;
   }
-  /* @media (min-width: 48em) { */
-    @media (min-width: 31em) {
+  @media (min-width: 48em) {
     .responsive-table thead {
       position: relative;
       clip: auto;
@@ -185,8 +70,8 @@ body{
     }
   }
   .responsive-table thead th {
-    background-color: #3498db;
-    border: 1px solid #034c81;
+    background-color: #26890d;
+    border: 1px solid #86bc25;
     font-weight: normal;
     text-align: center;
     color: white;
@@ -203,8 +88,7 @@ body{
     text-align: left;
     white-space: normal;
   }
-  /* @media (min-width: 48em) { */
-    @media (min-width: 31em) {
+  @media (min-width: 48em) {
     .responsive-table tr {
       display: table-row;
     }
@@ -220,8 +104,7 @@ body{
       padding: 0.75em 0.5em;
     }
   }
-  /* @media (min-width: 48em) { */
-    @media (min-width: 31em) {
+  @media (min-width: 48em) {
     .responsive-table th,
   .responsive-table td {
       display: table-cell;
@@ -260,8 +143,7 @@ body{
       font-size: 0.9em;
     }
   }
-  /* @media (min-width: 48em) { */
-    @media (min-width: 31em) {
+  @media (min-width: 48em) {
     .responsive-table tbody {
       display: table-row-group;
     }
@@ -269,8 +151,7 @@ body{
   .responsive-table tbody tr {
     margin-bottom: 1em;
   }
-  /* @media (min-width: 48em) { */
-    @media (min-width: 31em) {
+  @media (min-width: 48em) {
     .responsive-table tbody tr {
       display: table-row;
       border-width: 1px;
@@ -279,25 +160,22 @@ body{
   .responsive-table tbody tr:last-of-type {
     margin-bottom: 0;
   }
-  /* @media (min-width: 48em) { */
-    @media (min-width: 31em) {
+  @media (min-width: 48em) {
     .responsive-table tbody tr:nth-of-type(even) {
       background-color: rgba(0, 0, 0, 0.12);
-      /* background-color: #5ba2f4; */
     }
   }
   .responsive-table tbody th[scope=row] {
-    background-color: #3498db;
+    background-color: #26890d;
     color: white;
   }
   @media (min-width: 30em) {
     .responsive-table tbody th[scope=row] {
-      border-left: 1px solid #034c81;
-      border-bottom: 1px solid #034c81;
+      border-left: 1px solid #86bc25;
+      border-bottom: 1px solid #86bc25;
     }
   }
-  /* @media (min-width: 48em) { */
-    @media (min-width: 31em) {
+  @media (min-width: 48em) {
     .responsive-table tbody th[scope=row] {
       background-color: transparent;
       color: #000001;
@@ -307,18 +185,16 @@ body{
   .responsive-table tbody td {
     text-align: right;
   }
-  /* @media (min-width: 48em) { */
-    @media (min-width: 31em) {
+  @media (min-width: 48em) {
     .responsive-table tbody td {
-      border-left: 1px solid #034c81;
-      border-bottom: 1px solid #034c81;
+      border-left: 1px solid #86bc25;
+      border-bottom: 1px solid #86bc25;
       text-align: center;
     }
   }
-  /* @media (min-width: 48em) { */
-    @media (min-width: 31em) {
+  @media (min-width: 48em) {
     .responsive-table tbody td:last-of-type {
-      border-right: 1px solid #034c81;
+      border-right: 1px solid #86bc25;
     }
   }
   .responsive-table tbody td[data-type=currency] {
@@ -328,18 +204,15 @@ body{
     content: attr(data-title);
     float: left;
     font-size: 0.8em;
-    /* color: rgba(0, 0, 0, 0.54); */
-    color: #5ba2f4;
+    color: rgba(0, 0, 0, 0.54);
   }
   @media (min-width: 30em) {
     .responsive-table tbody td[data-title]:before {
       font-size: 0.9em;
     }
   }
-  /* @media (min-width: 48em) { */
-    @media (min-width: 31em) {
+  @media (min-width: 48em) {
     .responsive-table tbody td[data-title]:before {
       content: none;
     }
   }
-

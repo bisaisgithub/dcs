@@ -10,6 +10,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 // import Header from './components/Header';
 // import Login from './pages/Login';
 import Patient from './pages/Patient';
+import Dashboard from './pages/Dashboard';
 
 import Nav from './components/Nav';
 // import NavTest from './components2/NavTest';
@@ -22,6 +23,7 @@ function App() {
         <Nav />
         <Routes>
           <Route exact path='/patient' element={<Patient/>} />
+          <Route exact path='/dashboard' element={<Dashboard/>} />
           {/* <Route exact path='/' element={<Home/>} />
           <Route exact path='/add' element={<AddEdit/>} />
           <Route exact path='/update/:id' element={<AddEdit/>} />

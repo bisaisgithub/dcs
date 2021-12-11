@@ -1,3 +1,6 @@
+adding patient
+1. dateinput must be disabled
+
 patient table
 1.name
 2.gender
