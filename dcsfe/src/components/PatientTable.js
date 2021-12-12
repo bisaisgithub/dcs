@@ -213,13 +213,21 @@ const PatientTable = () => {
                     </thead>
                     <tbody>
                         {patientsData && patientsData.map((patient, index)=>{
+                            let age = 0;
+                            const ageDiffs = new Date().getFullYear() - new Date(patient.dob).getFullYear();
+                            // console.log('ageDiffs: ', ageDiffs);
+                            if (new Date().getMonth() < new Date(patient.dob).getMonth()) {
+                                age = ageDiffs -1;
+                            } else {
+                                age = ageDiffs;
+                            }
                             return (
                                 <tr key={index}>
                                     <td data-label='No.'>{index+1}</td>
                                     <td data-label='Name'>{patient.name}</td>
                                     <td data-label='Mobile'>{patient.mobile}</td>
                                     <td data-label='Gender'>{patient.gender}</td>
-                                    <td data-label='Age'>42</td>
+                                    <td data-label='Age'>{age}</td>
                                     <td data-label='Allergen'>{patient.allergen}</td>
                                     <td data-label='Status'>{patient.status_}</td>
                                     <td data-label='Edit'>
