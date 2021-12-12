@@ -8,7 +8,7 @@ import styles from './PrintTable.module.css';
 
 const PatientTable = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [data, setData] = useState([]);
+    const [patientsData, setPatientsData] = useState([]);
     const [nameInput, setNameInput] = useState('');
     const [mobileInput, setMobileInput] = useState('');
     const [genderInput, setGenderInput] = useState('');
@@ -17,20 +17,20 @@ const PatientTable = () => {
     // const dateInput = useRef();
     useEffect(()=>{
         
-        getUsers(); 
+        getPatients(); 
     
     }, []);
 
-    const getUsers = async ()=>{
+    const getPatients = async ()=>{
         const response = await axios.get('http://172.16.0.101:3001/patient');
   
         if (response.data) {
-            console.log('response data',response.data)
-            setData(response.data);
+            // console.log('response data',response.data)
+            setPatientsData(response.data);
         }
     };
 
-    console.log('patient table fecth data',data);
+    // console.log('patient table fecth data', patientsData);
     // console.log('name: ', nameInput);
     // console.log('mobile: ', mobileInput);
     // console.log('gender: ', genderInput);
@@ -212,19 +212,24 @@ const PatientTable = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td data-label='No.'>1</td>
-                            <td data-label='Name'>Benar Isais Isais</td>
-                            <td data-label='Mobile'>09569346661</td>
-                            <td data-label='Gender'>Male</td>
-                            <td data-label='Age'>42</td>
-                            <td data-label='Allergen'>None</td>
-                            <td data-label='Status'>Active</td>
-                            <td data-label='Edit'>
-                                <button className='patient-table-button-edit'>Edit</button>
-                            </td>
-                        </tr>
-                        <tr>
+                        {patientsData && patientsData.map((patient, index)=>{
+                            return (
+                                <tr key={index}>
+                                    <td data-label='No.'>{index+1}</td>
+                                    <td data-label='Name'>{patient.name}</td>
+                                    <td data-label='Mobile'>{patient.mobile}</td>
+                                    <td data-label='Gender'>{patient.gender}</td>
+                                    <td data-label='Age'>42</td>
+                                    <td data-label='Allergen'>{patient.allergen}</td>
+                                    <td data-label='Status'>{patient.status_}</td>
+                                    <td data-label='Edit'>
+                                        <button className='patient-table-button-edit'>Edit</button>
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                        
+                        {/* <tr>
                             <td data-label='No.'>2</td>
                             <td data-label='Name'>Benar Isais</td>
                             <td data-label='Mobile'>09569346661</td>
@@ -307,7 +312,7 @@ const PatientTable = () => {
                             <td data-label='Edit'>
                                 <button className='patient-table-button-edit'>Edit</button>
                             </td>
-                        </tr>
+                        </tr> */}
                     </tbody>
                 </table>
             </div>

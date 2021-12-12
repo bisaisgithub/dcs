@@ -7,8 +7,8 @@ export const getPatients = async (req, res)=>{
     try {
         console.log('getPatients called');
         const response = await db('patient').orderBy('name', 'desc');
-        // console.log('response gerusers: ', response);
-        res.json(response.data);
+        // console.log('response patients: ', response);
+        res.json(response);
     } catch (error) {
         console.log('catch error: ', error)
     }
