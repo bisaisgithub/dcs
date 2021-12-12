@@ -124,8 +124,10 @@ const PatientTable = () => {
                                 </label>
                             </div>
                         </div>
-                        <div className="button">
-                        <input type="submit" onClick={addPatient} value="Add Patient" />
+                        <div className="button display-flex-jc-sb">
+                        <input type="submit" onClick={addPatient} value="Add" className='percent-40'/>
+                        <input type="submit" className='patient-table-button-add-close percent-40' onClick={()=>{setIsOpen(false); setSelectedDatenput(new Date())}} value="Close" />
+                        
                         {/* <button className='modal-button-add-patient' onClick={addPatient}>Add Patient</button> */}
                         </div>
                     </div>
@@ -199,6 +201,7 @@ const PatientTable = () => {
                 <table className='patient-table-table'>
                     <thead className='patient-table-table-thead'>
                         <tr className='patient-table-table-thead-tr'>
+                            <th >No</th>
                             <th >Name</th>
                             <th>Mobile</th>
                             <th>Gender</th>
@@ -210,7 +213,8 @@ const PatientTable = () => {
                     </thead>
                     <tbody>
                         <tr>
-                            <td data-label='Name'>Benar Isais</td>
+                            <td data-label='No.'>1</td>
+                            <td data-label='Name'>Benar Isais Isais</td>
                             <td data-label='Mobile'>09569346661</td>
                             <td data-label='Gender'>Male</td>
                             <td data-label='Age'>42</td>
@@ -221,6 +225,19 @@ const PatientTable = () => {
                             </td>
                         </tr>
                         <tr>
+                            <td data-label='No.'>2</td>
+                            <td data-label='Name'>Benar Isais</td>
+                            <td data-label='Mobile'>09569346661</td>
+                            <td data-label='Gender'>Male</td>
+                            <td data-label='Age'>42</td>
+                            <td data-label='Allergen'>None</td>
+                            <td data-label='Status'>Active</td>
+                            <td data-label=''>
+                                <button className='patient-table-button-edit'>Edit</button>
+                            </td>
+                        </tr>
+                        <tr>   
+                            <td data-label='No.'>1</td>
                             <td data-label='Name'>Benar Isais</td>
                             <td data-label='Mobile'>09569346661</td>
                             <td data-label='Gender'>Male</td>
@@ -231,7 +248,56 @@ const PatientTable = () => {
                                 <button className='patient-table-button-edit'>Edit</button>
                             </td>
                         </tr>
-                        <tr>
+                        <tr>   
+                            <td data-label='No.'>1</td>
+                            <td data-label='Name'>Benar Isais</td>
+                            <td data-label='Mobile'>09569346661</td>
+                            <td data-label='Gender'>Male</td>
+                            <td data-label='Age'>42</td>
+                            <td data-label='Allergen'>None</td>
+                            <td data-label='Status'>Active</td>
+                            <td data-label='Edit'>
+                                <button className='patient-table-button-edit'>Edit</button>
+                            </td>
+                        </tr>
+                        <tr>   
+                            <td data-label='No.'>1</td>
+                            <td data-label='Name'>Benar Isais</td>
+                            <td data-label='Mobile'>09569346661</td>
+                            <td data-label='Gender'>Male</td>
+                            <td data-label='Age'>42</td>
+                            <td data-label='Allergen'>None</td>
+                            <td data-label='Status'>Active</td>
+                            <td data-label='Edit'>
+                                <button className='patient-table-button-edit'>Edit</button>
+                            </td>
+                        </tr>
+                        <tr>   
+                            <td data-label='No.'>1</td>
+                            <td data-label='Name'>Benar Isais</td>
+                            <td data-label='Mobile'>09569346661</td>
+                            <td data-label='Gender'>Male</td>
+                            <td data-label='Age'>42</td>
+                            <td data-label='Allergen'>None</td>
+                            <td data-label='Status'>Active</td>
+                            <td data-label='Edit'>
+                                <button className='patient-table-button-edit'>Edit</button>
+                            </td>
+                        </tr>
+                        <tr>   
+                            <td data-label='No.'>1</td>
+                            <td data-label='Name'>Benar Isais</td>
+                            <td data-label='Mobile'>09569346661</td>
+                            <td data-label='Gender'>Male</td>
+                            <td data-label='Age'>42</td>
+                            <td data-label='Allergen'>None</td>
+                            <td data-label='Status'>Active</td>
+                            <td data-label='Edit'>
+                                <button className='patient-table-button-edit'>Edit</button>
+                            </td>
+                        </tr>
+                        <tr>   
+                            <td data-label='No.'>1</td>
                             <td data-label='Name'>Benar Isais</td>
                             <td data-label='Mobile'>09569346661</td>
                             <td data-label='Gender'>Male</td>

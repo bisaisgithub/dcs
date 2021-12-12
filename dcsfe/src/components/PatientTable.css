@@ -24,7 +24,9 @@ body{
   margin-top: 55px;
 }
 .patient-table-table-thead{
-  background-color: #034c81b5;
+  background-color: #034c81;
+  position: sticky;
+  top: 72px;
 }
 .patient-table-table-thead-tr th{
   font-size: 14px;
@@ -32,7 +34,7 @@ body{
   letter-spacing: 0.35px;
   color: #eee;
   opacity: 1;
-  padding: 12px;
+  padding: 5px;
   vertical-align: top;
   border: 1px solid #dedede63;
 }
@@ -42,7 +44,7 @@ body{
   font-weight: normal;
   color: #f1f1f1;
   background-color: #3c3f44;
-  padding: 8px;
+  /* padding: 8px; */
   text-align: center;
   border: 1px solid #dee2e685;
 }
@@ -51,8 +53,9 @@ body{
   line-height: 35px;
 } */
 .patient-table-button-edit {
-  width: 130px !important;
-  line-height: 35px;
+  width: 70px !important;
+  /* line-height: 35px; */
+  line-height: 25px;
   background-color: #e9115bf0;
   display: inline-block;
   font-weight: 600 !important;
@@ -60,8 +63,9 @@ body{
   border: 1px solid transparent;
   font-size: 14px;
   opacity: 1;
+      margin: 1px 0 1px 0;
 }
-.patient-table-table tbody tr td:nth-child(1){
+.patient-table-table tbody tr td:nth-child(2){
   font-size: 14px;
 }
 .patient-table-button-add{
@@ -117,14 +121,35 @@ body{
   width: 80%;
   background-color: #18191a;
 }
+.display-flex-jc-sb{
+  display: flex;
+  justify-content: space-between;
+}
+.percent-40{
+  width: 40% !important;
+}
 
 @media(max-width: 900px){
   .patient-table-container{
     padding: 0 2% 30px 2%;
   }
+  .patient-table-head-container {
+    width: 96%;
+  }
+}
+@media(max-width: 700px) and(min-width: 600px){
+  .patient-table-button-add{
+    /* display: none; */
+  }
+  .modal-container{
+    width: 70%;
+  }
 }
 
 @media(max-width: 600px){
+  .patient-table-table tr td{
+    border: 0.01px solid #dee2e685;
+  }
   .patient-table-table{
     margin-top: 95px;
   }
@@ -165,6 +190,7 @@ body{
     margin-right: 2%;
     width: 95%;
   }
+  
 }
 
 /* .modal-container{
@@ -323,7 +349,7 @@ body{
     display: block;
     padding: 0;
     text-align: left;
-    #eee-space: normal;
+    /* #eee-space: normal; */
   }
   /* @media (min-width: 48em) { */
     @media (min-width: 31em) {
