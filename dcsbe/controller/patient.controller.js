@@ -38,10 +38,10 @@ export const createPatient = async (req, res)=>{
     
 };
 
-export const getUserByID = async (req, res)=>{
+export const getPatientByID = async (req, res)=>{
     // const singleUser = users.filter((user)=>user.id === req.params.id);
-    const singleUserReponse = await db('users').where('id', req.params.id)
-    res.send(singleUserReponse);
+    const singlePatientReponse = await db('patient').where('id', req.params.id)
+    res.send(singlePatientReponse);
 }
 
 export const deleteUser = async (req, res)=>{

@@ -4,7 +4,6 @@ import Modal from './Modal.js';
 import './PatientTable.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import styles from './PrintTable.module.css';
 
 const PatientTable = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -82,6 +81,15 @@ const PatientTable = () => {
         }
         }
         
+    }
+    const editPatient = async (patientId) =>{
+        const responsePatient = await axios.get(`http://172.16.0.101:3001/patient/${patientId}`);
+        setSelectedDatenput(new Date(responsePatient.data[0].dob));
+        setNameInput(responsePatient.data[0].name);
+        setMobileInput(responsePatient.data[0].mobile);
+        setAllergenInput(responsePatient.data[0].allergen);
+        setGenderInput(responsePatient.data[0].gender);
+        setIsOpen(true);
     }
     // console.log('dateInpu.current: ', dateInput.current);
     return (
@@ -231,7 +239,7 @@ const PatientTable = () => {
                                     <td data-label='Allergen'>{patient.allergen}</td>
                                     <td data-label='Status'>{patient.status_}</td>
                                     <td data-label='Edit'>
-                                        <button className='patient-table-button-edit'>Edit</button>
+                                        <button onClick={()=>editPatient(patient.id)} className='patient-table-button-edit'>Edit</button>
                                     </td>
                                 </tr>
                             );

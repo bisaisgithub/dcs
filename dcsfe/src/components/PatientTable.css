@@ -26,7 +26,7 @@ body{
 .patient-table-table-thead{
   background-color: #034c81;
   position: sticky;
-  top: 72px;
+  top: 71px;
 }
 .patient-table-table-thead-tr th{
   font-size: 14px;
