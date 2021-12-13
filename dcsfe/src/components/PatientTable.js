@@ -5,6 +5,8 @@ import './PatientTable.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
+
+
 const PatientTable = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [patientsData, setPatientsData] = useState([]);
@@ -14,14 +16,16 @@ const PatientTable = () => {
     const [selectedDateInput, setSelectedDatenput] = useState(new Date());
     const [allergenInput, setAllergenInput] = useState('');
     const [patientId, setPatientId] = useState("");
+    const [status_Input, setStatus_Input] =useState('-Select Status-');
+    const [searchInput, setSearchInput] = useState('');
     useEffect(()=>{
         
         getPatients(); 
     
-    }, [patientId]);
+    }, []);
 
     const getPatients = async ()=>{
-        const response = await axios.get('http://172.16.0.101:3001/patient');
+        const response = await axios.get(`http://172.16.0.101:3001/patients/${searchInput}`);
   
         if (response.data) {
             // console.log('response data',response.data)
@@ -43,6 +47,7 @@ const PatientTable = () => {
         setMobileInput('');
         setAllergenInput('');
         setGenderInput('');
+        setStatus_Input('-Select Status-');
         // console.log('clearing input name', nameInput);
         setIsOpen(true);
     }
@@ -76,7 +81,7 @@ const PatientTable = () => {
             allergen: allergenInput,
             status_: 'Active',
              });
-            console.log('update patient response.data', response.data)
+
             if (response.data.updateOk) {
             alert('Patient Upated');
             // setSelectedDatenput(new Date());
@@ -86,6 +91,7 @@ const PatientTable = () => {
             // setGenderInput('');
             // console.log('clearing input name', nameInput);
             setIsOpen(false);
+            getPatients();
             }else{
                 alert('Failed Updating Patient');
             }
@@ -112,7 +118,7 @@ const PatientTable = () => {
         let date = formatDate(selectedDateInput);
         // console.log('date: ', date);
         // console.log('addPatient called');
-        if (!nameInput || !mobileInput || !genderInput || !selectedDateInput || !allergenInput) {
+        if (!nameInput || !mobileInput || !genderInput || !selectedDateInput || !allergenInput || status_Input === '-Select Status-') {
             alert('Empty field/s')
         }else{
             const response = await axios.post("http://172.16.0.101:3001/patient", {
@@ -121,9 +127,9 @@ const PatientTable = () => {
             gender: genderInput,
             dob: date,
             allergen: allergenInput,
-            status_: 'Active',
+            status_: status_Input,
         });
-        console.log('add patient response.data', response.data)
+        // console.log('add patient response.data', response.data)
         if (response.data.insertOk) {
             alert('Patient Added');
             // setSelectedDatenput(new Date());
@@ -132,6 +138,7 @@ const PatientTable = () => {
             // setAllergenInput('');
             // setGenderInput('');
             // console.log('clearing input name', nameInput);
+            getPatients();
             setIsOpen(false);
         }else{
             alert('Failed Adding Patient');
@@ -150,15 +157,15 @@ const PatientTable = () => {
             setMobileInput(responsePatient.data[0].mobile);
             setAllergenInput(responsePatient.data[0].allergen);
             setGenderInput(responsePatient.data[0].gender);
-            // setPatientId(responsePatient.data[0].id);
+            setStatus_Input(responsePatient.data[0].status_);
             setPatientId(responsePatient.data[0].id);
             // console.log('patienId after setPatientId', patientId);
             // console.log('name after setPatientname', nameInput);
-            if (patientId) {
-                console.log('patientId true', patientId)
-            } else {
-                console.log('patientId false', patientId)
-            }
+            // if (patientId) {
+            //     console.log('patientId true', patientId)
+            // } else {
+            //     console.log('patientId false', patientId)
+            // }
             setIsOpen(true);
             
         } else {
@@ -167,6 +174,7 @@ const PatientTable = () => {
 
         
     }
+    
     // console.log('dateInpu.current: ', dateInput.current);
     return (
         <div className='patient-table-container'>
@@ -192,10 +200,17 @@ const PatientTable = () => {
                                 <span className="details">Allergen</span>
                                 <input type="text" placeholder="Enter allergens" value={allergenInput} required onChange={e=>setAllergenInput(e.target.value)}/>
                             </div>
+                            <select value={status_Input} onChange={(e)=>{setStatus_Input(e.target.value)}}>
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                                <option value="Scheduled">Scheduled</option>
+                                <option value="Deleted">Deleted</option>
+                                <option value="-Select Status-">-Select Status-</option>
+                            </select>
                         </div>
                         <div className="gender-details">
-                            <input type="radio" name="gender" id="dot-1" value="male" onChange={e=>setGenderInput(e.target.value)}/>
-                            <input type="radio" name="gender" id="dot-2" value="female" onChange={e=>setGenderInput(e.target.value)}/>
+                            <input type="radio" name="gender" checked={genderInput==="Male"? true: false} id="dot-1" value="Male" onChange={e=>setGenderInput(e.target.value)}/>
+                            <input type="radio" name="gender" checked={genderInput==="Female"? true: false} id="dot-2" value="Female" onChange={e=>setGenderInput(e.target.value)}/>
                             <span className="gender-title">Gender</span>
                             <div className="category">
                                 <label htmlFor="dot-1">
@@ -216,8 +231,9 @@ const PatientTable = () => {
                         
                         {/* <button className='modal-button-add-patient' onClick={addPatient}>Add Patient</button> */}
                         </div>
+                        <p style={{fontSize:'7px'}}>{'status_Input'+status_Input}</p>
                         <p style={{fontSize:'7px'}}>{'id'+patientId}</p>
-                        <p style={{fontSize:'7px'}}>{'name:'+nameInput}</p>
+                        {/* <p style={{fontSize:'7px'}}>{'name:'+nameInput}</p> */}
                     </div>
                     </div>
                 </div>
@@ -273,8 +289,9 @@ const PatientTable = () => {
                     <h1 className='patient-table-heading'>Patient Table</h1>
                     <div className='patient-table-head-input'>
                         <div className='patient-table-head-search'>
-                            <button className='patient-table-button-search'>Search</button>
-                            <input className='patient-table-search-input' type='text' placeholder='Search'/>
+                            <button className='patient-table-button-search' onClick={getPatients}>Search</button>
+                            <input className='patient-table-search-input' type='text' placeholder='Search' value={searchInput} onChange={(e)=>{setSearchInput(e.target.value)}}/>
+                            <button className='patient-table-search-input-clear' onClick={()=>{setSearchInput('')}}>X</button>
                         </div>
                         <div className='patient-table-button-add-container'>
                         <button className='patient-table-button-add' onClick={()=>newPatient()}>New Patient</button><br/>

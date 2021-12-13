@@ -22,6 +22,7 @@ body{
   width: 100%;
   border-collapse: collapse;
   margin-top: 55px;
+  margin-bottom: 32px;
 }
 .patient-table-table-thead{
   background-color: #034c81;
@@ -128,6 +129,9 @@ body{
 .percent-40{
   width: 40% !important;
 }
+.radio-value{
+  font-size: 13px;
+}
 
 @media(max-width: 900px){
   .patient-table-container{
@@ -182,6 +186,7 @@ body{
   .patient-table-search-input{
     margin-left: 0;
     margin-bottom: 5px;
+    width: 150px;
   }
   .nav{
     z-index: 1000;
@@ -489,5 +494,13 @@ body{
     .responsive-table tbody td[data-title]:before {
       content: none;
     }
+  }
+
+
+  .patient-table-search-input-clear{
+    background-color: #18191a;
+    color: #e9115bf0;
+    font-size: 20px;
+    width: 30px;
   }
 

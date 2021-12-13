@@ -1,13 +1,15 @@
 import { Router } from "express";
-import { createPatient, getPatients, getPatientByID, updatePatient } from "../controller/patient.controller.js";
+import { createPatient, getPatients, getPatientByID, updatePatient, getPatientBySearch } from "../controller/patient.controller.js";
 
 const patientRouter = Router();
 
-patientRouter.get('/patient', getPatients);
+patientRouter.get('/patients', getPatients);
 
 patientRouter.post('/patient', createPatient);
 
 patientRouter.get('/patient/:id', getPatientByID);
+
+patientRouter.get('/patients/:search', getPatientBySearch);
 
 // userRouter.delete('/user/:id', deleteUser);
 

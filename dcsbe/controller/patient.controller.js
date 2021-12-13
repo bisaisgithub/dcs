@@ -5,7 +5,7 @@ import db from "../config/db.js";
 
 export const getPatients = async (req, res)=>{
     try {
-        console.log('getPatients called');
+        // console.log('getPatients called');
         const response = await db('patient').orderBy('name', 'desc');
         // console.log('response patients: ', response);
         res.json(response);
@@ -41,6 +41,12 @@ export const createPatient = async (req, res)=>{
 export const getPatientByID = async (req, res)=>{
     // const singleUser = users.filter((user)=>user.id === req.params.id);
     const singlePatientReponse = await db('patient').where('id', req.params.id)
+    res.send(singlePatientReponse);
+}
+
+export const getPatientBySearch = async (req, res)=>{
+    // const singleUser = users.filter((user)=>user.id === req.params.id);
+    const singlePatientReponse = await db('patient').where('name', 'like', `%${req.params.search}%`)
     res.send(singlePatientReponse);
 }
 
