@@ -13,12 +13,12 @@ const PatientTable = () => {
     const [genderInput, setGenderInput] = useState('');
     const [selectedDateInput, setSelectedDatenput] = useState(new Date());
     const [allergenInput, setAllergenInput] = useState('');
-    // const dateInput = useRef();
+    const [patientId, setPatientId] = useState("");
     useEffect(()=>{
         
         getPatients(); 
     
-    }, []);
+    }, [patientId]);
 
     const getPatients = async ()=>{
         const response = await axios.get('http://172.16.0.101:3001/patient');
@@ -36,9 +36,66 @@ const PatientTable = () => {
     // console.log('dob: ', selectedDateInput);
     // console.log('allergen: ', allergenInput);
 
-    
+    const newPatient = ()=>{
+        setPatientId(null);
+        setSelectedDatenput(new Date());
+        setNameInput('');
+        setMobileInput('');
+        setAllergenInput('');
+        setGenderInput('');
+        // console.log('clearing input name', nameInput);
+        setIsOpen(true);
+    }
+
+    const updatePatient = async ()=>{
+        
+        function formatDate(date) {
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+        
+            if (month.length < 2) 
+                month = '0' + month;
+            if (day.length < 2) 
+                day = '0' + day;
+        
+            return [year, month, day].join('-');
+        }        
+        let date = formatDate(selectedDateInput);
+        // console.log('date: ', date);
+        // console.log('addPatient called');
+        if (!nameInput || !mobileInput || !genderInput || !selectedDateInput || !allergenInput) {
+            alert('Empty field/s')
+        }else{
+            const response = await axios.put(`http://172.16.0.101:3001/patient/${patientId}`, {
+            name: nameInput,
+            mobile: mobileInput,
+            gender: genderInput,
+            dob: date,
+            allergen: allergenInput,
+            status_: 'Active',
+             });
+            console.log('update patient response.data', response.data)
+            if (response.data.updateOk) {
+            alert('Patient Upated');
+            // setSelectedDatenput(new Date());
+            // setNameInput('');
+            // setMobileInput('');
+            // setAllergenInput('');
+            // setGenderInput('');
+            // console.log('clearing input name', nameInput);
+            setIsOpen(false);
+            }else{
+                alert('Failed Updating Patient');
+            }
+        }
+        
+    }
 
     const addPatient = async ()=>{
+
+        setIsOpen(true);
         function formatDate(date) {
             var d = new Date(date),
                 month = '' + (d.getMonth() + 1),
@@ -82,21 +139,40 @@ const PatientTable = () => {
         }
         
     }
-    const editPatient = async (patientId) =>{
-        const responsePatient = await axios.get(`http://172.16.0.101:3001/patient/${patientId}`);
-        setSelectedDatenput(new Date(responsePatient.data[0].dob));
-        setNameInput(responsePatient.data[0].name);
-        setMobileInput(responsePatient.data[0].mobile);
-        setAllergenInput(responsePatient.data[0].allergen);
-        setGenderInput(responsePatient.data[0].gender);
-        setIsOpen(true);
+    const editPatient = async (patientIdparam) =>{
+        // console.log('edit patient ccalled')
+        // console.log('patienId before fetch', patientId)
+        const responsePatient = await axios.get(`http://172.16.0.101:3001/patient/${patientIdparam}`);
+        
+        if (responsePatient.data[0].id) {
+            setSelectedDatenput(new Date(responsePatient.data[0].dob));
+            setNameInput(responsePatient.data[0].name);
+            setMobileInput(responsePatient.data[0].mobile);
+            setAllergenInput(responsePatient.data[0].allergen);
+            setGenderInput(responsePatient.data[0].gender);
+            // setPatientId(responsePatient.data[0].id);
+            setPatientId(responsePatient.data[0].id);
+            // console.log('patienId after setPatientId', patientId);
+            // console.log('name after setPatientname', nameInput);
+            if (patientId) {
+                console.log('patientId true', patientId)
+            } else {
+                console.log('patientId false', patientId)
+            }
+            setIsOpen(true);
+            
+        } else {
+            console.log('responsePatientId is empty: ', responsePatient.data[0].id)
+        }
+
+        
     }
     // console.log('dateInpu.current: ', dateInput.current);
     return (
         <div className='patient-table-container'>
             <Modal className='modal-container' open={isOpen} onClose={()=>{setIsOpen(false); setSelectedDatenput(new Date())}} >
                 <div className="container">
-                    <div className="title">Adding Patient</div>
+                    <div className="title">{patientId? 'Editing Patient' : 'Adding Patient'}</div>
                     <div className="content">
                     <div className='form'>
                         <div className="user-details">
@@ -133,11 +209,15 @@ const PatientTable = () => {
                             </div>
                         </div>
                         <div className="button display-flex-jc-sb">
-                        <input type="submit" onClick={addPatient} value="Add" className='percent-40'/>
+                            {patientId? (<input type="submit" onClick={updatePatient} value='Update' className='percent-40'/>):
+                            (<input type="submit" onClick={addPatient} value='Add' className='percent-40'/>)}
+                        
                         <input type="submit" className='patient-table-button-add-close percent-40' onClick={()=>{setIsOpen(false); setSelectedDatenput(new Date())}} value="Close" />
                         
                         {/* <button className='modal-button-add-patient' onClick={addPatient}>Add Patient</button> */}
                         </div>
+                        <p style={{fontSize:'7px'}}>{'id'+patientId}</p>
+                        <p style={{fontSize:'7px'}}>{'name:'+nameInput}</p>
                     </div>
                     </div>
                 </div>
@@ -197,7 +277,7 @@ const PatientTable = () => {
                             <input className='patient-table-search-input' type='text' placeholder='Search'/>
                         </div>
                         <div className='patient-table-button-add-container'>
-                        <button className='patient-table-button-add' onClick={()=>setIsOpen(true)}>New Patient</button><br/>
+                        <button className='patient-table-button-add' onClick={()=>newPatient()}>New Patient</button><br/>
                         </div>
                         
                     </div>

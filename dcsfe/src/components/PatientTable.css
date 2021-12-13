@@ -44,7 +44,7 @@ body{
   font-weight: normal;
   color: #f1f1f1;
   background-color: #3c3f44;
-  /* padding: 8px; */
+  padding: 0 4px;
   text-align: center;
   border: 1px solid #dee2e685;
 }
@@ -235,26 +235,26 @@ body{
     right: 1em;
   } */
 
-  .react-datepicker {
+  /* .react-datepicker {
     font-size: 1rem !important;
     margin-left: -13px;
   }
   
   .react-datepicker__current-month {
     font-size: 1.3rem !important;
-  }
+  } */
   
   /* .react-datepicker__header {
     padding-top: 4px !important;
   } */
   
-  .react-datepicker__navigation {
+  /* .react-datepicker__navigation {
     top: 11px !important;
   }
   
   .react-datepicker__day-name, .react-datepicker__day {
     margin: 0.4rem !important;
-  }
+  } */
 
   /* responsive table css */
 

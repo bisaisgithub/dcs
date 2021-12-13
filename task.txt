@@ -1,12 +1,13 @@
-adding patient
-1. dateinput must be disabled
 
-patient table
+on going start
+patient table 
 1.name
 2.gender
 3.dob
 4.allergies
 5.phone
+
+on going end
 
 appointment
 

@@ -55,21 +55,38 @@ export const deleteUser = async (req, res)=>{
     
 }
 
-export const updateUser = async (req, res)=>{
-    // const user = users.find((user)=>user.id === req.params.id);
+export const updatePatient = async (req, res)=>{
+    // res.json({nameSendingIs: req.body.name })
 
-    const userUpdateResponse = await db('users').where('id', req.params.id).update({
-        name: req.body.name,
-        email: req.body.email,
-        contact: req.body.contact,
-    });
+    try {
+        const userUpdateResponse = await db('patient').where('id', req.params.id).update({
+            name: req.body.name,
+            mobile: req.body.mobile,
+            gender: req.body.gender,
+            dob: req.body.dob,
+            allergen: req.body.allergen,
+            status_: req.body.status_,
+        });
+        if (userUpdateResponse) {
+            res.json({updateOk: true});
+        } else {
+            console.log('upating to the database returned 0 or false');
+            res.json({updateOk: false});
+        }
+    
+        // console.log(user);
+        // user.name = req.body.name;
+        // user.contact = req.body.contact;
+        // user.email = req.body.email;
+    
+        // res.json({updateOk: true});
+        // res.json(userUpdateResponse)
+    } catch (error) {
+        console.log('updatePatient trycatch reponse error: ', error)
+        res.json({updateOk: false});
+    }
 
-    // console.log(user);
-    // user.name = req.body.name;
-    // user.contact = req.body.contact;
-    // user.email = req.body.email;
-
-    res.send('User Updated');
+    
 }
 
 export const refreshToken = async (req, res)=>{
