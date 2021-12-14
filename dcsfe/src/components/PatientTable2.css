@@ -145,3 +145,17 @@
 .patient-table2-table-body-tr-td{
     display: flex;
 }
+@media(max-width: 500px){
+    .patient-table2-table-thead-tr th:nth-child(2){
+        width: 20%;
+    }
+    .patient-table2-table-body-tr-td{
+        /* align-items: center;
+        justify-content: center;
+        align-content: center; */
+        flex-direction: column;
+    }
+}
+/* .patient-table2-table-thead-tr th:nth-child(2){
+    width: 20%;
+} */
