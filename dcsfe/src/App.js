@@ -22,7 +22,7 @@ function App() {
       <div>
         <Nav />
         <Routes>
-          <Route exact path='/patient' element={<Patient/>} />
+          <Route exact path='/patient' element={<Patient/>} /> 
           <Route exact path='/dashboard' element={<Dashboard/>} />
           {/* <Route exact path='/' element={<Home/>} />
           <Route exact path='/add' element={<AddEdit/>} />

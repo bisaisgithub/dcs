@@ -5,7 +5,7 @@ const Patient = () => {
     return (
         <div className='patient-container'>
             <p>Patient</p>
-            <PatientTable />
+            {/* <PatientTable /> */}
         </div>
     )
 }

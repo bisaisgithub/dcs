@@ -1,0 +1,111 @@
+.patient-details-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 1000;
+}
+.patient-details-modal-container{
+    width: 95%;
+    /* max-width: 440px; */
+    padding: 3px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #FFF;
+    /* padding: 50px; */
+    z-index: 1000;
+}
+.patient-details-modal-title{
+    font-size: 16px;
+    font-weight: 500;
+    position: relative;
+}
+.patient-details-modal-title::before{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 30px;
+    border-radius: 5px;
+    background: linear-gradient(135deg, #71b7e6, #9b59b6);
+}
+.patient-details-modal-body{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 10px 0 5px 0;
+}
+.patient-details-modal-body-input-box{
+    margin-bottom: 7px;
+    width: calc(100% / 2 - 20px);
+    font-size: 12px;
+}
+.patient-details-modal-body-input-box span{
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;    
+}
+.patient-details-modal-body-input-box input{
+    height: 35px;
+    width: 100%;
+    outline: none;
+    font-size: 13px;
+    border-radius: 5px;
+    padding-left: 15px;
+    border: 1px solid #ccc;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+}
+.patient-details-modal-body-input-box input:focus, input:valid{
+    border-color: #9b59b6;
+    font-size: 14px;
+}
+.patient-details-modal-body-gender span{
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px; 
+}
+.patient-details-modal-body-input-box-gender{
+    display: flex;
+    justify-content: flex-start;
+    min-width: 110px;
+    font-size: 13px;
+}
+.patient-details-modal-body-status-gender{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.patient-details-modal-body-input-box-gender-span-male{
+    margin-right: 20px;
+}
+.patient-details-modal-body-gender{
+    margin-bottom: 7px;
+    width: calc(100% / 2 - 20px);
+    font-size: 12px;
+}
+.patient-details-modal-body-button button{
+    height: 100%;
+    width: 40%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: linear-gradient(
+135deg, #71b7e6, #9b59b6);
+}
+.patient-details-modal-body-button{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+}
