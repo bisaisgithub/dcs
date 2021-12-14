@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import React from 'react';
+import './Dashboard.css'
+import PatientTable2 from '../components/PatientTable2.js';
 
 const Dashboard = () => {
-    const [selectedDateInput, setSelectedDatenput] = useState(new Date());
+
     return (
-        <div>
-            <DatePicker maxDate={new Date()} yearDropdownItemNumber={90} showYearDropdown scrollableYearDropdown={true} dateFormat='yyyy/MM/dd' className='date-picker' placeholder="Enter Date of Birth" selected={selectedDateInput} onChange={date=>setSelectedDatenput(date)}/>
+        <div className='dashboard-container'>
+            <PatientTable2/>
         </div>
     )
 }
