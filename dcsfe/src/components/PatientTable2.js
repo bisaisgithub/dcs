@@ -175,11 +175,11 @@ const PatientTable2 = () => {
                                <td>{index+1}</td>
                                 <td>{patient.name}</td>
                                 <td>
-                                    <span>{patient.status_}</span>
+                                    <button  id={patient.status_=== 'Scheduled'? 'bg-green':'bg-black'}>{patient.status_}</button>
                                 </td>
                                 <td className='patient-table2-table-body-tr-td'>
-                                    <button>Options</button>
-                                    <button>Treatment</button>
+                                    <button>Details</button>
+                                    <button>Treatments</button>
                                 </td>
                             </tr>
                         );
