@@ -70,7 +70,7 @@
 .patient-table2-table-thead{
     background-color: #034c81;
     position: sticky;
-    top: 0px;
+    top: -1px;
 }
 .patient-table2-table-thead-tr th {
     font-size: 14px;
