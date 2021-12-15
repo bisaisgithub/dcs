@@ -12,6 +12,8 @@ import './App2.css';
 import Patient from './pages/Patient.js';
 import Dashboard from './pages/Dashboard.js';
 import User from './pages/User.js';
+import Admin from './pages/Admin.js';
+
 
 import Nav from './components/nav/Nav.js';
 // import NavTest from './components2/NavTest';
@@ -26,6 +28,7 @@ function App() {
           <Route exact path='/patient' element={<Patient/>} /> 
           <Route exact path='/dashboard' element={<Dashboard/>} />
           <Route exact path='/user' element={<User/>} />
+          <Route exact path='/admin' element={<Admin/>} />
           {/* <Route exact path='/' element={<Home/>} />
           <Route exact path='/add' element={<AddEdit/>} />
           <Route exact path='/update/:id' element={<AddEdit/>} />

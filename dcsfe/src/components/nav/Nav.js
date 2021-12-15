@@ -7,6 +7,7 @@ import patient from './patient-Freepik.png';
 import user from './user-Freepik.png';
 import appointment from './appointment-Freepik.png';
 import dashboard from './dashboard-Eucalyp.png';
+import admin from './admin-Flat-Icons.png';
 // import {ReactComponent as Patient} from './patient.svg'
 // import {ReactComponent as Dashboard} from './dashboard.svg'
 // import {ReactComponent as Appointment} from './appointment.svg'
@@ -38,7 +39,10 @@ const Nav = () => {
                 <img  src={dashboard} className='nav__icon' alt='dashboard-Eucalyp.png' />
                 <span>Dashboard</span>
            </Link>
-           
+           <Link to='/admin' className='nav__link'>
+                <img  src={admin} className='nav__icon' alt='admin-Flat-Icons.png' />
+                <span>Admin</span>
+           </Link>
         </div>
     )
 }

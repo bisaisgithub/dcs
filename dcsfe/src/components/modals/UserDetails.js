@@ -5,11 +5,11 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const UserDetails = ({
-    isOpen, setIsOpen, addUser, updatePatient,patientId,
+    isOpen, setIsOpen, addUser, updateUser,userId,
     typeInput,setTypeInput,genderInput,setGenderInput,
     nameInput,setNameInput,mobileInput,setMobileInput,emailInput,
-    setEmailInput,selectedDateInput,setSelectedDateInput,patientAge,
-    passwordInput,setPasswordInput
+    setEmailInput,selectedDateInput,setSelectedDateInput,userAge,
+    passwordInput,setPasswordInput,
     }) => {
     if (!isOpen) {
         return null;
@@ -21,14 +21,14 @@ const UserDetails = ({
     // const [mobileInput, setMobileInput] = useState('');
     // const [genderInput, setGenderInput] = useState('');
     // const [emailInput, setEmailInput] = useState('');
-    // const [patientId, setPatientId] = useState("");
+    // const [userId, setPatientId] = useState("");
     // const [typeInput, setTypeInput] =useState('-Select Status-');
     // const [searchInput, setSearchInput] = useState('');
     return ReactDOM.createPortal(
         <>
             <div className='patient-details-container'>
                 <div className='patient-details-modal-container'>
-                    <div className='patient-details-modal-title'>{patientId? `${nameInput} Details --  Age: ${patientAge}`: 'User Details'}</div>
+                    <div className='patient-details-modal-title'>{userId? `${nameInput} Details --  Age: ${userAge}`: 'User Details'}</div>
                     <div className='patient-details-modal-body'>
                         <div className='patient-details-modal-body-input-box'>
                             <span>Date of Birth</span>
@@ -44,11 +44,11 @@ const UserDetails = ({
                         </div>                       
                         <div className="patient-details-modal-body-input-box">
                             <span>Email</span>
-                            <input type="text" placeholder="Enter allergens" value={emailInput} required onChange={e=>setEmailInput(e.target.value)}/>
+                            <input type="text" placeholder="Enter email" value={emailInput} required onChange={e=>setEmailInput(e.target.value)}/>
                         </div>
                         <div className="patient-details-modal-body-input-box">
                             <span>Password</span>
-                            <input type="password" placeholder="Enter allergens" value={passwordInput} required onChange={e=>setPasswordInput(e.target.value)}/>
+                            <input type="password" placeholder="Enter password" value={passwordInput} required onChange={e=>setPasswordInput(e.target.value)}/>
                         </div>
                         <div className="patient-details-modal-body-status-gender">
                             <div className="patient-details-modal-body-input-box">
@@ -56,6 +56,7 @@ const UserDetails = ({
                                 <select value={typeInput} onChange={(e)=>{setTypeInput(e.target.value)}}>
                                     <option value="Dentist">Dentist</option>
                                     <option value="Receptionist">Receptionist</option>
+                                    <option value="Surgeon">Surgeon</option>
                                     <option value="Admin">Admin</option>
                                     <option value="Deleted">Deleted</option>
                                     <option value="-Select Status-">-Select Type-</option>
@@ -79,9 +80,9 @@ const UserDetails = ({
 
                     </div>
                     <div className='patient-details-modal-body-button'>                    
-                        {/* {patientId? (<input type="submit" onClick={updatePatient} value='Update' className='percent-40'/>):
+                        {/* {userId? (<input type="submit" onClick={updateUser} value='Update' className='percent-40'/>):
                         (<input type="submit" onClick={addUser} value='Add' className='percent-40'/>)}   */}
-                        <button onClick={patientId? updatePatient : addUser}>{patientId? 'Update' : 'Add'}</button>                               
+                        <button onClick={userId? updateUser : addUser}>{userId? 'Update' : 'Add'}</button>                               
                         <button onClick={()=>{setIsOpen(false); setSelectedDateInput(new Date())}}>Close</button>
                     </div>
                     

@@ -7,7 +7,7 @@ import './UserTable.css';
 const UserTable = () => {
     const [selectedDateInput, setSelectedDateInput] = useState(new Date());
     const [isOpen, setIsOpen] = useState(false);
-    const [patientsData, setPatientsData] = useState([]);
+    const [usersData, setUsersData] = useState([]);
     const [nameInput, setNameInput] = useState('');
     const [mobileInput, setMobileInput] = useState('');
     const [genderInput, setGenderInput] = useState('');
@@ -19,7 +19,7 @@ const UserTable = () => {
     const [passwordInput, setPasswordInput] = useState('');
     useEffect(()=>{
         
-        getPatients(); 
+        getUsers(); 
     
     }, []);
     const addUser = async ()=>{
@@ -50,7 +50,7 @@ const UserTable = () => {
             type: typeInput,
             password: passwordInput,
         });
-        // console.log('add patient response.data', response.data)
+        // console.log('add user response.data', response.data)
         if (response.data.userInsertOk) {
             alert('User Added');
             // setSelectedDatenput(new Date());
@@ -59,7 +59,7 @@ const UserTable = () => {
             // setEmailInput('');
             // setGenderInput('');
             // console.log('clearing input name', nameInput);
-            getPatients();
+            getUsers();
             setIsOpen(false);
         }else{
             alert('Failed Adding User');
@@ -67,15 +67,15 @@ const UserTable = () => {
         }
         
     }
-    const getPatients = async ()=>{
-        const response = await axios.get(`http://172.16.0.101:3001/patients/${searchInput}`);
+    const getUsers = async ()=>{
+        const response = await axios.get(`http://172.16.0.101:3001/users/${searchInput}`);
   
         if (response.data) {
             // console.log('response data',response.data)
-            setPatientsData(response.data);
+            setUsersData(response.data);
         }
     };
-    const updatePatient = async ()=>{
+    const updateUser = async ()=>{
         
         function formatDate(date) {
             var d = new Date(date),
@@ -96,7 +96,7 @@ const UserTable = () => {
         if (!nameInput || !mobileInput || !genderInput || !selectedDateInput || !emailInput) {
             alert('Empty field/s')
         }else{
-            const response = await axios.put(`http://172.16.0.101:3001/patient/${userId}`, {
+            const response = await axios.put(`http://172.16.0.101:3001/user/${userId}`, {
             name: nameInput,
             mobile: mobileInput,
             gender: genderInput,
@@ -105,8 +105,8 @@ const UserTable = () => {
             status_: 'Active',
              });
 
-            if (response.data.updateOk) {
-            alert('Patient Upated');
+            if (response.data.userUpdateOk) {
+            alert('User Upated');
             // setSelectedDatenput(new Date());
             // setNameInput('');
             // setMobileInput('');
@@ -114,9 +114,9 @@ const UserTable = () => {
             // setGenderInput('');
             // console.log('clearing input name', nameInput);
             setIsOpen(false);
-            getPatients();
+            getUsers();
             }else{
-                alert('Failed Updating Patient');
+                alert('Failed Updating User');
             }
         }
         
@@ -144,17 +144,18 @@ const UserTable = () => {
         }
     }
     const detailsFunction = async (patientIdparam)=>{
-        // console.log('edit patient ccalled')
+        // console.log('edit user ccalled')
         // console.log('patienId before fetch', userId)
-        const responsePatient = await axios.get(`http://172.16.0.101:3001/patient/${patientIdparam}`);
+        const responsePatient = await axios.get(`http://172.16.0.101:3001/user/${patientIdparam}`);
         
         if (responsePatient.data[0].id) {
             setSelectedDateInput(new Date(responsePatient.data[0].dob));
             setNameInput(responsePatient.data[0].name);
             setMobileInput(responsePatient.data[0].mobile);
-            setEmailInput(responsePatient.data[0].allergen);
+            setEmailInput(responsePatient.data[0].email);
+            // setPasswordInput(responsePatient.data[0].input);
             setGenderInput(responsePatient.data[0].gender);
-            setTypeInput(responsePatient.data[0].status_);
+            setTypeInput(responsePatient.data[0].type);
             setUserId(responsePatient.data[0].id);
             setUserAgeFunction(responsePatient.data[0].dob);
             // console.log('patienId after setUserId', userId);
@@ -171,50 +172,50 @@ const UserTable = () => {
         }
     }
     return (
-        <div className='patient-table2-container'>
+        <div className='user-table2-container'>
             <UserDetails
             isOpen={isOpen} setIsOpen={setIsOpen} addUser={addUser}
-            updatePatient={updatePatient} userId={userId} typeInput={typeInput}
+            updateUser={updateUser} userId={userId} typeInput={typeInput}
             setTypeInput={setTypeInput} genderInput={genderInput} setGenderInput={setGenderInput}
             nameInput={nameInput} setNameInput={setNameInput} mobileInput={mobileInput}
             setMobileInput={setMobileInput} emailInput={emailInput} setEmailInput={setEmailInput}
             selectedDateInput={selectedDateInput} setSelectedDateInput={setSelectedDateInput}
             userAge={userAge} passwordInput={passwordInput} setPasswordInput={setPasswordInput}
             ></UserDetails>
-            <div className='patient-table2-head-container'>
-                <div className='patient-table2-head-input'>
-                    <div className='patient-table2-head-search-container'>
-                        <button className='patient-table2-head-search-button' onClick={getPatients} >Search</button>
-                        <input className='patient-table2-head-search-input' placeholder='Search' value={searchInput} onChange={(e)=>{setSearchInput(e.target.value)}} />
-                        <button className='patient-table2-head-search-clear' onClick={()=>{setSearchInput('')}}>X</button>
+            <div className='user-table2-head-container'>
+                <div className='user-table2-head-input'>
+                    <div className='user-table2-head-search-container'>
+                        <button className='user-table2-head-search-button' onClick={getUsers} >Search</button>
+                        <input className='user-table2-head-search-input' placeholder='Search' value={searchInput} onChange={(e)=>{setSearchInput(e.target.value)}} />
+                        <button className='user-table2-head-search-clear' onClick={()=>{setSearchInput('')}}>X</button>
                     </div>
-                    <div className='patient-table2-head-add-container'>
-                    <button className='patient-table-head-add-button' onClick={()=>newPatient()}>New User</button>
+                    <div className='user-table2-head-add-container'>
+                    <button className='user-table-head-add-button' onClick={()=>newPatient()}>New User</button>
                 </div>
                 </div>
             </div>
-            <div className='patient-table2-table'>
-                <thead className='patient-table2-table-thead'>
-                    <tr className='patient-table2-table-thead-tr'>
+            <div className='user-table2-table'>
+                <thead className='user-table2-table-thead'>
+                    <tr className='user-table2-table-thead-tr'>
                         <th>No</th>
                         <th>Name</th>
-                        <th>Status</th>
+                        <th>Type</th>
                         <th>Options</th>
                     </tr>
                 </thead>
-                <tbody className='patient-table2-table-tbody'>
-                    {patientsData && patientsData.map((patient, index)=>{
+                <tbody className='user-table2-table-tbody'>
+                    {usersData && usersData.map((user, index)=>{
                         
                         return (
-                            <tr key={index} className='patient-table2-table-tbody-tr'>
+                            <tr key={index} className='user-table2-table-tbody-tr'>
                                <td>{index+1}</td>
-                                <td>{patient.name}</td>
+                                <td>{user.name}</td>
                                 <td>
-                                    <button  id={patient.status_=== 'Scheduled'? 'bg-green':'bg-black'}>{patient.status_}</button>
+                                    <button  id={user.status_=== 'Scheduled'? 'bg-green':'bg-black'}>{user.type}</button>
                                 </td>
-                                <td className='patient-table2-table-body-tr-td'>
-                                    <button onClick={()=>{detailsFunction(patient.id)}}>Details</button>
-                                    <button>Treatments</button>
+                                <td className='user-table2-table-body-tr-td'>
+                                    <button onClick={()=>{detailsFunction(user.id)}}>Details</button>
+                                    {/* <button>Treatments</button> */}
                                 </td>
                             </tr>
                         );

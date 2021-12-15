@@ -1,4 +1,4 @@
---New Design Flow Start--
+
 description:
     to have pages with tables that has buttons open modal with overflow like for treatment, detais
 nav menu
@@ -8,17 +8,25 @@ nav menu
 
   user 
 
---New Design Flow End
-
 patient tab with table column below:
   no, name(actual name), status(status), details(edit button), treatment
 patient search
 details function
 
 --working with start--
- treatment
---working with end--
-appointment
 
+admin menu
+--working with end--
+ appointment
+
+creating appointment table in database start --
+ doctorid
+ patientid
+ date and time starts
+ date and time ends
+ treatment
+ creating appointment table in database start --
+
+treatment
 
 dashboard

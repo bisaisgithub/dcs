@@ -42,10 +42,16 @@ export const loginUser = async (req, res)=>{
         
     }
 }
+export const getUsersBySearch = async (req, res)=>{
+    // const singleUser = users.filter((user)=>user.id === req.params.id);
+    const singlePatientReponse = await db('user').where('name', 'like', `%${req.params.search}%`)
+    .orWhere('type', 'like', `%${req.params.search}%`);
+    res.send(singlePatientReponse);
+}
 
 export const getUsers = async (req, res)=>{
     
-    const response = await db('users').orderBy('created_at', 'desc');
+    const response = await db('user').orderBy('name', 'asc');
     // console.log('response gerusers: ', response);
     
     // res.send(response);
@@ -84,14 +90,14 @@ export const createUser = async (req, res)=>{
 
 export const getUserByID = async (req, res)=>{
     // const singleUser = users.filter((user)=>user.id === req.params.id);
-    const singleUserReponse = await db('users').where('id', req.params.id)
+    const singleUserReponse = await db('user').where('id', req.params.id)
     res.send(singleUserReponse);
 }
 
 export const deleteUser = async (req, res)=>{
     // users = users.filter((user)=>user.id !== req.params.id);
     try {
-        const deleteUserResponse = await db('users').where('id', req.params.id).del();
+        const deleteUserResponse = await db('user').where('id', req.params.id).del();
          res.send('user deleted');
     } catch (error) {
         console.log('error deleting: ', error);
@@ -101,19 +107,27 @@ export const deleteUser = async (req, res)=>{
 
 export const updateUser = async (req, res)=>{
     // const user = users.find((user)=>user.id === req.params.id);
-
-    const userUpdateResponse = await db('users').where('id', req.params.id).update({
+    // const hashedPassword = await hash(req.body.password, 10);
+    const userUpdateResponse = await db('user').where('id', req.params.id).update({
         name: req.body.name,
+        mobile: req.body.mobile,
+        gender: req.body.gender,
+        dob: req.body.dob,
         email: req.body.email,
-        contact: req.body.contact,
+        type: req.body.type,
+        // password: hashedPassword,
     });
-
+    if (userUpdateResponse) {
+        res.json({userUpdateOk: true});
+    } else {
+        res.json({userUpdateOk: false});
+    }
     // console.log(user);
     // user.name = req.body.name;
     // user.contact = req.body.contact;
     // user.email = req.body.email;
 
-    res.send('User Updated');
+    
 }
 
 export const refreshToken = async (req, res)=>{
