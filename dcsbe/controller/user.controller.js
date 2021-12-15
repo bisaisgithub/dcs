@@ -56,17 +56,27 @@ export const getUsers = async (req, res)=>{
 export const createUser = async (req, res)=>{
     // const user = req.body;
     // users.push({...user, id: uuid()});
-    const hashedPassword = await hash(req.body.name, 10);
+    const hashedPassword = await hash(req.body.password, 10);
     try {
-        const response = await db('users').insert({
+        const response = await db('user').insert({
             id: uuid(),
-            name: hashedPassword,
+            name: req.body.name,
+            mobile: req.body.mobile,
+            gender: req.body.gender,
+            dob: req.body.dob,
             email: req.body.email,
-            contact: req.body.contact,
+            type: req.body.type,
+            password: hashedPassword,
         });
         // console.log('insert succes: ', response);
-        res.send('User Added Successfully');
+        if (response) {
+            res.json({userInsertOk: true});
+        } else {
+            res.json({userInsertOk: false});
+        }
+        
     } catch (error) {
+        res.json({userInsertOk: false});
         console.log('error: ', error);
     }
     
