@@ -10,13 +10,11 @@ nav menu
 
 --New Design Flow End
 
-
---working with start--
-
 patient tab with table column below:
   no, name(actual name), status(status), details(edit button), treatment
 
-
+--working with start--
+ patient search function
 --working with end--
 appointment
 

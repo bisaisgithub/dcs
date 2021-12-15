@@ -16,6 +16,7 @@ const PatientTable2 = () => {
     const [patientId, setPatientId] = useState("");
     const [status_Input, setStatus_Input] =useState('-Select Status-');
     const [searchInput, setSearchInput] = useState('');
+    const [patientAge, setPatientAge] = useState('');
     useEffect(()=>{
         
         getPatients(); 
@@ -130,6 +131,44 @@ const PatientTable2 = () => {
         // console.log('clearing input name', nameInput);
         setIsOpen(true);
     };
+    const setPatientAgeFunction = (patientDOB)=>{
+        // let age = 0;
+        const ageDiffs = new Date().getFullYear() - new Date(patientDOB).getFullYear();
+        if (new Date().getMonth() < new Date(patientDOB).getMonth()) {
+            // age = ageDiffs -1;
+            setPatientAge(ageDiffs -1);
+        } else {
+            // age = ageDiffs;
+            setPatientAge(ageDiffs);
+        }
+    }
+    const detailsFunction = async (patientIdparam)=>{
+        // console.log('edit patient ccalled')
+        // console.log('patienId before fetch', patientId)
+        const responsePatient = await axios.get(`http://172.16.0.101:3001/patient/${patientIdparam}`);
+        
+        if (responsePatient.data[0].id) {
+            setSelectedDateInput(new Date(responsePatient.data[0].dob));
+            setNameInput(responsePatient.data[0].name);
+            setMobileInput(responsePatient.data[0].mobile);
+            setAllergenInput(responsePatient.data[0].allergen);
+            setGenderInput(responsePatient.data[0].gender);
+            setStatus_Input(responsePatient.data[0].status_);
+            setPatientId(responsePatient.data[0].id);
+            setPatientAgeFunction(responsePatient.data[0].dob);
+            // console.log('patienId after setPatientId', patientId);
+            // console.log('name after setPatientname', nameInput);
+            // if (patientId) {
+            //     console.log('patientId true', patientId)
+            // } else {
+            //     console.log('patientId false', patientId)
+            // }
+            setIsOpen(true);
+            
+        } else {
+            console.log('responsePatientId is empty: ', responsePatient.data[0].id)
+        }
+    }
     return (
         <div className='patient-table2-container'>
             <PatientDetails
@@ -139,13 +178,14 @@ const PatientTable2 = () => {
             nameInput={nameInput} setNameInput={setNameInput} mobileInput={mobileInput}
             setMobileInput={setMobileInput} allergenInput={allergenInput} setAllergenInput={setAllergenInput}
             selectedDateInput={selectedDateInput} setSelectedDateInput={setSelectedDateInput}
+            patientAge={patientAge}
             ></PatientDetails>
             <div className='patient-table2-head-container'>
                 <div className='patient-table2-head-input'>
                     <div className='patient-table2-head-search-container'>
-                        <button className='patient-table2-head-search-button' >Search</button>
-                        <input className='patient-table2-head-search-input' placeholder='Search' />
-                        <button className='patient-table2-head-search-clear'>X</button>
+                        <button className='patient-table2-head-search-button' onClick={getPatients} >Search</button>
+                        <input className='patient-table2-head-search-input' placeholder='Search' value={searchInput} onChange={(e)=>{setSearchInput(e.target.value)}} />
+                        <button className='patient-table2-head-search-clear' onClick={()=>{setSearchInput('')}}>X</button>
                     </div>
                     <div className='patient-table2-head-add-container'>
                     <button className='patient-table-head-add-button' onClick={()=>newPatient()}>New Patient</button>
@@ -163,13 +203,7 @@ const PatientTable2 = () => {
                 </thead>
                 <tbody className='patient-table2-table-tbody'>
                     {patientsData && patientsData.map((patient, index)=>{
-                        let age = 0;
-                        const ageDiffs = new Date().getFullYear() - new Date(patient.dob).getFullYear();
-                        if (new Date().getMonth() < new Date(patient.dob).getMonth()) {
-                            age = ageDiffs -1;
-                        } else {
-                            age = ageDiffs;
-                        }
+                        
                         return (
                             <tr key={index} className='patient-table2-table-tbody-tr'>
                                <td>{index+1}</td>
@@ -178,7 +212,7 @@ const PatientTable2 = () => {
                                     <button  id={patient.status_=== 'Scheduled'? 'bg-green':'bg-black'}>{patient.status_}</button>
                                 </td>
                                 <td className='patient-table2-table-body-tr-td'>
-                                    <button>Details</button>
+                                    <button onClick={()=>{detailsFunction(patient.id)}}>Details</button>
                                     <button>Treatments</button>
                                 </td>
                             </tr>

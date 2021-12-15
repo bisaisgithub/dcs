@@ -47,6 +47,7 @@ export const getPatientByID = async (req, res)=>{
 export const getPatientBySearch = async (req, res)=>{
     // const singleUser = users.filter((user)=>user.id === req.params.id);
     const singlePatientReponse = await db('patient').where('name', 'like', `%${req.params.search}%`)
+    .orWhere('status_', 'like', `%${req.params.search}%`);
     res.send(singlePatientReponse);
 }
 

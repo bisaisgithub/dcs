@@ -8,7 +8,7 @@ const PatientDetails = ({
     isOpen, setIsOpen, addPatient, updatePatient,patientId,
     status_Input,setStatus_Input,genderInput,setGenderInput,
     nameInput,setNameInput,mobileInput,setMobileInput,allergenInput,
-    setAllergenInput,selectedDateInput,setSelectedDateInput,
+    setAllergenInput,selectedDateInput,setSelectedDateInput,patientAge
     }) => {
 
     if (!isOpen) {
@@ -28,7 +28,7 @@ const PatientDetails = ({
         <>
             <div className='patient-details-container'>
                 <div className='patient-details-modal-container'>
-                    <div className='patient-details-modal-title'>Patient Details</div>
+                    <div className='patient-details-modal-title'>{patientId? `${nameInput} Details --  Age: ${patientAge}`: 'Patient Details'}</div>
                     <div className='patient-details-modal-body'>
                         <div className='patient-details-modal-body-input-box'>
                             <span>Date of Birth</span>
@@ -77,7 +77,7 @@ const PatientDetails = ({
                     <div className='patient-details-modal-body-button'>                    
                         {/* {patientId? (<input type="submit" onClick={updatePatient} value='Update' className='percent-40'/>):
                         (<input type="submit" onClick={addPatient} value='Add' className='percent-40'/>)}   */}
-                        <button onClick={addPatient}>{patientId? 'Update' : 'Add'}</button>                               
+                        <button onClick={patientId? updatePatient : addPatient}>{patientId? 'Update' : 'Add'}</button>                               
                         <button onClick={()=>{setIsOpen(false); setSelectedDateInput(new Date())}}>Close</button>
                     </div>
                     
