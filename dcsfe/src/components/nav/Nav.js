@@ -1,9 +1,10 @@
 import React from 'react';
 import './Nav.css';
 import {Link} from 'react-router-dom'
-import prescription from './prescription-monkik.png';
+// import prescription from './prescription-monkik.png';
 import treatment from './treatment-Eucalyp.png';
 import patient from './patient-Freepik.png';
+import user from './user-Freepik.png';
 import appointment from './appointment-Freepik.png';
 import dashboard from './dashboard-Eucalyp.png';
 // import {ReactComponent as Patient} from './patient.svg'
@@ -25,10 +26,14 @@ const Nav = () => {
                 <img src={treatment} className='nav__icon' alt='treatment-Eucalyp.png'/>
                 <span>Treatment</span>
            </Link> 
-           <Link to='/prescription' className='nav__link'>
+           <Link to='/user' className='nav__link'>
+               <img src={user} className='nav__icon' alt='user-Freepik.png'/>
+                <span>User</span>
+           </Link>
+           {/* <Link to='/prescription' className='nav__link'>
                 <img src={prescription} className='nav__icon' alt='prescription-monkik.png'/>
                 <span>Prescription</span>
-           </Link> 
+           </Link>  */}
            <Link to='/dashboard' className='nav__link'>
                 <img  src={dashboard} className='nav__icon' alt='dashboard-Eucalyp.png' />
                 <span>Dashboard</span>

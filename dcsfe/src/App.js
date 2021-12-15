@@ -9,10 +9,11 @@ import './App2.css';
 // import About from './pages/About';
 // import Header from './components/Header';
 // import Login from './pages/Login';
-import Patient from './pages/Patient';
-import Dashboard from './pages/Dashboard';
+import Patient from './pages/Patient.js';
+import Dashboard from './pages/Dashboard.js';
+import User from './pages/User.js';
 
-import Nav from './components/Nav';
+import Nav from './components/nav/Nav.js';
 // import NavTest from './components2/NavTest';
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Routes>
           <Route exact path='/patient' element={<Patient/>} /> 
           <Route exact path='/dashboard' element={<Dashboard/>} />
+          <Route exact path='/user' element={<User/>} />
           {/* <Route exact path='/' element={<Home/>} />
           <Route exact path='/add' element={<AddEdit/>} />
           <Route exact path='/update/:id' element={<AddEdit/>} />

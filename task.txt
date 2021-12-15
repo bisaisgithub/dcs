@@ -12,9 +12,11 @@ nav menu
 
 patient tab with table column below:
   no, name(actual name), status(status), details(edit button), treatment
+patient search
+details function
 
 --working with start--
- patient search function
+ treatment
 --working with end--
 appointment
 

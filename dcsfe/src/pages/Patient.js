@@ -1,11 +1,11 @@
-import React from 'react'
-import PatientTable from '../components/PatientTable';
+import React from 'react';
 import './Patient.css';
+import PatientTable2 from '../components/PatientTable2.js';
+
 const Patient = () => {
     return (
         <div className='patient-container'>
-            <p>Patient</p>
-            {/* <PatientTable /> */}
+            <PatientTable2 />
         </div>
     )
 }
