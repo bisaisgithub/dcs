@@ -15,7 +15,7 @@ import admin from './admin-Flat-Icons.png';
 const Nav = () => {
     return (
         <div className='nav'>
-           <Link to='/' className='nav__link'>
+           <Link to='/appointment' className='nav__link'>
                 <img src={appointment} className='nav__icon' alt='/appointment-Freepik.png'/>
                 <span>Appointment</span>
            </Link> 

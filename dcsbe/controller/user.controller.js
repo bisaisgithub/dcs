@@ -49,6 +49,14 @@ export const getUsersBySearch = async (req, res)=>{
     res.send(singlePatientReponse);
 }
 
+export const getUsersBySearch2 = async (req, res)=>{
+    // const singleUser = users.filter((user)=>user.id === req.params.id);
+    const singlePatientReponse = await db('user').where('name', 'like', `%${req.body.name}%`)
+    .where('type', 'like', `%${req.body.type}%`).orderBy('name', 'asc');
+    // console.log('req.body', req.body)
+    res.send(singlePatientReponse);
+}
+
 export const getUsers = async (req, res)=>{
     
     const response = await db('user').orderBy('name', 'asc');

@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import UserDetails from './modals/UserDetails.js';
+import AppointmentDetails from './modals/AppointmentDetails.js';
 import './Table.css';
 
 
-const UserTable = () => {
+const AppointmentTable = () => {
     const [selectedDateInput, setSelectedDateInput] = useState(new Date());
     const [isOpen, setIsOpen] = useState(false);
     const [usersData, setUsersData] = useState([]);
@@ -186,7 +186,7 @@ const UserTable = () => {
     }
     return (
         <div className='table-table2-container'>
-            <UserDetails
+            <AppointmentDetails
             isOpen={isOpen} setIsOpen={setIsOpen} addUser={addUser}
             updateUser={updateUser} userId={userId} typeInput={typeInput}
             setTypeInput={setTypeInput} genderInput={genderInput} setGenderInput={setGenderInput}
@@ -194,7 +194,7 @@ const UserTable = () => {
             setMobileInput={setMobileInput} emailInput={emailInput} setEmailInput={setEmailInput}
             selectedDateInput={selectedDateInput} setSelectedDateInput={setSelectedDateInput}
             userAge={userAge} passwordInput={passwordInput} setPasswordInput={setPasswordInput}
-            ></UserDetails>
+            ></AppointmentDetails>
             <div className='table-table2-head-container'>
                 <div className='table-table2-head-input'>
                     <div className='table-table2-head-search-container'>
@@ -254,4 +254,4 @@ const UserTable = () => {
     )
 }
 
-export default UserTable;
+export default AppointmentTable;

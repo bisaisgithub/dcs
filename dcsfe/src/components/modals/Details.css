@@ -61,7 +61,8 @@
     border-bottom-width: 2px;
     transition: all 0.3s ease;
 }
-.details-details-modal-body-input-box input:focus, input:valid{
+.details-details-modal-body-input-box input:focus, 
+.details-details-modal-body-input-box input:valid{
     border-color: #9b59b6;
     font-size: 14px;
 }

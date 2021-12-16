@@ -17,8 +17,9 @@ details function
 
 creating prescription table in database start--
   id
-  doc id
   patient id
+  doc id
+  treatment id
 creating prescription table in database end--
 
 creating prescription UI
@@ -27,9 +28,9 @@ creating prescription UI
 
 
 creating treatment table in database start--
-  doc id
   patient id
-  prescription id
+  doc id
+  appointment id
   Procedure cost
   Duration Hrs
 
@@ -40,10 +41,10 @@ creating treatment table in database end--
 creating appointment table in database start --
  doctorid
  patientid
- treatment id
  date and time starts
  date and time ends
  treatment
+ type (Scheduled, Walk-in)
  creating appointment table in database start --
 
 treatment

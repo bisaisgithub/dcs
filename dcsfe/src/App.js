@@ -8,6 +8,7 @@ import Patient from './pages/Patient.js';
 import Dashboard from './pages/Dashboard.js';
 import User from './pages/User.js';
 import Admin from './pages/Admin.js';
+import Appointment from './pages/Appointment.js'
 
 
 import Nav from './components/nav/Nav.js';
@@ -24,6 +25,7 @@ function App() {
           <Route exact path='/dashboard' element={<Dashboard/>} />
           <Route exact path='/user' element={<User/>} />
           <Route exact path='/admin' element={<Admin/>} />
+          <Route exact path='/appointment' element={<Appointment/>} />
           {/* <Route exact path='/' element={<Home/>} />
           <Route exact path='/add' element={<AddEdit/>} />
           <Route exact path='/update/:id' element={<AddEdit/>} />

@@ -1,11 +1,13 @@
-import React from 'react'
+import React from 'react';
+import AppointmentTable from '../components/AppointmentTable.js';
+import './Page.css';
 
 const Appointment = () => {
     return (
-        <div>
-            
+        <div className='page-container'>
+            <AppointmentTable />
         </div>
     )
 }
 
-export default Appointment
+export default Appointment;
