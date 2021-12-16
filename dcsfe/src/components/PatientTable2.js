@@ -15,8 +15,9 @@ const PatientTable2 = () => {
     const [allergenInput, setAllergenInput] = useState('');
     const [patientId, setPatientId] = useState("");
     const [status_Input, setStatus_Input] =useState('-Select Status-');
-    const [searchInput, setSearchInput] = useState('');
+    const [searchNameInput, setSearchNameInput] = useState('');
     const [patientAge, setPatientAge] = useState('');
+    const [searchStatusInput, setSearchStatusInput] = useState('');
     useEffect(()=>{
         
         getPatients(); 
@@ -66,13 +67,24 @@ const PatientTable2 = () => {
         }
         
     }
-    const getPatients = async ()=>{
-        const response = await axios.get(`http://172.16.0.101:3001/patients/${searchInput}`);
+    const getPatients = async (data)=>{
+
+        if (data) {
+            const response = await axios.post(`http://172.16.0.101:3001/patients`, data);
   
         if (response.data) {
             // console.log('response data',response.data)
             setPatientsData(response.data);
         }
+        } else {
+            const response = await axios.get(`http://172.16.0.101:3001/patients`);
+  
+        if (response.data) {
+            // console.log('response data',response.data)
+            setPatientsData(response.data);
+        }
+        }
+        
     };
     const updatePatient = async ()=>{
         
@@ -181,7 +193,7 @@ const PatientTable2 = () => {
             patientAge={patientAge}
             ></PatientDetails>
             <div className='table-table2-head-container'>
-                <div className='table-table2-head-input'>
+                {/* <div className='table-table2-head-input'>
                     <div className='table-table2-head-search-container'>
                         <button className='table-table2-head-search-button' onClick={getPatients} >Search</button>
                         <input className='table-table2-head-search-input' placeholder='Search' value={searchInput} onChange={(e)=>{setSearchInput(e.target.value)}} />
@@ -190,9 +202,17 @@ const PatientTable2 = () => {
                     <div className='table-table2-head-add-container'>
                     <button className='table-table-head-add-button' onClick={()=>newPatient()}>New Patient</button>
                 </div>
-                </div>
+                </div> */}
             </div>
             <div className='table-table2-table'>
+                <thead className='table-table2-table-thead-search2'>
+                    <tr className='table-table2-table-thead-tr-search2'>
+                        <th><p onClick={()=>{getPatients({name: searchNameInput, status_: searchStatusInput})}}>Find</p></th>
+                        <th><input placeholder='Name' value={searchNameInput} onChange={(e)=>{setSearchNameInput(e.target.value)}}/><button onClick={()=>{setSearchNameInput('');setSearchStatusInput('')}}>X</button></th>
+                        <th><input placeholder='Status' value={searchStatusInput} onChange={(e)=>{setSearchStatusInput(e.target.value)}}/></th>
+                        <th><p onClick={()=>newPatient()}>New</p></th>
+                    </tr>
+                </thead>
                 <thead className='table-table2-table-thead'>
                     <tr className='table-table2-table-thead-tr'>
                         <th>No</th>

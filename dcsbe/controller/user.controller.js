@@ -49,6 +49,8 @@ export const getUsersBySearch = async (req, res)=>{
     res.send(singlePatientReponse);
 }
 
+
+
 export const getUsersBySearch2 = async (req, res)=>{
     // const singleUser = users.filter((user)=>user.id === req.params.id);
     const singlePatientReponse = await db('user').where('name', 'like', `%${req.body.name}%`)

@@ -114,7 +114,7 @@ const UserTable = () => {
             mobile: mobileInput,
             gender: genderInput,
             dob: date,
-            allergen: emailInput,
+            email: emailInput,
             status_: 'Active',
              });
 
@@ -134,13 +134,14 @@ const UserTable = () => {
         }
         
     };
-    const newPatient = ()=>{
+    const newUser = ()=>{
         setUserId(null);
         setSelectedDateInput(new Date());
         setNameInput('');
         setMobileInput('');
         setEmailInput('');
         setGenderInput('');
+        setPasswordInput('');
         setTypeInput('-Select Status-');
         // console.log('clearing input name', nameInput);
         setIsOpen(true);
@@ -194,6 +195,7 @@ const UserTable = () => {
             setMobileInput={setMobileInput} emailInput={emailInput} setEmailInput={setEmailInput}
             selectedDateInput={selectedDateInput} setSelectedDateInput={setSelectedDateInput}
             userAge={userAge} passwordInput={passwordInput} setPasswordInput={setPasswordInput}
+            
             ></UserDetails>
             <div className='table-table2-head-container'>
                 <div className='table-table2-head-input'>
@@ -203,7 +205,7 @@ const UserTable = () => {
                         {/* <button className='table-table2-head-search-clear' onClick={()=>{setSearchNameInput('')}}>X</button> */}
                     </div>
                     <div className='table-table2-head-add-container'>
-                    {/* <button className='table-table-head-add-button' onClick={()=>newPatient()}>New User</button> */}
+                    {/* <button className='table-table-head-add-button' onClick={()=>newUser()}>New User</button> */}
                 </div>
                 </div>
             </div>
@@ -214,11 +216,9 @@ const UserTable = () => {
                             <div><button>Find</button></div>
                         </th> */}
                         <th><p onClick={()=>{getUsers({name: searchNameInput, type: searchTypeInput})}}>Find</p></th>
-                        {/* <th><input value='Find' onClick={()=>{getUsers()}} /></th> */}
                         <th><input placeholder='Name' value={searchNameInput} onChange={(e)=>{setSearchNameInput(e.target.value)}}/><button onClick={()=>{setSearchNameInput('');setSearchTypeInput('')}}>X</button></th>
                         <th><input placeholder='Type' value={searchTypeInput} onChange={(e)=>{setSearchTypeInput(e.target.value)}}/></th>
-                        <th><p onClick={()=>newPatient()}>New</p></th>
-                        {/* <th><input value='New' onClick={()=>newPatient()}/></th> */}
+                        <th><p onClick={()=>newUser()}>New</p></th>
                     </tr>
                 </thead>
                 <thead className='table-table2-table-thead'>

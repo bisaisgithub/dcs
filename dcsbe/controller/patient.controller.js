@@ -51,6 +51,14 @@ export const getPatientBySearch = async (req, res)=>{
     res.send(singlePatientReponse);
 }
 
+export const getPatientsBySearch2 = async (req, res)=>{
+    // const singleUser = users.filter((user)=>user.id === req.params.id);
+    const singlePatientReponse = await db('patient').where('name', 'like', `%${req.body.name}%`)
+    .where('status_', 'like', `%${req.body.status_}%`).orderBy('name', 'asc');
+    // console.log('req.body', req.body)
+    res.send(singlePatientReponse);
+}
+
 export const deleteUser = async (req, res)=>{
     // users = users.filter((user)=>user.id !== req.params.id);
     try {
