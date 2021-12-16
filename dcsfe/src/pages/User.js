@@ -1,10 +1,10 @@
 import React from 'react';
-import './User.css';
+import './Page.css';
 import UserTable from '../components/UserTable.js';
 
 const User = () => {
     return (
-        <div className='user-container'>
+        <div className='page-container'>
             <UserTable />
         </div>
     )

@@ -14,14 +14,33 @@ patient search
 details function
 
 --working with start--
-
 admin menu
+
+
 --working with end--
+creating prescription table in database start--
+  id
+  doc id
+  patient id
+
+
+creating prescription table in database end--
+
+creating treatment table in database start--
+  doc id
+  patient id
+  prescription id
+  Procedure cost
+  Duration Hrs
+
+creating treatment table in database end--
+
  appointment
 
 creating appointment table in database start --
  doctorid
  patientid
+ treatment id
  date and time starts
  date and time ends
  treatment

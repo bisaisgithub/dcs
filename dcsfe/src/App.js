@@ -3,11 +3,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 
 import './App2.css';
-// import Home from './pages/Home';
-// import AddEdit from './pages/AddEdit';
-// import View from './pages/View';
-// import About from './pages/About';
-// import Header from './components/Header';
 // import Login from './pages/Login';
 import Patient from './pages/Patient.js';
 import Dashboard from './pages/Dashboard.js';

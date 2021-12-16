@@ -1,11 +1,11 @@
 import React from 'react';
-import './Dashboard.css';
+import './Page.css';
 // import PatientTable2 from '../components/PatientTable2.js';
 
 const Dashboard = () => {
 
     return (
-        <div className='dashboard-container'>
+        <div className='page-container'>
             {/* <PatientTable2/> */}
         </div>
     )
