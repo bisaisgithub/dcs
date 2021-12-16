@@ -13,18 +13,18 @@ patient tab with table column below:
 patient search
 details function
 
---working with start--
-admin menu
+--currently working start--
 
-
---working with end--
 creating prescription table in database start--
   id
   doc id
   patient id
-
-
 creating prescription table in database end--
+
+creating prescription UI
+
+--currently working end--
+
 
 creating treatment table in database start--
   doc id
