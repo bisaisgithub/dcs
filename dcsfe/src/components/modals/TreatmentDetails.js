@@ -4,13 +4,13 @@ import './Details.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-const PatientDetails = ({
-    isOpen, setIsOpen, addPatient, updatePatient,patientId,
-    status_Input,setStatus_Input,genderInput,setGenderInput,
-    nameInput,setNameInput,mobileInput,setMobileInput,allergenInput,
-    setAllergenInput,selectedDateInput,setSelectedDateInput,patientAge
+const TreatmentDetails = ({
+    isOpen, setIsOpen, addUser, updateUser,userId,
+    typeInput,setTypeInput,genderInput,setGenderInput,
+    nameInput,setNameInput,mobileInput,setMobileInput,emailInput,
+    setEmailInput,selectedDateInput,setSelectedDateInput,userAge,
+    passwordInput,setPasswordInput,
     }) => {
-
     if (!isOpen) {
         return null;
     }
@@ -20,15 +20,15 @@ const PatientDetails = ({
     // const [nameInput, setNameInput] = useState('');
     // const [mobileInput, setMobileInput] = useState('');
     // const [genderInput, setGenderInput] = useState('');
-    // const [allergenInput, setAllergenInput] = useState('');
-    // const [patientId, setPatientId] = useState("");
-    // const [status_Input, setStatus_Input] =useState('-Select Status-');
+    // const [emailInput, setEmailInput] = useState('');
+    // const [userId, setPatientId] = useState("");
+    // const [typeInput, setTypeInput] =useState('-Select Status-');
     // const [searchInput, setSearchInput] = useState('');
     return ReactDOM.createPortal(
         <>
             <div className='details-details-container'>
                 <div className='details-details-modal-container'>
-                    <div className='details-details-modal-title'>{patientId? `${nameInput} Details --  Age: ${patientAge}`: 'Patient Details'}</div>
+                    <div className='details-details-modal-title'>{userId? `${nameInput} Details --  Age: ${userAge}`: 'User Details'}</div>
                     <div className='details-details-modal-body'>
                         <div className='details-details-modal-body-input-box'>
                             <span>Date of Birth</span>
@@ -43,18 +43,23 @@ const PatientDetails = ({
                             <input type="text" placeholder="Enter mobile" value={mobileInput} required onChange={e=>setMobileInput(e.target.value)}/>
                         </div>                       
                         <div className="details-details-modal-body-input-box">
-                            <span>Allergen</span>
-                            <input type="text" placeholder="Enter allergens" value={allergenInput} required onChange={e=>setAllergenInput(e.target.value)}/>
+                            <span>Email</span>
+                            <input type="text" placeholder="Enter email" value={emailInput} required onChange={e=>setEmailInput(e.target.value)}/>
+                        </div>
+                        <div className="details-details-modal-body-input-box">
+                            <span>Password</span>
+                            <input type="password" placeholder="Enter password" value={passwordInput} required onChange={e=>setPasswordInput(e.target.value)}/>
                         </div>
                         <div className="details-details-modal-body-status-gender">
                             <div className="details-details-modal-body-input-box">
-                                <span>Status</span>
-                                <select value={status_Input} onChange={(e)=>{setStatus_Input(e.target.value)}}>
-                                    <option value="Active">Active</option>
-                                    <option value="Inactive">Inactive</option>
-                                    <option value="Scheduled">Scheduled</option>
+                                <span>Type</span>
+                                <select value={typeInput} onChange={(e)=>{setTypeInput(e.target.value)}}>
+                                    <option value="Dentist">Dentist</option>
+                                    <option value="Receptionist">Receptionist</option>
+                                    <option value="Surgeon">Surgeon</option>
+                                    <option value="Admin">Admin</option>
                                     <option value="Deleted">Deleted</option>
-                                    <option value="-Select Status-">-Select Status-</option>
+                                    <option value="-Select Status-">-Select Type-</option>
                                 </select>
                             </div>
                             <div className='details-details-modal-body-gender'>
@@ -75,18 +80,18 @@ const PatientDetails = ({
 
                     </div>
                     <div className='details-details-modal-body-button'>                    
-                        {/* {patientId? (<input type="submit" onClick={updatePatient} value='Update' className='percent-40'/>):
-                        (<input type="submit" onClick={addPatient} value='Add' className='percent-40'/>)}   */}
-                        <button onClick={patientId? updatePatient : addPatient}>{patientId? 'Update' : 'Add'}</button>                               
+                        {/* {userId? (<input type="submit" onClick={updateUser} value='Update' className='percent-40'/>):
+                        (<input type="submit" onClick={addUser} value='Add' className='percent-40'/>)}   */}
+                        <button onClick={userId? updateUser : addUser}>{userId? 'Update' : 'Add'}</button>                               
                         <button onClick={()=>{setIsOpen(false); setSelectedDateInput(new Date())}}>Close</button>
                     </div>
                     
                 </div>
             </div>
         </>,
-        document.getElementById('patient-details')
+        document.getElementById('user-details')
         
-    )
-}
+    );
+};
 
-export default PatientDetails
+export default TreatmentDetails;

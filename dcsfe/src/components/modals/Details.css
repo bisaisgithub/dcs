@@ -1,4 +1,4 @@
-.patient-details-container{
+.details-details-container{
     position: fixed;
     top: 0;
     left: 0;
@@ -7,7 +7,7 @@
     background-color: rgba(0,0,0,0.7);
     z-index: 1000;
 }
-.patient-details-modal-container{
+.details-details-modal-container{
     width: 95%;
     /* max-width: 440px; */
     padding: 3px;
@@ -19,12 +19,12 @@
     /* padding: 50px; */
     z-index: 1000;
 }
-.patient-details-modal-title{
+.details-details-modal-title{
     font-size: 16px;
     font-weight: 500;
     position: relative;
 }
-.patient-details-modal-title::before{
+.details-details-modal-title::before{
     content: "";
     position: absolute;
     left: 0;
@@ -34,23 +34,23 @@
     border-radius: 5px;
     background: linear-gradient(135deg, #71b7e6, #9b59b6);
 }
-.patient-details-modal-body{
+.details-details-modal-body{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     margin: 10px 0 5px 0;
 }
-.patient-details-modal-body-input-box{
+.details-details-modal-body-input-box{
     margin-bottom: 7px;
     width: calc(100% / 2 - 20px);
     font-size: 12px;
 }
-.patient-details-modal-body-input-box span{
+.details-details-modal-body-input-box span{
     display: block;
     font-weight: 500;
     margin-bottom: 5px;    
 }
-.patient-details-modal-body-input-box input{
+.details-details-modal-body-input-box input{
     height: 35px;
     width: 100%;
     outline: none;
@@ -61,35 +61,35 @@
     border-bottom-width: 2px;
     transition: all 0.3s ease;
 }
-.patient-details-modal-body-input-box input:focus, input:valid{
+.details-details-modal-body-input-box input:focus, input:valid{
     border-color: #9b59b6;
     font-size: 14px;
 }
-.patient-details-modal-body-gender span{
+.details-details-modal-body-gender span{
     display: block;
     font-weight: 500;
     margin-bottom: 5px; 
 }
-.patient-details-modal-body-input-box-gender{
+.details-details-modal-body-input-box-gender{
     display: flex;
     justify-content: flex-start;
     min-width: 110px;
     font-size: 13px;
 }
-.patient-details-modal-body-status-gender{
+.details-details-modal-body-status-gender{
     width: 100%;
     display: flex;
     justify-content: space-between;
 }
-.patient-details-modal-body-input-box-gender-span-male{
+.details-details-modal-body-input-box-gender-span-male{
     margin-right: 20px;
 }
-.patient-details-modal-body-gender{
+.details-details-modal-body-gender{
     margin-bottom: 7px;
     width: calc(100% / 2 - 20px);
     font-size: 12px;
 }
-.patient-details-modal-body-button button{
+.details-details-modal-body-button button{
     height: 100%;
     width: 40%;
     padding: 10px;
@@ -104,7 +104,7 @@
     background: linear-gradient(
 135deg, #71b7e6, #9b59b6);
 }
-.patient-details-modal-body-button{
+.details-details-modal-body-button{
     display: flex;
     justify-content: space-between;
     padding: 0 10px;

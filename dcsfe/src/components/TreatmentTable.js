@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import UserDetails from './modals/UserDetails.js';
+import TreatmentDetails from './modals/TreatmentDetails.js';
 import './Table.css';
 
 
@@ -173,7 +173,7 @@ const UserTable = () => {
     }
     return (
         <div className='table-table2-container'>
-            <UserDetails
+            <TreatmentDetails
             isOpen={isOpen} setIsOpen={setIsOpen} addUser={addUser}
             updateUser={updateUser} userId={userId} typeInput={typeInput}
             setTypeInput={setTypeInput} genderInput={genderInput} setGenderInput={setGenderInput}
@@ -181,7 +181,7 @@ const UserTable = () => {
             setMobileInput={setMobileInput} emailInput={emailInput} setEmailInput={setEmailInput}
             selectedDateInput={selectedDateInput} setSelectedDateInput={setSelectedDateInput}
             userAge={userAge} passwordInput={passwordInput} setPasswordInput={setPasswordInput}
-            ></UserDetails>
+            ></TreatmentDetails>
             <div className='table-table2-head-container'>
                 <div className='table-table2-head-input'>
                     <div className='table-table2-head-search-container'>

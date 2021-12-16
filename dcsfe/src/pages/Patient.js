@@ -1,10 +1,10 @@
 import React from 'react';
-import './Patient.css';
 import PatientTable2 from '../components/PatientTable2.js';
+import './Page.css';
 
 const Patient = () => {
     return (
-        <div className='patient-container'>
+        <div className='page-container'>
             <PatientTable2 />
         </div>
     )

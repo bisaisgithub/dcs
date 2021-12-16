@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import PatientDetails from './modals/PatientDetails.js';
-import './PatientTable2.css';
+import './Table.css';
 // import DatePicker from 'react-datepicker';
 // import 'react-datepicker/dist/react-datepicker.css';
 
@@ -170,7 +170,7 @@ const PatientTable2 = () => {
         }
     }
     return (
-        <div className='patient-table2-container'>
+        <div className='table-table2-container'>
             <PatientDetails
             isOpen={isOpen} setIsOpen={setIsOpen} addPatient={addPatient}
             updatePatient={updatePatient} patientId={patientId} status_Input={status_Input}
@@ -180,38 +180,38 @@ const PatientTable2 = () => {
             selectedDateInput={selectedDateInput} setSelectedDateInput={setSelectedDateInput}
             patientAge={patientAge}
             ></PatientDetails>
-            <div className='patient-table2-head-container'>
-                <div className='patient-table2-head-input'>
-                    <div className='patient-table2-head-search-container'>
-                        <button className='patient-table2-head-search-button' onClick={getPatients} >Search</button>
-                        <input className='patient-table2-head-search-input' placeholder='Search' value={searchInput} onChange={(e)=>{setSearchInput(e.target.value)}} />
-                        <button className='patient-table2-head-search-clear' onClick={()=>{setSearchInput('')}}>X</button>
+            <div className='table-table2-head-container'>
+                <div className='table-table2-head-input'>
+                    <div className='table-table2-head-search-container'>
+                        <button className='table-table2-head-search-button' onClick={getPatients} >Search</button>
+                        <input className='table-table2-head-search-input' placeholder='Search' value={searchInput} onChange={(e)=>{setSearchInput(e.target.value)}} />
+                        <button className='table-table2-head-search-clear' onClick={()=>{setSearchInput('')}}>X</button>
                     </div>
-                    <div className='patient-table2-head-add-container'>
-                    <button className='patient-table-head-add-button' onClick={()=>newPatient()}>New Patient</button>
+                    <div className='table-table2-head-add-container'>
+                    <button className='table-table-head-add-button' onClick={()=>newPatient()}>New Patient</button>
                 </div>
                 </div>
             </div>
-            <div className='patient-table2-table'>
-                <thead className='patient-table2-table-thead'>
-                    <tr className='patient-table2-table-thead-tr'>
+            <div className='table-table2-table'>
+                <thead className='table-table2-table-thead'>
+                    <tr className='table-table2-table-thead-tr'>
                         <th>No</th>
                         <th>Name</th>
                         <th>Status</th>
                         <th>Options</th>
                     </tr>
                 </thead>
-                <tbody className='patient-table2-table-tbody'>
+                <tbody className='table-table2-table-tbody'>
                     {patientsData && patientsData.map((patient, index)=>{
                         
                         return (
-                            <tr key={index} className='patient-table2-table-tbody-tr'>
+                            <tr key={index} className='table-table2-table-tbody-tr'>
                                <td>{index+1}</td>
                                 <td>{patient.name}</td>
                                 <td>
                                     <button  id={patient.status_=== 'Scheduled'? 'bg-green':'bg-black'}>{patient.status_}</button>
                                 </td>
-                                <td className='patient-table2-table-body-tr-td'>
+                                <td className='table-table2-table-body-tr-td'>
                                     <button onClick={()=>{detailsFunction(patient.id)}}>Details</button>
                                     <button>Treatments</button>
                                 </td>
