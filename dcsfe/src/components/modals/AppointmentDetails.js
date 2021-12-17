@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './Details.css';
-// import DatePicker from 'react-datepicker';
+import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import setHours from 'date-fns/setHours';
+import setMinutes from 'date-fns/setMinutes';
 
 const AppointmentDetails = ({
     isOpen, setIsOpen, addUser, updateUser,userId,
@@ -10,7 +12,8 @@ const AppointmentDetails = ({
     nameInput,setNameInput,mobileInput,setMobileInput,emailInput,
     setEmailInput,selectedDateInput,setSelectedDateInput,userAge,
     passwordInput,setPasswordInput,patientsData, setAppointmentPatientId, appointmentPatientId,
-    usersData, appointmentDoctorId, setAppointmentDoctorId,appointmentDoctorInput,setAppointmentDoctorInput
+    usersData, appointmentDoctorId, setAppointmentDoctorId,appointmentDoctorInput,setAppointmentDoctorInput,
+    startTime,setStartTime,
     }) => {
     if (!isOpen) {
         return null;
@@ -18,22 +21,17 @@ const AppointmentDetails = ({
     
     const setAppointmentPatientIdFunction = (name)=>{
          patientsData.map((patient)=>{
-            // console.log(patient.name,'=', appointmentPatientInput)
             if (patient.name === name) {
                 setAppointmentPatientId(patient.id);
             }
             return null;
 
         });
-        setAppointmentPatientInput(name)
-        
-        console.log('getPatientId', appointmentPatientId);
-        // console.log('appointmentPatientInput', appointmentPatientInput);
+        setAppointmentPatientInput(name);
     }
 
     const setAppointmentDoctorIdFunction = (name)=>{
             usersData.map((user)=>{
-            // console.log(patient.name,'=', appointmentPatientInput)
             if (user.name === name) {
                setAppointmentDoctorId(user.id);
             }
@@ -41,11 +39,7 @@ const AppointmentDetails = ({
 
         });
         setAppointmentDoctorInput(name)
-        console.log('getPatientId', appointmentDoctorId);
-        // console.log('appointmentPatientInput', appointmentPatientInput);
     }
-
-
     return ReactDOM.createPortal(
         <>
             <div className='details-details-container'>
@@ -75,11 +69,40 @@ const AppointmentDetails = ({
                                 <option value="-Select Doctor-">-Select Doctor-</option>
                             </select>       
                         </div>
-                        <p>appointmentPatientInput: {appointmentPatientInput}</p>
+                        <div className='details-details-modal-body-input-box'>
+                            <span>Date of Birth</span>
+                            <DatePicker 
+                            maxDate={new Date()} 
+                            yearDropdownItemNumber={90} 
+                            showYearDropdown 
+                            scrollableYearDropdown={true} 
+                            dateFormat='yyyy/MM/dd' 
+                            className='date-picker' 
+                            placeholder="Enter Date of Birth" 
+                            selected={selectedDateInput} 
+                            onChange={date=>setSelectedDateInput(date)} />
+                        </div>
+                        <div className='details-details-modal-body-input-box'>
+                            <span>Start Time</span>
+                            <DatePicker
+                                selected={startTime}
+                                onChange={(date) => setStartTime(date)}
+                                showTimeSelect
+                                showTimeSelectOnly
+                                timeIntervals={15}
+                                minTime={setHours(setMinutes(new Date(), 0), 8)}
+                                maxTime={setHours(setMinutes(new Date(), 0), 17)}
+                                placeholderText="Select Start Time"
+                                timeCaption="Time"
+                                dateFormat="h:mm aa"
+                            />
+                        </div>
+                        
+                        {/* <p>appointmentPatientInput: {appointmentPatientInput}</p>
                         <p>appointmentPatientId: {appointmentPatientId}</p>
                         <p>appointmentDoctorInput: {appointmentDoctorInput}</p>
-                        <p>appointmentDoctorId: {appointmentDoctorId}</p>
-                     
+                        <p>appointmentDoctorId: {appointmentDoctorId}</p> */}
+
    
                         {/* <div className='details-details-modal-body-input-box'>
                             <span>Date of Birth</span>

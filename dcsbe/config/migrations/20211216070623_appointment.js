@@ -4,8 +4,9 @@ exports.up = function(knex) {
         table.string('id').notNullable().primary();
         table.string('patient_id').notNullable();
         table.string('doctor_id').notNullable();
-        table.date('start').notNullable();
-        table.date('end').notNullable();
+        table.date('date').notNullable();
+        table.datetime('start').notNullable();
+        table.datetime('end').notNullable();
         table.string('Treatment').notNullable();
         table.string('type').notNullable();        
         table.timestamps(true, true);
