@@ -8,12 +8,16 @@ const AppointmentTable = () => {
     const [selectedDateInput, setSelectedDateInput] = useState(new Date());
     const [isOpen, setIsOpen] = useState(false);
     const [usersData, setUsersData] = useState([]);
+    const [patientsData, setPatientsData] = useState([]);
     const [nameInput, setNameInput] = useState('');
     const [mobileInput, setMobileInput] = useState('');
     const [genderInput, setGenderInput] = useState('');
     const [emailInput, setEmailInput] = useState('');
     const [userId, setUserId] = useState("");
-    const [typeInput, setTypeInput] =useState('-Select Status-');
+    const [appointmentPatientInput, setAppointmentPatientInput] =useState('-Select Patient-');
+    const [appointmentPatientId, setAppointmentPatientId] =useState('');
+    const [appointmentDoctorInput, setAppointmentDoctorInput] =useState('-Select Doctor-');
+    const [appointmentDoctorId, setAppointmentDoctorId] =useState('');
     const [searchNameInput, setSearchNameInput] = useState('');
     const [userAge, setUserAge] = useState('');
     const [passwordInput, setPasswordInput] = useState('');
@@ -23,6 +27,7 @@ const AppointmentTable = () => {
         getUsers(); 
     
     }, []);
+    
     const addUser = async ()=>{
         setIsOpen(true);
         function formatDate(date) {
@@ -39,7 +44,7 @@ const AppointmentTable = () => {
         let date = formatDate(selectedDateInput);
         // console.log('date: ', date);
         // console.log('addUser called');
-        if (!nameInput || !mobileInput || !genderInput || !selectedDateInput || !emailInput || !passwordInput || typeInput === '-Select Status-') {
+        if (!nameInput || !mobileInput || !genderInput || !selectedDateInput || !emailInput || !passwordInput || appointmentPatientInput === '-Select Status-') {
             alert('Empty field/s')
         }else{
             const response = await axios.post("http://172.16.0.101:3001/user", {
@@ -48,7 +53,7 @@ const AppointmentTable = () => {
             gender: genderInput,
             dob: date,
             email: emailInput,
-            type: typeInput,
+            type: appointmentPatientInput,
             password: passwordInput,
         });
         // console.log('add user response.data', response.data)
@@ -68,6 +73,33 @@ const AppointmentTable = () => {
         }
         
     }
+
+    // const getPatients = async (data)=>{
+        const getPatients = async ()=>{
+
+        // if (data) {
+        //     const response = await axios.post(`http://172.16.0.101:3001/patients`, data);
+  
+        // if (response.data) {
+        //     // console.log('response data',response.data)
+        //     setPatientsData(response.data);
+        // }
+        // } else {
+        //     const response = await axios.get(`http://172.16.0.101:3001/patients`);
+  
+        //     if (response.data) {
+        //         // console.log('response data',response.data)
+        //         setPatientsData(response.data);
+        //     }
+        // }
+            const response = await axios.get(`http://172.16.0.101:3001/patients`);
+  
+            if (response.data) {
+                // console.log('response data',response.data)
+                setPatientsData(response.data);
+            }
+        
+    };
     
     const getUsers = async (data)=>{
         
@@ -134,15 +166,17 @@ const AppointmentTable = () => {
         }
         
     };
-    const newPatient = ()=>{
-        setUserId(null);
-        setSelectedDateInput(new Date());
-        setNameInput('');
-        setMobileInput('');
-        setEmailInput('');
-        setGenderInput('');
-        setTypeInput('-Select Status-');
-        // console.log('clearing input name', nameInput);
+    const newAppointment = ()=>{
+        getPatients();
+        getUsers();
+        // setUserId(null);
+        // setSelectedDateInput(new Date());
+        // setNameInput('');
+        // setMobileInput('');
+        // setEmailInput('');
+        // setGenderInput('');
+        // setAppointmentPatientInput('-Select Status-');
+        // // console.log('clearing input name', nameInput);
         setIsOpen(true);
     };
     const setUserAgeFunction = (patientDOB)=>{
@@ -168,7 +202,7 @@ const AppointmentTable = () => {
             setEmailInput(responsePatient.data[0].email);
             // setPasswordInput(responsePatient.data[0].input);
             setGenderInput(responsePatient.data[0].gender);
-            setTypeInput(responsePatient.data[0].type);
+            setAppointmentPatientInput(responsePatient.data[0].type);
             setUserId(responsePatient.data[0].id);
             setUserAgeFunction(responsePatient.data[0].dob);
             // console.log('patienId after setUserId', userId);
@@ -188,37 +222,39 @@ const AppointmentTable = () => {
         <div className='table-table2-container'>
             <AppointmentDetails
             isOpen={isOpen} setIsOpen={setIsOpen} addUser={addUser}
-            updateUser={updateUser} userId={userId} typeInput={typeInput}
-            setTypeInput={setTypeInput} genderInput={genderInput} setGenderInput={setGenderInput}
+            updateUser={updateUser} userId={userId} appointmentPatientInput={appointmentPatientInput}
+            setAppointmentPatientInput={setAppointmentPatientInput} genderInput={genderInput} setGenderInput={setGenderInput}
             nameInput={nameInput} setNameInput={setNameInput} mobileInput={mobileInput}
             setMobileInput={setMobileInput} emailInput={emailInput} setEmailInput={setEmailInput}
             selectedDateInput={selectedDateInput} setSelectedDateInput={setSelectedDateInput}
             userAge={userAge} passwordInput={passwordInput} setPasswordInput={setPasswordInput}
+            patientsData={patientsData} appointmentPatientId={appointmentPatientId} setAppointmentPatientId={setAppointmentPatientId}
+            usersData={usersData} appointmentDoctorInput={appointmentDoctorInput} appointmentDoctorId={appointmentDoctorId}
+            setAppointmentDoctorInput={setAppointmentDoctorInput} setAppointmentDoctorId={setAppointmentDoctorId}
             ></AppointmentDetails>
+            
             <div className='table-table2-head-container'>
                 <div className='table-table2-head-input'>
-                    <div className='table-table2-head-search-container'>
-                        {/* <button className='table-table2-head-search-button' onClick={getUsers} >Search</button> */}
-                        {/* <input className='table-table2-head-search-input' placeholder='Search' value={searchNameInput} onChange={(e)=>{setSearchNameInput(e.target.value)}} /> */}
-                        {/* <button className='table-table2-head-search-clear' onClick={()=>{setSearchNameInput('')}}>X</button> */}
+                    {/* <div className='table-table2-head-search-container'>
+                        <button className='table-table2-head-search-button' onClick={getUsers} >Search</button>
+                        <input className='table-table2-head-search-input' placeholder='Search' value={searchNameInput} onChange={(e)=>{setSearchNameInput(e.target.value)}} />
+                        <button className='table-table2-head-search-clear' onClick={()=>{setSearchNameInput('')}}>X</button>
                     </div>
                     <div className='table-table2-head-add-container'>
-                    {/* <button className='table-table-head-add-button' onClick={()=>newPatient()}>New User</button> */}
-                </div>
+                    <button className='table-table-head-add-button' onClick={()=>newAppointment()}>New User</button>
+                    </div> */}
                 </div>
             </div>
             <div className='table-table2-table'>
                 <thead className='table-table2-table-thead-search2'>
                     <tr className='table-table2-table-thead-tr-search2'>
-                        {/* <th>
-                            <div><button>Find</button></div>
-                        </th> */}
+                      
                         <th><p onClick={()=>{getUsers({name: searchNameInput, type: searchTypeInput})}}>Find</p></th>
                         {/* <th><input value='Find' onClick={()=>{getUsers()}} /></th> */}
                         <th><input placeholder='Name' value={searchNameInput} onChange={(e)=>{setSearchNameInput(e.target.value)}}/><button onClick={()=>{setSearchNameInput('');setSearchTypeInput('')}}>X</button></th>
                         <th><input placeholder='Type' value={searchTypeInput} onChange={(e)=>{setSearchTypeInput(e.target.value)}}/></th>
-                        <th><p onClick={()=>newPatient()}>New</p></th>
-                        {/* <th><input value='New' onClick={()=>newPatient()}/></th> */}
+                        <th><p onClick={()=>newAppointment()}>New</p></th>
+                        
                     </tr>
                 </thead>
                 <thead className='table-table2-table-thead'>

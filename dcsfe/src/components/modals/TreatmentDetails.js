@@ -1,16 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './Details.css';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+// import DatePicker from 'react-datepicker';
+// import 'react-datepicker/dist/react-datepicker.css';
 
-const TreatmentDetails = ({
+const TreatmentDetails = (
+    {
     isOpen, setIsOpen, addUser, updateUser,userId,
     typeInput,setTypeInput,genderInput,setGenderInput,
     nameInput,setNameInput,mobileInput,setMobileInput,emailInput,
     setEmailInput,selectedDateInput,setSelectedDateInput,userAge,
     passwordInput,setPasswordInput,
-    }) => {
+    }
+    ) => {
     if (!isOpen) {
         return null;
     }
@@ -27,7 +29,7 @@ const TreatmentDetails = ({
     return ReactDOM.createPortal(
         <>
             <div className='details-details-container'>
-                <div className='details-details-modal-container'>
+                {/* <div className='details-details-modal-container'>
                     <div className='details-details-modal-title'>{userId? `${nameInput} Details --  Age: ${userAge}`: 'User Details'}</div>
                     <div className='details-details-modal-body'>
                         <div className='details-details-modal-body-input-box'>
@@ -80,13 +82,11 @@ const TreatmentDetails = ({
 
                     </div>
                     <div className='details-details-modal-body-button'>                    
-                        {/* {userId? (<input type="submit" onClick={updateUser} value='Update' className='percent-40'/>):
-                        (<input type="submit" onClick={addUser} value='Add' className='percent-40'/>)}   */}
                         <button onClick={userId? updateUser : addUser}>{userId? 'Update' : 'Add'}</button>                               
                         <button onClick={()=>{setIsOpen(false); setSelectedDateInput(new Date())}}>Close</button>
                     </div>
                     
-                </div>
+                </div> */}
             </div>
         </>,
         document.getElementById('user-details')

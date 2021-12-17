@@ -1,36 +1,87 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './Details.css';
-import DatePicker from 'react-datepicker';
+// import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const AppointmentDetails = ({
     isOpen, setIsOpen, addUser, updateUser,userId,
-    typeInput,setTypeInput,genderInput,setGenderInput,
+    appointmentPatientInput,setAppointmentPatientInput,genderInput,setGenderInput,
     nameInput,setNameInput,mobileInput,setMobileInput,emailInput,
     setEmailInput,selectedDateInput,setSelectedDateInput,userAge,
-    passwordInput,setPasswordInput,
+    passwordInput,setPasswordInput,patientsData, setAppointmentPatientId, appointmentPatientId,
+    usersData, appointmentDoctorId, setAppointmentDoctorId,appointmentDoctorInput,setAppointmentDoctorInput
     }) => {
     if (!isOpen) {
         return null;
     }
-    // const [selectedDateInput, setSelectedDateInput] = useState(new Date());
-    // const [isOpen, setIsOpen] = useState(false);
-    // const [patientsData, setPatientsData] = useState([]);
-    // const [nameInput, setNameInput] = useState('');
-    // const [mobileInput, setMobileInput] = useState('');
-    // const [genderInput, setGenderInput] = useState('');
-    // const [emailInput, setEmailInput] = useState('');
-    // const [userId, setPatientId] = useState("");
-    // const [typeInput, setTypeInput] =useState('-Select Status-');
-    // const [searchInput, setSearchInput] = useState('');
+    
+    const setAppointmentPatientIdFunction = (name)=>{
+         patientsData.map((patient)=>{
+            // console.log(patient.name,'=', appointmentPatientInput)
+            if (patient.name === name) {
+                setAppointmentPatientId(patient.id);
+            }
+            return null;
+
+        });
+        setAppointmentPatientInput(name)
+        
+        console.log('getPatientId', appointmentPatientId);
+        // console.log('appointmentPatientInput', appointmentPatientInput);
+    }
+
+    const setAppointmentDoctorIdFunction = (name)=>{
+            usersData.map((user)=>{
+            // console.log(patient.name,'=', appointmentPatientInput)
+            if (user.name === name) {
+               setAppointmentDoctorId(user.id);
+            }
+            return null;
+
+        });
+        setAppointmentDoctorInput(name)
+        console.log('getPatientId', appointmentDoctorId);
+        // console.log('appointmentPatientInput', appointmentPatientInput);
+    }
+
+
     return ReactDOM.createPortal(
         <>
             <div className='details-details-container'>
+                {/* {console.log('patientsName from jsx', patientsData[0].name)} */}
                 <div className='details-details-modal-container'>
-                    <div className='details-details-modal-title'>{userId? `${nameInput} Details --  Age: ${userAge}`: 'User Details'}</div>
+                    {/* <div className='details-details-modal-title'>{userId? `${nameInput} Details --  Age: ${userAge}`: 'User Details'}</div> */}
                     <div className='details-details-modal-body'>
-                        <div className='details-details-modal-body-input-box'>
+                        <div className="details-details-modal-body-input-box">
+                            <span>Patient</span>
+                            <select value={appointmentPatientInput} onChange={(e)=>{setAppointmentPatientIdFunction(e.target.value)}}>
+                                {patientsData && patientsData.map((patient, index)=>{
+                                    return (
+                                        <option key={index} value={patient.name}>{patient.name}</option>
+                                    );
+                                })}
+                                <option value="-Select Patient-">-Select Patient-</option>
+                            </select>       
+                        </div>
+                        <div className="details-details-modal-body-input-box">
+                            <span>Doctor</span>
+                            <select value={appointmentDoctorInput} onChange={(e)=>{setAppointmentDoctorIdFunction(e.target.value)}}>
+                                {patientsData && usersData.map((user, index)=>{
+                                    return (
+                                        <option key={index} value={user.name}>{user.name}</option>
+                                    );
+                                })}
+                                <option value="-Select Doctor-">-Select Doctor-</option>
+                            </select>       
+                        </div>
+                        <p>appointmentPatientInput: {appointmentPatientInput}</p>
+                        <p>appointmentPatientId: {appointmentPatientId}</p>
+                        <p>appointmentDoctorInput: {appointmentDoctorInput}</p>
+                        <p>appointmentDoctorId: {appointmentDoctorId}</p>
+                     
+   
+                        {/* <div className='details-details-modal-body-input-box'>
                             <span>Date of Birth</span>
                             <DatePicker maxDate={new Date()} yearDropdownItemNumber={90} showYearDropdown scrollableYearDropdown={true} dateFormat='yyyy/MM/dd' className='date-picker' placeholder="Enter Date of Birth" selected={selectedDateInput} onChange={date=>setSelectedDateInput(date)} />
                         </div>
@@ -53,14 +104,14 @@ const AppointmentDetails = ({
                         <div className="details-details-modal-body-status-gender">
                             <div className="details-details-modal-body-input-box">
                                 <span>Type</span>
-                                <select value={typeInput} onChange={(e)=>{setTypeInput(e.target.value)}}>
-                                    <option value="Dentist">Dentist</option>
-                                    <option value="Receptionist">Receptionist</option>
-                                    <option value="Surgeon">Surgeon</option>
-                                    <option value="Admin">Admin</option>
-                                    <option value="Deleted">Deleted</option>
+                                <select value={appointmentPatientInput} onChange={(e)=>{setAppointmentPatientIdFunction(e.target.value)}}>
+                                    {patientsData && patientsData.map((patient, index)=>{
+                                        return (
+                                            <option key={index} value={patient.name}>{patient.name}</option>
+                                        );
+                                    })}
                                     <option value="-Select Status-">-Select Type-</option>
-                                </select>
+                                </select>       
                             </div>
                             <div className='details-details-modal-body-gender'>
                                 <span>Gender</span>
@@ -75,7 +126,7 @@ const AppointmentDetails = ({
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         
 
                     </div>
@@ -85,6 +136,8 @@ const AppointmentDetails = ({
                         <button onClick={userId? updateUser : addUser}>{userId? 'Update' : 'Add'}</button>                               
                         <button onClick={()=>{setIsOpen(false); setSelectedDateInput(new Date())}}>Close</button>
                     </div>
+               
+
                     
                 </div>
             </div>

@@ -52,16 +52,21 @@ export const getUsersBySearch = async (req, res)=>{
 
 
 export const getUsersBySearch2 = async (req, res)=>{
-    // const singleUser = users.filter((user)=>user.id === req.params.id);
+    try {
+       // const singleUser = users.filter((user)=>user.id === req.params.id);
     const singlePatientReponse = await db('user').where('name', 'like', `%${req.body.name}%`)
-    .where('type', 'like', `%${req.body.type}%`).orderBy('name', 'asc');
+    .where('type', 'like', `%${req.body.type}%`).orderBy([{ column: 'name' }, { column: 'type', order: 'asc' }]);
     // console.log('req.body', req.body)
-    res.send(singlePatientReponse);
+    res.send(singlePatientReponse); 
+    } catch (error) {
+        console.log('error getUsersBySearch2', error);
+    }
+    
 }
 
 export const getUsers = async (req, res)=>{
     
-    const response = await db('user').orderBy('name', 'asc');
+    const response = await db('user').orderBy([{ column: 'name' }, { column: 'type', order: 'asc' }]);
     // console.log('response gerusers: ', response);
     
     // res.send(response);

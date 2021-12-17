@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
 import TreatmentDetails from './modals/TreatmentDetails.js';
 import './Table.css';
@@ -17,11 +17,11 @@ const UserTable = () => {
     const [searchInput, setSearchInput] = useState('');
     const [userAge, setUserAge] = useState('');
     const [passwordInput, setPasswordInput] = useState('');
-    useEffect(()=>{
+    // useEffect(()=>{
         
-        getUsers(); 
+    //     getUsers(); 
     
-    }, []);
+    // }, []);
     const addUser = async ()=>{
         setIsOpen(true);
         function formatDate(date) {
