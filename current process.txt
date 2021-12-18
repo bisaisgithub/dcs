@@ -1,0 +1,32 @@
+
+appointment chat
+appointment next visit
+
+a day chat or txt reminding appointment.
+
+receive patient
+guard receive
+disinfect bibigay dental slip
+
+isusubmit reception
+verify
+fill form
+	dental slip
+
+waiting area..
+
+doctor will fill doc, pipirma
+payment..
+
+
+
+follow up.
+cha
+
+
+background: #e9115bf0;
+    color: white;
+    font-weight: 600;
+    /* padding: 0 10px; */
+    min-width: 50px;
+    line-height: 2;

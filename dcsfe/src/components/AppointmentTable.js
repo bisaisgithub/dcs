@@ -27,10 +27,10 @@ const AppointmentTable = () => {
     const [procedureFields, setProcedureFields] = useState([
         {procedure: '', durationMinutes: ''},
     ]);
-    // const [template, template] = useState('');
-    // const [hours, setHours] = useState(null);
-    // const [minutes, setMinutes] = useState(null);
     const [startTime, setStartTime] = useState(null);
+    const [endtTime, setEndTime] = useState(null);
+    const [statusInput, setStatusInput] = useState('');
+    // const [template, template] = useState('');
     useEffect(()=>{
         
         getUsers(); 
@@ -253,7 +253,8 @@ const AppointmentTable = () => {
             appointmentProcedureInput={appointmentProcedureInput} setAppointmentProcedureInput={setAppointmentProcedureInput}
             appointmentDurationMinutesInput={appointmentDurationMinutesInput} setAppointmentDurationMinutesInput={setAppointmentDurationMinutesInput}
             procedureFields={procedureFields} setProcedureFields={setProcedureFields}
-            
+            endtTime={endtTime} setEndTime={setEndTime} statusInput={statusInput} setStatusInput={setStatusInput}
+
             // setHours={setHours} setMinutes={setMinutes}
             ></AppointmentDetails>
             

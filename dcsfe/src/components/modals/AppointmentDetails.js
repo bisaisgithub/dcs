@@ -16,7 +16,7 @@ const AppointmentDetails = ({
     startTime,setStartTime,
     appointmentProcedureInput,setAppointmentProcedureInput,
     appointmentDurationMinutesInput,setAppointmentDurationMinutesInput,
-    procedureFields, setProcedureFields
+    procedureFields, setProcedureFields,endtTime,setEndTime,statusInput,setStatusInput
     }) => {
     if (!isOpen) {
         return null;
@@ -35,6 +35,8 @@ const AppointmentDetails = ({
         const values = [...procedureFields];
         values[index][event.target.name] = event.target.value;
         setProcedureFields(values);
+
+
     }
 
     const addAppointmentFunction = ()=>{
@@ -68,9 +70,7 @@ const AppointmentDetails = ({
     return ReactDOM.createPortal(
         <>
             <div className='details-details-container'>
-                {/* {console.log('patientsName from jsx', patientsData[0].name)} */}
                 <div className='details-details-modal-container'>
-                    {/* <div className='details-details-modal-title'>{userId? `${nameInput} Details --  Age: ${userAge}`: 'User Details'}</div> */}
                     <div className='details-details-modal-body'>
                         <div className="details-details-modal-body-input-box">
                             <span>Patient</span>
@@ -122,67 +122,8 @@ const AppointmentDetails = ({
                                 dateFormat="h:mm aa"
                             />
                         </div>
-                        
-                        
-                        
-                        {/* <p>appointmentPatientInput: {appointmentPatientInput}</p>
-                        <p>appointmentPatientId: {appointmentPatientId}</p>
-                        <p>appointmentDoctorInput: {appointmentDoctorInput}</p>
-                        <p>appointmentDoctorId: {appointmentDoctorId}</p> */}
-
-   
-                        {/* <div className='details-details-modal-body-input-box'>
-                            <span>Date of Birth</span>
-                            <DatePicker maxDate={new Date()} yearDropdownItemNumber={90} showYearDropdown scrollableYearDropdown={true} dateFormat='yyyy/MM/dd' className='date-picker' placeholder="Enter Date of Birth" selected={selectedDateInput} onChange={date=>setSelectedDateInput(date)} />
-                        </div>
-                        <div className='details-details-modal-body-input-box'>
-                            <span>Full Name</span>
-                            <input type="text" placeholder="Enter name" value={nameInput} required onChange={e=>setNameInput(e.target.value)} />
-                        </div>
-                        <div className="details-details-modal-body-input-box">
-                            <span>Mobile</span>
-                            <input type="text" placeholder="Enter mobile" value={mobileInput} required onChange={e=>setMobileInput(e.target.value)}/>
-                        </div>                       
-                        <div className="details-details-modal-body-input-box">
-                            <span>Email</span>
-                            <input type="text" placeholder="Enter email" value={emailInput} required onChange={e=>setEmailInput(e.target.value)}/>
-                        </div>
-                        <div className="details-details-modal-body-input-box">
-                            <span>Password</span>
-                            <input type="password" placeholder="Enter password" value={passwordInput} required onChange={e=>setPasswordInput(e.target.value)}/>
-                        </div>
-                        <div className="details-details-modal-body-status-gender">
-                            <div className="details-details-modal-body-input-box">
-                                <span>Type</span>
-                                <select value={appointmentPatientInput} onChange={(e)=>{setAppointmentPatientIdFunction(e.target.value)}}>
-                                    {patientsData && patientsData.map((patient, index)=>{
-                                        return (
-                                            <option key={index} value={patient.name}>{patient.name}</option>
-                                        );
-                                    })}
-                                    <option value="-Select Status-">-Select Type-</option>
-                                </select>       
-                            </div>
-                            <div className='details-details-modal-body-gender'>
-                                <span>Gender</span>
-                                <div className='details-details-modal-body-input-box-gender'>
-                                    <div>
-                                        <input type="radio" name="gender" checked={genderInput==="Male"? true: false} id="dot-1" value="Male" onChange={e=>setGenderInput(e.target.value)}/>
-                                        <span className='details-details-modal-body-input-box-gender-span-male'>Male</span>
-                                    </div>
-                                    <div>
-                                        <input type="radio" name="gender" checked={genderInput==="Female"? true: false} id="dot-2" value="Female" onChange={e=>setGenderInput(e.target.value)}/>
-                                        <span>Female</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> */}
-                        
-
                     </div>
                     {
-                        
-                        
                         procedureFields.map((procedureField, index)=>{
                             return (
                                 
@@ -209,9 +150,26 @@ const AppointmentDetails = ({
                             );
                         })
                     }
+                    
                     <div className='details-details-modal-body-button-procedure'>                                               
                         <button className='add-remove-button' onClick={()=>{addProcedureFieldFunction()}}>+</button>
                     </div>
+                    <div className='display-flex'>
+                    <div className="details-details-modal-body-input-box">
+                        <span>Status</span>
+                        <select name="status" value={statusInput} onChange={(e)=>{setStatusInput(e.target.value)}}>
+                            <option value="-Select Status-">-Select Status-</option>
+                            <option value="On Schedule">On Schedule</option>
+                        </select>       
+                    </div>
+                    <div className="details-details-modal-body-input-box">
+                        <span>End Time</span>
+                        <div className='duration-minutes-container'>
+                            <input value={endtTime} disabled/>
+                        </div> 
+                    </div>
+                    </div>
+                   
                     <div className='details-details-modal-body-button'>                    
                         {/* {userId? (<input type="submit" onClick={updateUser} value='Update' className='percent-40'/>):
                         (<input type="submit" onClick={addUser} value='Add' className='percent-40'/>)}   */}

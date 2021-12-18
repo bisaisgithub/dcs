@@ -151,6 +151,9 @@
         flex-direction: column;
     }
 }
+.table-table2-table-thead-tr-search2{
+    background-color: #3c3f44;
+}
 /* .table-table2-table-thead-tr th:nth-child(2){
     width: 20%;
 } */

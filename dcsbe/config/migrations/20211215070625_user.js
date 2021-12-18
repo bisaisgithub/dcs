@@ -9,6 +9,7 @@ exports.up = function(knex) {
         table.string('gender').notNullable();
         table.string('type').notNullable();
         table.date('dob').notNullable();
+        table.string('status_').notNullable(); //Active, Deleted
         
         table.timestamps(true, true);
     });

@@ -2,9 +2,9 @@
 exports.up = function(knex) {
     return knex.schema.createTable('appointment', table=>{
         table.string('id').notNullable().primary();
-        table.string('patient_id').notNullable();
-        table.string('doctor_id').notNullable();
-        table.date('date').notNullable();
+        table.string('appointment_id').notNullable();
+        
+    
         table.datetime('start_time').notNullable();
         table.datetime('end_time').notNullable();
         table.string('status_').notNullable(); // On Schedule
