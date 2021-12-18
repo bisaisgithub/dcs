@@ -3,6 +3,8 @@ import AppointmentTable from '../components/AppointmentTable.js';
 import './Page.css';
 
 const Appointment = () => {
+
+    
     return (
         <div className='page-container'>
             <AppointmentTable />

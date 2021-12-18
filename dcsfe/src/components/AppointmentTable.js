@@ -22,23 +22,29 @@ const AppointmentTable = () => {
     const [userAge, setUserAge] = useState('');
     const [passwordInput, setPasswordInput] = useState('');
     const [searchTypeInput, setSearchTypeInput] = useState('');
+    const [appointmentProcedureInput, setAppointmentProcedureInput] = useState('');
+    const [appointmentDurationMinutesInput, setAppointmentDurationMinutesInput] = useState('');
+    const [procedureFields, setProcedureFields] = useState([
+        {procedure: '', durationMinutes: ''},
+    ]);
+    // const [template, template] = useState('');
     // const [hours, setHours] = useState(null);
     // const [minutes, setMinutes] = useState(null);
     const [startTime, setStartTime] = useState(null);
     useEffect(()=>{
         
         getUsers(); 
-        formatDate();
+
     
     }, []);
 
-    const formatDate = ()=>{
-        let d = new Date(2010, 7, 5);
-        let ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
-        let mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
-        let da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
-        console.log(`${da}-${mo}-${ye}`);
-    }
+    // const formatDate2 = ()=>{
+    //     let d = new Date(2010, 7, 5);
+    //     let ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+    //     let mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
+    //     let da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+    //     // console.log(`${da}-${mo}-${ye}`);
+    // }
     
     const addUser = async ()=>{
         setIsOpen(true);
@@ -244,6 +250,10 @@ const AppointmentTable = () => {
             usersData={usersData} appointmentDoctorInput={appointmentDoctorInput} appointmentDoctorId={appointmentDoctorId}
             setAppointmentDoctorInput={setAppointmentDoctorInput} setAppointmentDoctorId={setAppointmentDoctorId}
             startTime={startTime} setStartTime={setStartTime} 
+            appointmentProcedureInput={appointmentProcedureInput} setAppointmentProcedureInput={setAppointmentProcedureInput}
+            appointmentDurationMinutesInput={appointmentDurationMinutesInput} setAppointmentDurationMinutesInput={setAppointmentDurationMinutesInput}
+            procedureFields={procedureFields} setProcedureFields={setProcedureFields}
+            
             // setHours={setHours} setMinutes={setMinutes}
             ></AppointmentDetails>
             

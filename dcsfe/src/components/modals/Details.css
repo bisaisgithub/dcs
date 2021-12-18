@@ -38,10 +38,10 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin: 10px 0 5px 0;
+    margin: 10px -10px 0 -10px;
 }
 .details-details-modal-body-input-box{
-    margin-bottom: 7px;
+    margin: 0 10px 7px 10px;
     width: calc(100% / 2 - 20px);
     font-size: 12px;
 }
@@ -93,9 +93,15 @@
     width: calc(100% / 2 - 20px);
     font-size: 12px;
 }
+.button-w70{
+    width: 70%;
+}
+.button-w20{
+    width: 20%;
+}
 .details-details-modal-body-button button{
     height: 100%;
-    width: 40%;
+    /* width: 40%; */
     padding: 10px;
     border-radius: 5px;
     border: none;
@@ -112,4 +118,22 @@
     display: flex;
     justify-content: space-between;
     padding: 0 10px;
+}
+.details-details-modal-body-button-procedure{
+    display: flex;
+    margin-bottom: 13px;
+}
+.details-details-modal-body-button-procedure button{
+    margin: 0 7px 0px 10px !important;
+    background: linear-gradient(135deg, #71b7e6, #9b59b6);
+}
+.add-remove-button{
+    width: 40px;
+    margin: 0 5px;
+    font-size: 25px;
+    background: linear-gradient(135deg, #71b7e6, #9b59b6);
+}
+.duration-minutes-container{
+    display: flex;
+    flex-direction: row;
 }

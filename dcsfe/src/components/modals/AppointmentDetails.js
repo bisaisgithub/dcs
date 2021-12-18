@@ -14,9 +14,31 @@ const AppointmentDetails = ({
     passwordInput,setPasswordInput,patientsData, setAppointmentPatientId, appointmentPatientId,
     usersData, appointmentDoctorId, setAppointmentDoctorId,appointmentDoctorInput,setAppointmentDoctorInput,
     startTime,setStartTime,
+    appointmentProcedureInput,setAppointmentProcedureInput,
+    appointmentDurationMinutesInput,setAppointmentDurationMinutesInput,
+    procedureFields, setProcedureFields
     }) => {
     if (!isOpen) {
         return null;
+    }
+
+    const addProcedureFieldFunction = ()=>{
+        setProcedureFields([...procedureFields, {procedure: '', durationMinutes: ''}])
+    }
+    const removeProcedureFieldFunction = (index) =>{
+        const values = [...procedureFields];
+        values.splice(index, 1);
+        setProcedureFields(values);
+    }
+
+    const handleChangeInput =(index, event)=>{
+        const values = [...procedureFields];
+        values[index][event.target.name] = event.target.value;
+        setProcedureFields(values);
+    }
+
+    const addAppointmentFunction = ()=>{
+        console.log('procedureFields: ', procedureFields);
     }
     
     const setAppointmentPatientIdFunction = (name)=>{
@@ -70,13 +92,13 @@ const AppointmentDetails = ({
                             </select>       
                         </div>
                         <div className='details-details-modal-body-input-box'>
-                            <span>Date of Birth</span>
+                            <span>Date</span>
                             <DatePicker 
                             maxDate={new Date()} 
                             yearDropdownItemNumber={90} 
                             showYearDropdown 
                             scrollableYearDropdown={true} 
-                            dateFormat='yyyy/MM/dd' 
+                            dateFormat='MMMM d, yyyy' 
                             className='date-picker' 
                             placeholder="Enter Date of Birth" 
                             selected={selectedDateInput} 
@@ -89,14 +111,16 @@ const AppointmentDetails = ({
                                 onChange={(date) => setStartTime(date)}
                                 showTimeSelect
                                 showTimeSelectOnly
-                                timeIntervals={15}
+                                timeIntervals={30}
                                 minTime={setHours(setMinutes(new Date(), 0), 8)}
-                                maxTime={setHours(setMinutes(new Date(), 0), 17)}
+                                maxTime={setHours(setMinutes(new Date(), 30), 18)}
                                 placeholderText="Select Start Time"
                                 timeCaption="Time"
                                 dateFormat="h:mm aa"
                             />
                         </div>
+                        
+                        
                         
                         {/* <p>appointmentPatientInput: {appointmentPatientInput}</p>
                         <p>appointmentPatientId: {appointmentPatientId}</p>
@@ -153,11 +177,44 @@ const AppointmentDetails = ({
                         
 
                     </div>
+                    {
+                        
+                        
+                        procedureFields.map((procedureField, index)=>{
+                            return (
+                                
+                                <div style={{marginTop:'0'}} className='details-details-modal-body' key={index}>
+                                <div className="details-details-modal-body-input-box">
+                                    <span style={index? {display: 'none'}:{}}>Procedure</span>
+                                    <select name="procedure" value={procedureField.procedure} onChange={(event)=>{handleChangeInput(index, event)}}>
+                                        <option value="-Select Procedure-">-Select Procedure-</option>
+                                        <option value="Extraction">Extraction</option>
+                                    </select>       
+                                </div>
+                                <div className="details-details-modal-body-input-box">
+                                    <span style={index? {display: 'none'}:{}}>Duration Minutes</span>
+                                    <div className='duration-minutes-container'>
+                                        <select name="durationMinutes" value={procedureField.durationMinutes} onChange={(event)=>{handleChangeInput(index, event)}}>
+                                            <option value="-Select Minutes-">-Select Minutes-</option>
+                                            <option value="60">60</option>
+                                        </select>
+                                        <button className='add-remove-button' onClick={(index)=>{removeProcedureFieldFunction()}}>-</button>
+                                    </div>
+                                         
+                                </div>
+                            </div>
+                            );
+                        })
+                    }
+                    <div className='details-details-modal-body-button-procedure'>                                               
+                        <button className='add-remove-button' onClick={()=>{addProcedureFieldFunction()}}>+</button>
+                        
+                    </div>
                     <div className='details-details-modal-body-button'>                    
                         {/* {userId? (<input type="submit" onClick={updateUser} value='Update' className='percent-40'/>):
                         (<input type="submit" onClick={addUser} value='Add' className='percent-40'/>)}   */}
-                        <button onClick={userId? updateUser : addUser}>{userId? 'Update' : 'Add'}</button>                               
-                        <button onClick={()=>{setIsOpen(false); setSelectedDateInput(new Date())}}>Close</button>
+                        <button className='button-w70' onClick={()=>{addAppointmentFunction()}}>Add Appointment</button>                               
+                        <button className='button-w20' onClick={()=>{setIsOpen(false); setSelectedDateInput(new Date())}}>Close</button>
                     </div>
                
 
