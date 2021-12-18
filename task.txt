@@ -14,6 +14,8 @@ patient search
 details function
 
 --currently working start--
+addAppointmentFunction
+--currently working end--
 
 creating prescription table in database start--
   id
@@ -23,9 +25,6 @@ creating prescription table in database start--
 creating prescription table in database end--
 
 creating prescription UI
-
---currently working end--
-
 
 creating treatment table in database start--
   patient id

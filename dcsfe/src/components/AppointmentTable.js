@@ -274,7 +274,6 @@ const AppointmentTable = () => {
                     <tr className='table-table2-table-thead-tr-search2'>
                       
                         <th><p onClick={()=>{getUsers({name: searchNameInput, type: searchTypeInput})}}>Find</p></th>
-                        {/* <th><input value='Find' onClick={()=>{getUsers()}} /></th> */}
                         <th><input placeholder='Name' value={searchNameInput} onChange={(e)=>{setSearchNameInput(e.target.value)}}/><button onClick={()=>{setSearchNameInput('');setSearchTypeInput('')}}>X</button></th>
                         <th><input placeholder='Type' value={searchTypeInput} onChange={(e)=>{setSearchTypeInput(e.target.value)}}/></th>
                         <th><p onClick={()=>newAppointment()}>New</p></th>
@@ -302,7 +301,6 @@ const AppointmentTable = () => {
                                 </td>
                                 <td className='table-table2-table-body-tr-td'>
                                     <button onClick={()=>{detailsFunction(user.id)}}>Details</button>
-                                    {/* <button>Treatments</button> */}
                                 </td>
                             </tr>
                         );

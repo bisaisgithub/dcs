@@ -193,16 +193,7 @@ const PatientTable2 = () => {
             patientAge={patientAge}
             ></PatientDetails>
             <div className='table-table2-head-container'>
-                {/* <div className='table-table2-head-input'>
-                    <div className='table-table2-head-search-container'>
-                        <button className='table-table2-head-search-button' onClick={getPatients} >Search</button>
-                        <input className='table-table2-head-search-input' placeholder='Search' value={searchInput} onChange={(e)=>{setSearchInput(e.target.value)}} />
-                        <button className='table-table2-head-search-clear' onClick={()=>{setSearchInput('')}}>X</button>
-                    </div>
-                    <div className='table-table2-head-add-container'>
-                    <button className='table-table-head-add-button' onClick={()=>newPatient()}>New Patient</button>
-                </div>
-                </div> */}
+                
             </div>
             <div className='table-table2-table'>
                 <thead className='table-table2-table-thead-search2'>

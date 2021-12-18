@@ -13,11 +13,12 @@ const UserTable = () => {
     const [genderInput, setGenderInput] = useState('');
     const [emailInput, setEmailInput] = useState('');
     const [userId, setUserId] = useState("");
-    const [typeInput, setTypeInput] =useState('-Select Status-');
+    const [typeInput, setTypeInput] =useState("-Select Type-");
     const [searchNameInput, setSearchNameInput] = useState('');
     const [userAge, setUserAge] = useState('');
     const [passwordInput, setPasswordInput] = useState('');
     const [searchTypeInput, setSearchTypeInput] = useState('');
+    const [statusInput, setStatusInput] = useState('-Select Status-');
     useEffect(()=>{
         
         getUsers(); 
@@ -142,7 +143,8 @@ const UserTable = () => {
         setEmailInput('');
         setGenderInput('');
         setPasswordInput('');
-        setTypeInput('-Select Status-');
+        setTypeInput('-Select Type-');
+        setStatusInput('-Select Status-');
         // console.log('clearing input name', nameInput);
         setIsOpen(true);
     };
@@ -195,7 +197,8 @@ const UserTable = () => {
             setMobileInput={setMobileInput} emailInput={emailInput} setEmailInput={setEmailInput}
             selectedDateInput={selectedDateInput} setSelectedDateInput={setSelectedDateInput}
             userAge={userAge} passwordInput={passwordInput} setPasswordInput={setPasswordInput}
-            
+            statusInput={statusInput} setStatusInput={setStatusInput}
+
             ></UserDetails>
             <div className='table-table2-head-container'>
                 <div className='table-table2-head-input'>

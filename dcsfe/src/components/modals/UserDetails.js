@@ -9,7 +9,7 @@ const UserDetails = ({
     typeInput,setTypeInput,genderInput,setGenderInput,
     nameInput,setNameInput,mobileInput,setMobileInput,emailInput,
     setEmailInput,selectedDateInput,setSelectedDateInput,userAge,
-    passwordInput,setPasswordInput,
+    passwordInput,setPasswordInput,statusInput,setStatusInput
     }) => {
     if (!isOpen) {
         return null;
@@ -50,16 +50,27 @@ const UserDetails = ({
                             <span>Password</span>
                             <input type="password" placeholder="Enter password" value={passwordInput} required onChange={e=>setPasswordInput(e.target.value)}/>
                         </div>
+                        <div className="details-details-modal-body-input-box">
+                                <span>Status</span>
+                                {'statusType: ' + statusInput}
+                                <select value={statusInput} onChange={(e)=>{setStatusInput(e.target.value)}}>
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                    <option value="Deleted">Deleted</option>
+                                    <option value="-Select Status-">-Select Status-</option>
+                                </select>
+                            </div>
                         <div className="details-details-modal-body-status-gender">
                             <div className="details-details-modal-body-input-box">
                                 <span>Type</span>
+                                {'typeInput: '+typeInput}
                                 <select value={typeInput} onChange={(e)=>{setTypeInput(e.target.value)}}>
                                     <option value="Dentist">Dentist</option>
                                     <option value="Receptionist">Receptionist</option>
                                     <option value="Surgeon">Surgeon</option>
                                     <option value="Admin">Admin</option>
                                     <option value="Deleted">Deleted</option>
-                                    <option value="-Select Status-">-Select Type-</option>
+                                    <option value="-Select Type-">-Select Type-</option>
                                 </select>
                             </div>
                             <div className='details-details-modal-body-gender'>

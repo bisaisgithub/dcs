@@ -38,7 +38,10 @@ const AppointmentDetails = ({
     }
 
     const addAppointmentFunction = ()=>{
-        console.log('procedureFields: ', procedureFields);
+        // insert appointment
+
+        //insert procedures
+        // console.log('procedureFields: ', procedureFields);
     }
     
     const setAppointmentPatientIdFunction = (name)=>{
@@ -208,7 +211,6 @@ const AppointmentDetails = ({
                     }
                     <div className='details-details-modal-body-button-procedure'>                                               
                         <button className='add-remove-button' onClick={()=>{addProcedureFieldFunction()}}>+</button>
-                        
                     </div>
                     <div className='details-details-modal-body-button'>                    
                         {/* {userId? (<input type="submit" onClick={updateUser} value='Update' className='percent-40'/>):
@@ -216,9 +218,6 @@ const AppointmentDetails = ({
                         <button className='button-w70' onClick={()=>{addAppointmentFunction()}}>Add Appointment</button>                               
                         <button className='button-w20' onClick={()=>{setIsOpen(false); setSelectedDateInput(new Date())}}>Close</button>
                     </div>
-               
-
-                    
                 </div>
             </div>
         </>,

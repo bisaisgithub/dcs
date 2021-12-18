@@ -89,7 +89,7 @@ const TreatmentDetails = (
                 </div> */}
             </div>
         </>,
-        document.getElementById('user-details')
+        document.getElementById('treatment-details')
         
     );
 };
