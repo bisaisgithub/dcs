@@ -16,7 +16,9 @@ const AppointmentDetails = ({
     startTime,setStartTime,
     appointmentProcedureInput,setAppointmentProcedureInput,
     appointmentDurationMinutesInput,setAppointmentDurationMinutesInput,
-    procedureFields, setProcedureFields,endtTime,setEndTime,statusInput,setStatusInput
+    procedureFields, setProcedureFields,endtTime,setEndTime,statusInput,setStatusInput,
+    totalDurationMinutes,setTotalDurationMinutes
+
     }) => {
     if (!isOpen) {
         return null;
@@ -25,10 +27,17 @@ const AppointmentDetails = ({
     const addProcedureFieldFunction = ()=>{
         setProcedureFields([...procedureFields, {procedure: '', durationMinutes: ''}])
     }
-    const removeProcedureFieldFunction = (index) =>{
+    const removeProcedureFieldFunction = (index, duration) =>{
         const values = [...procedureFields];
         values.splice(index, 1);
         setProcedureFields(values);
+        // console.log('duration: ', duration);
+        setEndTime(
+            new Date(
+                // new Date()
+                new Date(new Date(endtTime).setMinutes(new Date(endtTime).getMinutes()-duration))
+                    ));
+      
     }
 
     const handleChangeInput =(index, event)=>{
@@ -36,7 +45,24 @@ const AppointmentDetails = ({
         values[index][event.target.name] = event.target.value;
         setProcedureFields(values);
 
+        let totalMinutes = 0;
+        procedureFields.map((procedureField)=>{
+            
+            totalMinutes = totalMinutes + parseInt(procedureField.durationMinutes);
+            // setTotalDurationMinutes(totalDurationMinutes + parseInt(procedureField.durationMinutes));
+            
+            
+            return null;
+        })
 
+        setEndTime(
+            new Date(
+                // new Date(endtTime).setMinutes(endtTime.getMinutes()+totalDurationMinutes)
+                new Date(new Date(startTime).setMinutes(new Date(startTime).getMinutes()+totalMinutes))
+                    ));
+        // console.log('totalDurationMinutes: ',totalDurationMinutes)
+        
+        // setEndTime(new Date().setMinutes+totalDurationMinutes));
     }
 
     const addAppointmentFunction = ()=>{
@@ -111,7 +137,7 @@ const AppointmentDetails = ({
                             <span>Start Time</span>
                             <DatePicker
                                 selected={startTime}
-                                onChange={(date) => setStartTime(date)}
+                                onChange={(dateStartTime) => {setStartTime(dateStartTime);}}
                                 showTimeSelect
                                 showTimeSelectOnly
                                 timeIntervals={30}
@@ -142,7 +168,7 @@ const AppointmentDetails = ({
                                             <option value="-Select Minutes-">-Select Minutes-</option>
                                             <option value="60">60</option>
                                         </select>
-                                        <button className='add-remove-button' onClick={(index)=>{removeProcedureFieldFunction()}}>-</button>
+                                        <button className='add-remove-button' onClick={()=>{removeProcedureFieldFunction(index, procedureField.durationMinutes)}}>-</button>
                                     </div>
                                          
                                 </div>
@@ -154,6 +180,10 @@ const AppointmentDetails = ({
                     <div className='details-details-modal-body-button-procedure'>                                               
                         <button className='add-remove-button' onClick={()=>{addProcedureFieldFunction()}}>+</button>
                     </div>
+
+                    <p>{'endtTime: '+endtTime}</p>
+                    <p>{'totalDurationMinutes: '+totalDurationMinutes}</p>
+
                     <div className='display-flex'>
                     <div className="details-details-modal-body-input-box">
                         <span>Status</span>
@@ -167,6 +197,18 @@ const AppointmentDetails = ({
                         <div className='duration-minutes-container'>
                             <input value={endtTime} disabled/>
                         </div> 
+                        {/* <DatePicker
+                                selected={endtTime}
+                                // onChange={(date) => setStartTime(date)}
+                                showTimeSelect
+                                showTimeSelectOnly
+                                // timeIntervals={30}
+                                // minTime={setHours(setMinutes(new Date(), 0), 8)}
+                                // maxTime={setHours(setMinutes(new Date(), 30), 18)}
+                                placeholderText="Select Start Time"
+                                timeCaption="Time"
+                                dateFormat="h:mm aa"
+                            /> */}
                     </div>
                     </div>
                    
