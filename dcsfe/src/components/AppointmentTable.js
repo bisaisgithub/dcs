@@ -14,9 +14,9 @@ const AppointmentTable = () => {
     const [genderInput, setGenderInput] = useState('');
     const [emailInput, setEmailInput] = useState('');
     const [userId, setUserId] = useState("");
-    const [appointmentPatientInput, setAppointmentPatientInput] =useState('-Select Patient-');
+    const [appointmentPatientInput, setAppointmentPatientInput] =useState('');
     const [appointmentPatientId, setAppointmentPatientId] =useState('');
-    const [appointmentDoctorInput, setAppointmentDoctorInput] =useState('-Select Doctor-');
+    const [appointmentDoctorInput, setAppointmentDoctorInput] =useState('');
     const [appointmentDoctorId, setAppointmentDoctorId] =useState('');
     const [searchNameInput, setSearchNameInput] = useState('');
     const [userAge, setUserAge] = useState('');
@@ -31,6 +31,7 @@ const AppointmentTable = () => {
     const [endtTime, setEndTime] = useState(null);
     const [statusInput, setStatusInput] = useState('');
     const [totalDurationMinutes, setTotalDurationMinutes] = useState(0);
+    const [typeInput, setTypeInput] = useState('Scheduled');
     // const [template, template] = useState('');
     useEffect(()=>{
         
@@ -63,7 +64,7 @@ const AppointmentTable = () => {
         let date = formatDate(selectedDateInput);
         // console.log('date: ', date);
         // console.log('addUser called');
-        if (!nameInput || !mobileInput || !genderInput || !selectedDateInput || !emailInput || !passwordInput || appointmentPatientInput === '-Select Status-') {
+        if (!nameInput || !mobileInput || !genderInput || !selectedDateInput || !emailInput || !passwordInput || !appointmentPatientInput) {
             alert('Empty field/s')
         }else{
             const response = await axios.post("http://172.16.0.101:3001/user", {
@@ -194,7 +195,7 @@ const AppointmentTable = () => {
         // setMobileInput('');
         // setEmailInput('');
         // setGenderInput('');
-        // setAppointmentPatientInput('-Select Status-');
+        // setAppointmentPatientInput('');
         // // console.log('clearing input name', nameInput);
         setIsOpen(true);
     };
@@ -256,7 +257,7 @@ const AppointmentTable = () => {
             procedureFields={procedureFields} setProcedureFields={setProcedureFields}
             endtTime={endtTime} setEndTime={setEndTime} statusInput={statusInput} setStatusInput={setStatusInput}
             totalDurationMinutes={totalDurationMinutes} setTotalDurationMinutes={setTotalDurationMinutes}
-
+            typeInput={typeInput} setTypeInput={setTypeInput}
             // setHours={setHours} setMinutes={setMinutes}
             ></AppointmentDetails>
             
