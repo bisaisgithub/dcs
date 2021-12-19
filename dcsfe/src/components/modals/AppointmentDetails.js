@@ -47,11 +47,8 @@ const AppointmentDetails = ({
             procedureFields.map((procedureField)=>{
                 if (!parseInt(procedureField.durationMinutes)<1) {
                     totalMinutes = totalMinutes + parseInt(procedureField.durationMinutes);
-                    console.log('true: ', procedureField.durationMinutes, totalMinutes);
                 } else {
-                    console.log('false');
                     if (procedureField.procedure === 'Extraction') {
-
                         procedureField.durationMinutes = 30;
                     }else if(procedureField.procedure === 'Cleaning'){
                         procedureField.durationMinutes = 60;

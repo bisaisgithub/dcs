@@ -44,6 +44,7 @@
     margin: 0 10px 7px 10px;
     width: calc(100% / 2 - 20px);
     font-size: 12px;
+    color: grey;
 }
 .details-details-modal-body-input-box span{
     display: block;
