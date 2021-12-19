@@ -31,38 +31,54 @@ const AppointmentDetails = ({
         const values = [...procedureFields];
         values.splice(index, 1);
         setProcedureFields(values);
-        // console.log('duration: ', duration);
         setEndTime(
             new Date(
-                // new Date()
                 new Date(new Date(endtTime).setMinutes(new Date(endtTime).getMinutes()-duration))
                     ));
-      
     }
 
     const handleChangeInput =(index, event)=>{
         const values = [...procedureFields];
-        values[index][event.target.name] = event.target.value;
-        setProcedureFields(values);
+            values[index][event.target.name] = event.target.value;
+            setProcedureFields(values);
 
-        let totalMinutes = 0;
-        procedureFields.map((procedureField)=>{
-            
-            totalMinutes = totalMinutes + parseInt(procedureField.durationMinutes);
-            // setTotalDurationMinutes(totalDurationMinutes + parseInt(procedureField.durationMinutes));
-            
-            
-            return null;
-        })
+            let totalMinutes = 0;
+            procedureFields.map((procedureField)=>{
+                
 
-        setEndTime(
-            new Date(
-                // new Date(endtTime).setMinutes(endtTime.getMinutes()+totalDurationMinutes)
-                new Date(new Date(startTime).setMinutes(new Date(startTime).getMinutes()+totalMinutes))
-                    ));
-        // console.log('totalDurationMinutes: ',totalDurationMinutes)
-        
-        // setEndTime(new Date().setMinutes+totalDurationMinutes));
+                if (!parseInt(procedureField.durationMinutes)<1) {
+                    totalMinutes = totalMinutes + parseInt(procedureField.durationMinutes);
+                    console.log('true: ', procedureField.durationMinutes, totalMinutes);
+                } else {
+                    console.log('false');
+                    if (procedureField.procedure === 'Extraction') {
+
+                        procedureField.durationMinutes = 30;
+                    }else if(procedureField.procedure === 'Cleaning'){
+                        procedureField.durationMinutes = 60;
+                    }else {
+                        console.log('else', procedureField.procedure)
+                        procedureField.durationMinutes = 0;
+                    }
+                   
+                    totalMinutes = totalMinutes + parseInt(procedureField.durationMinutes);
+                }
+                
+                return null;
+            })
+
+            setEndTime(
+                new Date(
+                    // new Date(endtTime).setMinutes(endtTime.getMinutes()+totalDurationMinutes)
+                    new Date(new Date(startTime).setMinutes(new Date(startTime).getMinutes()+totalMinutes))
+                        ))
+                        console.log('totalMinutes: ', totalMinutes)
+                        console.log('endtTime', endtTime)
+        if (startTime) {
+            ;
+        } else {
+            alert('please select start time first')
+        }
     }
 
     const addAppointmentFunction = ()=>{
@@ -159,14 +175,16 @@ const AppointmentDetails = ({
                                     <select name="procedure" value={procedureField.procedure} onChange={(event)=>{handleChangeInput(index, event)}}>
                                         <option value="-Select Procedure-">-Select Procedure-</option>
                                         <option value="Extraction">Extraction</option>
+                                        <option value="Cleaning">Cleaning</option>
                                     </select>       
                                 </div>
                                 <div className="details-details-modal-body-input-box">
                                     <span style={index? {display: 'none'}:{}}>Duration Minutes</span>
                                     <div className='duration-minutes-container'>
                                         <select name="durationMinutes" value={procedureField.durationMinutes} onChange={(event)=>{handleChangeInput(index, event)}}>
-                                            <option value="-Select Minutes-">-Select Minutes-</option>
-                                            <option value="60">60</option>
+                                            <option value={0}>-Select Minutes-</option>
+                                            <option value={30}>30</option>
+                                            <option value={60}>60</option>
                                         </select>
                                         <button className='add-remove-button' onClick={()=>{removeProcedureFieldFunction(index, procedureField.durationMinutes)}}>-</button>
                                     </div>
@@ -181,9 +199,6 @@ const AppointmentDetails = ({
                         <button className='add-remove-button' onClick={()=>{addProcedureFieldFunction()}}>+</button>
                     </div>
 
-                    <p>{'endtTime: '+endtTime}</p>
-                    <p>{'totalDurationMinutes: '+totalDurationMinutes}</p>
-
                     <div className='display-flex'>
                     <div className="details-details-modal-body-input-box">
                         <span>Status</span>
@@ -195,9 +210,8 @@ const AppointmentDetails = ({
                     <div className="details-details-modal-body-input-box">
                         <span>End Time</span>
                         <div className='duration-minutes-container'>
-                            <input value={endtTime} disabled/>
-                        </div> 
-                        {/* <DatePicker
+                            {/* <input value={endtTime} disabled/> */}
+                            <DatePicker
                                 selected={endtTime}
                                 // onChange={(date) => setStartTime(date)}
                                 showTimeSelect
@@ -208,7 +222,10 @@ const AppointmentDetails = ({
                                 placeholderText="Select Start Time"
                                 timeCaption="Time"
                                 dateFormat="h:mm aa"
-                            /> */}
+                                disabled
+                            />
+                        </div> 
+                        
                     </div>
                     </div>
                    
