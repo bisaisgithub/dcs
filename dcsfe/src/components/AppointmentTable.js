@@ -33,6 +33,10 @@ const AppointmentTable = () => {
     const [totalDurationMinutes, setTotalDurationMinutes] = useState(0);
     const [typeInput, setTypeInput] = useState('Scheduled');
     const [totalCost, setTotalCost] = useState(0);
+    const [paymentFields, setPaymentFields] = useState([
+        {payment: '', balance: ''}
+        ]);
+
     // const [template, template] = useState('');
     useEffect(()=>{
         
@@ -281,7 +285,8 @@ const AppointmentTable = () => {
             totalDurationMinutes={totalDurationMinutes} setTotalDurationMinutes={setTotalDurationMinutes}
             typeInput={typeInput} setTypeInput={setTypeInput}
             totalCost={totalCost} setTotalCost={setTotalCost}
-            
+            paymentFields={paymentFields} setPaymentFields={setPaymentFields}
+
             // setHours={setHours} setMinutes={setMinutes}
             ></AppointmentDetails>
             

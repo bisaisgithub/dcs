@@ -19,6 +19,7 @@ const AppointmentDetails = ({
     procedureFields, setProcedureFields,endtTime,setEndTime,statusInput,setStatusInput,
     totalDurationMinutes,setTotalDurationMinutes,setTypeInput,typeInput,
     setTotalCost,totalCost,
+    setPaymentFields,paymentFields
 
     }) => {
     if (!isOpen) {
@@ -255,6 +256,25 @@ const AppointmentDetails = ({
                                     <option value="Walk-in">Walk-in</option>
                                 </select>       
                             </div>
+                        </div>
+                        <div className='details-details-modal-body-input-box'>
+                            {
+                                paymentFields.map((paymentField, index)=>{
+                                    return (
+                                        
+                                        <div style={{marginTop:'0'}} className='details-details-modal-body' key={index}>
+                                            <div className="details-details-modal-body-input-box3">
+                                                <span style={index? {display: 'none'}:{}}>Payment</span>
+                                                <input />      
+                                            </div>
+                                            <div className="details-details-modal-body-input-box3">
+                                                <span style={index? {display: 'none'}:{}}>Balance</span>
+                                                    <input />
+                                            </div>
+                                        </div>
+                                    );
+                                })
+                            }
                         </div>
                     </div>                    
                     <div className='details-details-modal-body-button'>                    
