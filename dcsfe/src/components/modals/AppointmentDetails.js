@@ -7,7 +7,7 @@ import setHours from 'date-fns/setHours';
 import setMinutes from 'date-fns/setMinutes';
 
 const AppointmentDetails = ({
-    isOpen, setIsOpen, addUser, updateUser,userId,
+    isOpen, setIsOpen, addAppointmentFunction, updateUser,userId,
     appointmentPatientInput,setAppointmentPatientInput,genderInput,setGenderInput,
     nameInput,setNameInput,mobileInput,setMobileInput,emailInput,
     setEmailInput,selectedDateInput,setSelectedDateInput,userAge,
@@ -72,13 +72,6 @@ const AppointmentDetails = ({
         } else {
             alert('please select start time first')
         }
-    }
-
-    const addAppointmentFunction = ()=>{
-        // insert appointment
-
-        //insert procedures
-        // console.log('procedureFields: ', procedureFields);
     }
     
     const setAppointmentPatientIdFunction = (name)=>{

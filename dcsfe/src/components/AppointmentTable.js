@@ -47,9 +47,20 @@ const AppointmentTable = () => {
     //     let da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
     //     // console.log(`${da}-${mo}-${ye}`);
     // }
+
     
-    const addUser = async ()=>{
-        setIsOpen(true);
+    
+    const addAppointmentFunction = async ()=>{
+
+        function validateEmptyObjectField(array){
+            for (var i=0; i < array.length; i++) {
+                if (array[i].procedure === "") {
+                    return false;
+                }
+            }
+            return true;
+        }
+        // setIsOpen(true);
         function formatDate(date) {
             var d = new Date(date),
                 month = '' + (d.getMonth() + 1),
@@ -64,33 +75,45 @@ const AppointmentTable = () => {
         let date = formatDate(selectedDateInput);
         // console.log('date: ', date);
         // console.log('addUser called');
-        if (!nameInput || !mobileInput || !genderInput || !selectedDateInput || !emailInput || !passwordInput || !appointmentPatientInput) {
+        if (!appointmentPatientInput || !appointmentDoctorInput || !selectedDateInput ||
+            !startTime) {
+                
             alert('Empty field/s')
         }else{
-            const response = await axios.post("http://172.16.0.101:3001/user", {
-            name: nameInput,
-            mobile: mobileInput,
-            gender: genderInput,
-            dob: date,
-            email: emailInput,
-            type: appointmentPatientInput,
-            password: passwordInput,
-        });
+            if (!validateEmptyObjectField(procedureFields)) {
+                alert("Empty Procedure/s")
+            } else {
+                alert("No Empty Procedures")
+            }
+            
+            
+
+            // const response = await axios.post("http://172.16.0.101:3001/user", {
+            // name: nameInput,
+            // mobile: mobileInput,
+            // gender: genderInput,
+            // dob: date,
+            // email: emailInput,
+            // type: appointmentPatientInput,
+            // password: passwordInput,
+        }
+        
         // console.log('add user response.data', response.data)
-        if (response.data.userInsertOk) {
-            alert('User Added');
-            // setSelectedDatenput(new Date());
-            // setNameInput('');
-            // setMobileInput('');
-            // setEmailInput('');
-            // setGenderInput('');
-            // console.log('clearing input name', nameInput);
-            getUsers();
-            setIsOpen(false);
-        }else{
-            alert('Failed Adding User');
-        }
-        }
+        // if (response.data.userInsertOk) {
+        //     alert('User Added');
+        //     // setSelectedDatenput(new Date());
+        //     // setNameInput('');
+        //     // setMobileInput('');
+        //     // setEmailInput('');
+        //     // setGenderInput('');
+        //     // console.log('clearing input name', nameInput);
+        //     getUsers();
+        //     setIsOpen(false);
+        // }else{
+        //     alert('Failed Adding User');
+        // }
+        
+    
         
     }
 
@@ -241,7 +264,7 @@ const AppointmentTable = () => {
     return (
         <div className='table-table2-container'>
             <AppointmentDetails
-            isOpen={isOpen} setIsOpen={setIsOpen} addUser={addUser}
+            isOpen={isOpen} setIsOpen={setIsOpen} addAppointmentFunction={addAppointmentFunction}
             updateUser={updateUser} userId={userId} appointmentPatientInput={appointmentPatientInput}
             setAppointmentPatientInput={setAppointmentPatientInput} genderInput={genderInput} setGenderInput={setGenderInput}
             nameInput={nameInput} setNameInput={setNameInput} mobileInput={mobileInput}
