@@ -19,6 +19,10 @@
     /* padding: 50px; */
     z-index: 1000;
 }
+.details-details-modal-body-container{
+    overflow-y: auto;
+    max-height: 590px;
+}
 .details-details-modal-title{
     font-size: 16px;
     font-weight: 500;
@@ -46,7 +50,18 @@
     font-size: 12px;
     color: grey;
 }
+.details-details-modal-body-input-box3{
+    margin: 0 10px 7px 10px;
+    width: calc(100% / 3 - 20px);
+    font-size: 12px;
+    color: grey;
+}
 .details-details-modal-body-input-box span{
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;    
+}
+.details-details-modal-body-input-box3 span{
     display: block;
     font-weight: 500;
     margin-bottom: 5px;    
@@ -64,10 +79,30 @@
     transition: all 0.3s ease;
     padding: 0 0 0 5px;
 }
+.details-details-modal-body-input-box3 input,
+.details-details-modal-body-input-box3 select{
+    height: 35px;
+    width: 100%;
+    outline: none;
+    font-size: 13px;
+    border-radius: 5px;
+    padding-left: 15px;
+    border: 1px solid #ccc;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+    padding: 0 0 0 5px;
+}
 .details-details-modal-body-input-box input:focus,
 .details-details-modal-body-input-box select:focus,
 .details-details-modal-body-input-box select:valid, 
 .details-details-modal-body-input-box input:valid{
+    border-color: #9b59b6;
+    font-size: 14px;
+}
+.details-details-modal-body-input-box3 input:focus,
+.details-details-modal-body-input-box3 select:focus,
+.details-details-modal-body-input-box3 select:valid, 
+.details-details-modal-body-input-box3 input:valid{
     border-color: #9b59b6;
     font-size: 14px;
 }
@@ -148,4 +183,9 @@ input[type="text"]{
 }
 .height-80p{
     height: 80%;
+}
+@media(max-height: 370px) {
+    .details-details-modal-body-container{
+        max-height: 300px ;
+    }
 }

@@ -8,7 +8,8 @@ exports.up = function(knex) {
         table.datetime('start_time').notNullable();
         table.datetime('end_time').notNullable();
         table.string('status_').notNullable(); // On Schedule
-        table.string('type').notNullable();       //scheduled, walk-in
+        table.string('type').notNullable();      //scheduled, walk-in
+        table.double('total_cost').notNullable();
         table.datetime('closed_date');
         table.timestamps(true, true);
         table.foreign('patient_id').references('id').inTable('patient');

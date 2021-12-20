@@ -1,5 +1,7 @@
+// import { response } from 'express';
 import {v4 as uuid} from 'uuid';
 import db from "../config/db.js";
+
 
 // export const getPatients = async (req, res)=>{
 //     try {
@@ -12,21 +14,26 @@ import db from "../config/db.js";
 //     }  
 // };
 
-export const createPatient = async (req, res)=>{
-
+export const createAppointment = async (req, res)=>{
+    // console.log('appointment reqbody: ',req.body)
     try {
         const response = await db('appointment').insert({
             id: uuid(),
-            patient_id: req.body.appointment.patient_id,
-            doctor_id: req.body.appointment.doctor_id,
-            date: req.body.appointment.date,
-            start_time: req.body.appointment.start_time,
-            end_time: req.body.appointment.end_time,
-            status_: req.body.appointment.status_,
-            type: req.body.appointment.type,
+            patient_id: req.body.patient_id,
+            doctor_id: req.body.doctor_id,
+            date: req.body.date,
+            start_time: new Date(req.body.start_time).toISOString().split('T')[0] + ' '+ new Date(req.body.start_time).toTimeString().split(' ')[0],
+            end_time: new Date(req.body.end_time).toISOString().split('T')[0] + ' '+ new Date(req.body.end_time).toTimeString().split(' ')[0],
+            status_: req.body.status_,
+            type: req.body.type,
+            total_cost: req.body.total_cost,
         });
-        // console.log('insert succes: ', response);
-        res.json({insertOk: true});
+        if (response) {
+            res.json({appointmentInsertOk: true});
+        } else {
+            
+        }
+        // res.json({insertOk: true});
     } catch (error) {
         console.log('error: ', error);
         res.json({insertOk: false});

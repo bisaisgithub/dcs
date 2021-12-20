@@ -5,7 +5,7 @@ import './Table.css';
 
 
 const AppointmentTable = () => {
-    const [selectedDateInput, setSelectedDateInput] = useState(new Date());
+    const [selectedDateInput, setSelectedDateInput] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
     const [usersData, setUsersData] = useState([]);
     const [patientsData, setPatientsData] = useState([]);
@@ -25,13 +25,14 @@ const AppointmentTable = () => {
     const [appointmentProcedureInput, setAppointmentProcedureInput] = useState('');
     const [appointmentDurationMinutesInput, setAppointmentDurationMinutesInput] = useState('');
     const [procedureFields, setProcedureFields] = useState([
-        {procedure: '', durationMinutes: ''},
+        {procedure: '', durationMinutes: '', cost: ''},
     ]);
     const [startTime, setStartTime] = useState(null);
     const [endtTime, setEndTime] = useState(null);
     const [statusInput, setStatusInput] = useState('');
     const [totalDurationMinutes, setTotalDurationMinutes] = useState(0);
     const [typeInput, setTypeInput] = useState('Scheduled');
+    const [totalCost, setTotalCost] = useState(0);
     // const [template, template] = useState('');
     useEffect(()=>{
         
@@ -76,42 +77,40 @@ const AppointmentTable = () => {
         // console.log('date: ', date);
         // console.log('addUser called');
         if (!appointmentPatientInput || !appointmentDoctorInput || !selectedDateInput ||
-            !startTime) {
+            !startTime || !statusInput || !typeInput) {
                 
             alert('Empty field/s')
         }else{
             if (!validateEmptyObjectField(procedureFields)) {
                 alert("Empty Procedure/s")
             } else {
-                alert("No Empty Procedures")
-            }
-            
-            
+                const response = await axios.post("http://172.16.0.101:3001/appointment", {
+                    patient_id: appointmentPatientId,
+                    doctor_id: appointmentDoctorId,
+                    date: date,
+                    start_time: startTime,
+                    end_time: endtTime,
+                    status_: statusInput,
+                    type: typeInput,
+                 });   
 
-            // const response = await axios.post("http://172.16.0.101:3001/user", {
-            // name: nameInput,
-            // mobile: mobileInput,
-            // gender: genderInput,
-            // dob: date,
-            // email: emailInput,
-            // type: appointmentPatientInput,
-            // password: passwordInput,
+                 // console.log('add user response.data', response.data)
+                    if (response.data.appointmentInsertOk) {
+                        alert('Appointment Added');
+                        // setSelectedDatenput(new Date());
+                        // setNameInput('');
+                        // setMobileInput('');
+                        // setEmailInput('');
+                        // setGenderInput('');
+                        // console.log('clearing input name', nameInput);
+                        // getUsers();
+                        // setIsOpen(false);
+                    }else{
+                        alert('Failed Adding Appointment');
+                    }
+            }
         }
         
-        // console.log('add user response.data', response.data)
-        // if (response.data.userInsertOk) {
-        //     alert('User Added');
-        //     // setSelectedDatenput(new Date());
-        //     // setNameInput('');
-        //     // setMobileInput('');
-        //     // setEmailInput('');
-        //     // setGenderInput('');
-        //     // console.log('clearing input name', nameInput);
-        //     getUsers();
-        //     setIsOpen(false);
-        // }else{
-        //     alert('Failed Adding User');
-        // }
         
     
         
@@ -281,6 +280,8 @@ const AppointmentTable = () => {
             endtTime={endtTime} setEndTime={setEndTime} statusInput={statusInput} setStatusInput={setStatusInput}
             totalDurationMinutes={totalDurationMinutes} setTotalDurationMinutes={setTotalDurationMinutes}
             typeInput={typeInput} setTypeInput={setTypeInput}
+            totalCost={totalCost} setTotalCost={setTotalCost}
+            
             // setHours={setHours} setMinutes={setMinutes}
             ></AppointmentDetails>
             

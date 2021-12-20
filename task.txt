@@ -26,7 +26,7 @@ creating prescription table in database end--
 
 creating prescription UI
 
-creating treatment table in database start--
+creating procedure table in database start--
   patient id
   doc id
   appointment id
