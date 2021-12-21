@@ -24,9 +24,15 @@ const AppointmentTable = () => {
     const [searchTypeInput, setSearchTypeInput] = useState('');
     const [appointmentProcedureInput, setAppointmentProcedureInput] = useState('');
     const [appointmentDurationMinutesInput, setAppointmentDurationMinutesInput] = useState('');
-    const [procedureFields, setProcedureFields] = useState([
-        {procedure: '', durationMinutes: '', cost: ''},
-    ]);
+    const [procedureFields, setProcedureFields] = useState(()=>
+    
+    {
+        return [
+            {procedure: '', durationMinutes: '', cost: ''},
+        ]
+    }
+        
+    );
     const [startTime, setStartTime] = useState(null);
     const [endtTime, setEndTime] = useState(null);
     const [statusInput, setStatusInput] = useState('');
@@ -34,16 +40,18 @@ const AppointmentTable = () => {
     const [typeInput, setTypeInput] = useState('Scheduled');
     const [totalCost, setTotalCost] = useState(0);
     const [paymentFields, setPaymentFields] = useState([
-        {payment: '', balance: ''}
         ]);
-
+    const [paymentBalance, setPaymentBalance] = useState('');
+    const [paymentChange, setPaymentChange] = useState('');
     // const [template, template] = useState('');
     useEffect(()=>{
         
-        getUsers(); 
+        getUsers();
 
+      
     
     }, []);
+
 
     // const formatDate2 = ()=>{
     //     let d = new Date(2010, 7, 5);
@@ -88,6 +96,7 @@ const AppointmentTable = () => {
             if (!validateEmptyObjectField(procedureFields)) {
                 alert("Empty Procedure/s")
             } else {
+                console.log('procedureFields: ',procedureFields);
                 const response = await axios.post("http://172.16.0.101:3001/appointment", {
                     patient_id: appointmentPatientId,
                     doctor_id: appointmentDoctorId,
@@ -96,10 +105,12 @@ const AppointmentTable = () => {
                     end_time: endtTime,
                     status_: statusInput,
                     type: typeInput,
+                    procedures: procedureFields,
+                    
                  });   
 
                  // console.log('add user response.data', response.data)
-                    if (response.data.appointmentInsertOk) {
+                    if (response.data.appointmentInsertOk) { 
                         alert('Appointment Added');
                         // setSelectedDatenput(new Date());
                         // setNameInput('');
@@ -286,22 +297,12 @@ const AppointmentTable = () => {
             typeInput={typeInput} setTypeInput={setTypeInput}
             totalCost={totalCost} setTotalCost={setTotalCost}
             paymentFields={paymentFields} setPaymentFields={setPaymentFields}
+            paymentBalance={paymentBalance} setPaymentBalance={setPaymentBalance}
+            paymentChange={paymentChange} setPaymentChange={setPaymentChange}
 
             // setHours={setHours} setMinutes={setMinutes}
             ></AppointmentDetails>
             
-            <div className='table-table2-head-container'>
-                <div className='table-table2-head-input'>
-                    {/* <div className='table-table2-head-search-container'>
-                        <button className='table-table2-head-search-button' onClick={getUsers} >Search</button>
-                        <input className='table-table2-head-search-input' placeholder='Search' value={searchNameInput} onChange={(e)=>{setSearchNameInput(e.target.value)}} />
-                        <button className='table-table2-head-search-clear' onClick={()=>{setSearchNameInput('')}}>X</button>
-                    </div>
-                    <div className='table-table2-head-add-container'>
-                    <button className='table-table-head-add-button' onClick={()=>newAppointment()}>New User</button>
-                    </div> */}
-                </div>
-            </div>
             <div className='table-table2-table'>
                 <thead className='table-table2-table-thead-search2'>
                     <tr className='table-table2-table-thead-tr-search2'>

@@ -19,24 +19,82 @@ const AppointmentDetails = ({
     procedureFields, setProcedureFields,endtTime,setEndTime,statusInput,setStatusInput,
     totalDurationMinutes,setTotalDurationMinutes,setTypeInput,typeInput,
     setTotalCost,totalCost,
-    setPaymentFields,paymentFields
+    setPaymentFields,paymentFields,
+    setPaymentBalance,paymentBalance,
+    paymentChange,setPaymentChange
+
 
     }) => {
     if (!isOpen) {
         return null;
     }
+    
 
     const addProcedureFieldFunction = ()=>{
-        setProcedureFields([...procedureFields, {procedure: '', durationMinutes: '', cost: ''}])
+        setProcedureFields((prev)=>
+        {
+            return [...prev, {procedure: '', durationMinutes: '', cost: ''}]
+        }
+            // [...procedureFields, {procedure: '', durationMinutes: '', cost: ''}]
+            )
+
     }
-    const removeProcedureFieldFunction = (index, duration) =>{
-        const values = [...procedureFields];
+    const addPaymentFieldFunction = ()=>{
+        setPaymentFields([...paymentFields, {payment: '', date: new Date()}])
+    }
+    const removePaymentFieldFunction= (index, cost)=>{
+        const values = [...paymentFields];
         values.splice(index, 1);
-        setProcedureFields(values);
+        setPaymentFields(values);
+        if (parseFloat(cost)>0) {
+            setPaymentBalance(parseFloat(paymentBalance + parseFloat(cost))); 
+        }
+        
+    }
+    const removeProcedureFieldFunction = (index, duration, cost) =>{
+        
+        setProcedureFields((prev)=>{
+            const values = [...prev];
+            values.splice(index, 1);
+            return values;
+        })
+        // const values = [...procedureFields];
+        // values.splice(index, 1);
+        // // setProcedureFields(values);
+        // setProcedureFields(prev=>values)
+        
+        setTotalCost(parseFloat(totalCost - cost));        
+        setPaymentBalance(parseFloat(paymentBalance - cost));
+
         setEndTime(
             new Date(
                 new Date(new Date(endtTime).setMinutes(new Date(endtTime).getMinutes()-duration))
                     ));
+
+        
+    }
+
+    const handleChangeInputPayment = (index, event)=>{
+        const values = [...paymentFields];
+        values[index][event.target.name] = event.target.value;
+        setPaymentFields(values);
+
+        let totalPayment = 0;
+        paymentFields.map((paymentField)=>{
+            if (parseInt(paymentField.payment)>0) {
+                
+                totalPayment = totalPayment + parseFloat(paymentField.payment);
+            }
+            return null;
+        })
+        if (totalCost-totalPayment>-1) {
+            setPaymentBalance(parseFloat(totalCost-totalPayment));
+            setPaymentChange(0);
+        } else {
+            setPaymentBalance(0);
+            setPaymentChange(totalPayment-totalCost);
+        }
+        
     }
 
     const handleChangeInput =(index, event)=>{
@@ -46,14 +104,9 @@ const AppointmentDetails = ({
             setProcedureFields(values);
 
             let totalMinutes = 0;
-            let totalCost = 0;
-            // procedureFields.map((procedureField)=>{
-            //     if (condition) {
-                    
-            //     } else {
-                    
-            //     }
-            // });
+            let totalCostTemporary = 0;
+            setTotalCost(0);
+            let totalPayment = 0;
             procedureFields.map((procedureField)=>{
                 if (!parseInt(procedureField.durationMinutes)<1) {
                     totalMinutes = totalMinutes + parseInt(procedureField.durationMinutes);
@@ -77,13 +130,16 @@ const AppointmentDetails = ({
 
                 if (procedureField.cost>0) {
 
-                    totalCost = totalCost + parseInt(procedureField.cost);
+                    totalCostTemporary = totalCostTemporary + parseFloat(procedureField.cost);
                 }
+                
+                
+                   
                 
                 return null;
             })
+
             
-            setTotalCost(totalCost);
             setEndTime(
                 new Date(
                     // new Date(endtTime).setMinutes(endtTime.getMinutes()+totalDurationMinutes)
@@ -91,6 +147,19 @@ const AppointmentDetails = ({
                         ))
                         // console.log('totalMinutes: ', totalMinutes)
                         // console.log('endtTime', endtTime)
+
+            paymentFields.map((paymentField)=>{
+                if (parseFloat(paymentField.payment)>0) {
+                    totalPayment = totalPayment + parseFloat(paymentField.payment);
+                }else{
+                    totalPayment = totalPayment + 0;
+                }
+                return null;
+            });
+            setTotalCost(parseFloat(totalCostTemporary));
+            // console.log('totalCost', totalCost);
+            // console.log('totalPayment' , totalPayment)
+            setPaymentBalance(parseFloat(totalCostTemporary-totalPayment));
         } else {
             alert('please select start time first')
         }
@@ -200,7 +269,7 @@ const AppointmentDetails = ({
                                             <span style={index? {display: 'none'}:{}}>Cost</span>
                                             <div className='duration-minutes-container'>
                                                 <input type='number' name="cost" value={procedureField.cost} onChange={(event)=>{handleChangeInput(index, event)}}/>
-                                                <button className='add-remove-button' onClick={()=>{removeProcedureFieldFunction(index, procedureField.durationMinutes)}}>-</button>
+                                                <button className='add-remove-button' onClick={()=>{removeProcedureFieldFunction(index, procedureField.durationMinutes, procedureField.cost)}}>-</button>
                                             </div>                                    
                                         </div>
                                     </div>
@@ -257,25 +326,62 @@ const AppointmentDetails = ({
                                 </select>       
                             </div>
                         </div>
-                        <div className='details-details-modal-body-input-box'>
+                        <div className='display-flex' style={{marginTop:'5px'}} >
+                            <div className="details-details-modal-body-input-box">
+                                <span>Balance</span>
+                                <input style={paymentBalance>0? {color: 'red', fontWeight: '600', fontSize:'14px'} : {}} disabled value={paymentBalance} />
+                            </div>
+                            
+                        </div>
+
                             {
                                 paymentFields.map((paymentField, index)=>{
                                     return (
                                         
-                                        <div style={{marginTop:'0'}} className='details-details-modal-body' key={index}>
-                                            <div className="details-details-modal-body-input-box3">
-                                                <span style={index? {display: 'none'}:{}}>Payment</span>
-                                                <input />      
+                                        <div className='display-flex' style={{marginTop:'0px',flexWrap: 'wrap'}}  key={index}>
+                                            <div className='display-flex' style={{marginTop:'0px'}}  key={index}>
+                                                <div className='details-details-modal-body-input-box'>
+                                                    <span style={false? {display: 'none'}:{}} >Payment</span>
+                                                    <div className='display-flex'>
+                                                        
+                                                        <input type='number' name='payment' value={paymentField.payment} onChange={(event)=>{handleChangeInputPayment(index, event)}}/>
+                                                        <button className='add-remove-button height-80p' onClick={()=>{removePaymentFieldFunction(index, paymentField.payment)}}>-</button>
+                                                    </div>
+                                                </div>
+                                                    
+                                                    
+                                                <div className='details-details-modal-body-input-box'>
+                                                    <span style={false? {display: 'none'}:{}}>Date of Payment</span>
+                                                        
+                                                    <DatePicker 
+                                                    // minDate={new Date()} 
+                                                    yearDropdownItemNumber={90} 
+                                                    showYearDropdown 
+                                                    scrollableYearDropdown={true} 
+                                                    dateFormat='MMMM d, yyyy h:mm' 
+                                                    className='date-picker' 
+                                                    placeholderText="Select Date" 
+                                                    selected={paymentField.date} 
+                                                    // onChange={date=>setSelectedDateInput(date)} 
+                                                    />
+                                                </div>
                                             </div>
-                                            <div className="details-details-modal-body-input-box3">
-                                                <span style={index? {display: 'none'}:{}}>Balance</span>
-                                                    <input />
+                                            
+                                            
+                                            <div className="details-details-modal-body-input-box">
+                                                <span>Change</span>
+                                                <input style={paymentChange>0? {color: 'green', fontWeight: '600', fontSize:'14px'} : {}} disabled value={paymentChange} />
                                             </div>
+                                                
                                         </div>
+                                                                                      
+                                        // </div>
                                     );
                                 })
                             }
-                        </div>
+                        
+                        <button className='add-remove-button height-80p' onClick={()=>{addPaymentFieldFunction()}}>+</button>
+                        {/* <p>procedureFields: {procedureFields}</p> */}
                     </div>                    
                     <div className='details-details-modal-body-button'>                    
                         {/* {userId? (<input type="submit" onClick={updateUser} value='Update' className='percent-40'/>):

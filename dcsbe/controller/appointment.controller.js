@@ -15,10 +15,15 @@ import db from "../config/db.js";
 // };
 
 export const createAppointment = async (req, res)=>{
-    // console.log('appointment reqbody: ',req.body)
+    // console.log('appointment reqbody: ',req.body.procedure)
+    // console.log('procedure', req.body.procedure[0].procedure)
+    
+
+    
+    const appointmentId = uuid();
     try {
         const response = await db('appointment').insert({
-            id: uuid(),
+            id: appointmentId,
             patient_id: req.body.patient_id,
             doctor_id: req.body.doctor_id,
             date: req.body.date,
@@ -26,17 +31,37 @@ export const createAppointment = async (req, res)=>{
             end_time: new Date(req.body.end_time).toISOString().split('T')[0] + ' '+ new Date(req.body.end_time).toTimeString().split(' ')[0],
             status_: req.body.status_,
             type: req.body.type,
-            total_cost: req.body.total_cost,
         });
+        console.log(response);
         if (response) {
-            res.json({appointmentInsertOk: true});
-        } else {
+            let procedures = [];
+            req.body.procedures.map((procedure)=>{
+                procedures = [...procedures, 
+                    {
+                        id: uuid(),
+                        patient_id: req.body.patient_id,
+                        doctor_id: req.body.doctor_id,
+                        appointment_id: appointmentId,
+                        procedure_name: procedure.procedure,
+                        duration_minutes: procedure.durationMinutes,
+                        procedure_cost: procedure.cost,
+                    }
+                ]                
+            });
+            const responseProcedures = await db('procedure').insert(procedures);
+            if (responseProcedures) {
+                res.json({appointmentInsertOk: true});
+            } else {
+                
+            }
             
+        } else {
+            res.json({appointmentInsertOk: false});
         }
-        // res.json({insertOk: true});
+        
     } catch (error) {
         console.log('error: ', error);
-        res.json({insertOk: false});
+        res.json({appointmentInsertOk: false});
     }
     
 };
