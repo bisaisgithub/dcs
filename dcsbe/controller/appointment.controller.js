@@ -32,7 +32,7 @@ export const createAppointment = async (req, res)=>{
             status_: req.body.status_,
             type: req.body.type,
         });
-        console.log(response);
+        // console.log(response);
         if (response) {
             let procedures = [];
             req.body.procedures.map((procedure)=>{
@@ -50,9 +50,29 @@ export const createAppointment = async (req, res)=>{
             });
             const responseProcedures = await db('procedure').insert(procedures);
             if (responseProcedures) {
-                res.json({appointmentInsertOk: true});
-            } else {
+                let payments = [];
+                req.body.payments.map((payment)=>{
+                    payments = [...payments, 
+                    {
+                        id: uuid(),
+                        appointment_id: appointmentId,
+                        patient_id: req.body.patient_id,
+                        payment: payment.payment,
+                        payment_date: new Date(req.body.start_time).toISOString().split('T')[0] + ' '+ new Date(req.body.start_time).toTimeString().split(' ')[0],
+                        change: payment.change,
+                        balance: payment.balance,
+                    }
+                ]                
+            });
+                const responsePayment = await db('payment').insert(payments);
+                if (responsePayment) {
+                    res.json({appointmentInsertOk: true});
+                } else {
+                    res.json({appointmentInsertOk: false});
+                }
                 
+            } else {
+                res.json({appointmentInsertOk: false});
             }
             
         } else {

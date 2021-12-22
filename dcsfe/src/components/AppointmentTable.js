@@ -48,8 +48,6 @@ const AppointmentTable = () => {
         
         getUsers();
 
-      
-    
     }, []);
 
 
@@ -61,8 +59,6 @@ const AppointmentTable = () => {
     //     // console.log(`${da}-${mo}-${ye}`);
     // }
 
-    
-    
     const addAppointmentFunction = async ()=>{
 
         function validateEmptyObjectField(array){
@@ -86,8 +82,7 @@ const AppointmentTable = () => {
             return [year, month, day].join('-');
         }        
         let date = formatDate(selectedDateInput);
-        // console.log('date: ', date);
-        // console.log('addUser called');
+
         if (!appointmentPatientInput || !appointmentDoctorInput || !selectedDateInput ||
             !startTime || !statusInput || !typeInput) {
                 
@@ -106,57 +101,17 @@ const AppointmentTable = () => {
                     status_: statusInput,
                     type: typeInput,
                     procedures: procedureFields,
-                    
+                    payments: paymentFields,
                  });   
 
-                 // console.log('add user response.data', response.data)
-                    if (response.data.appointmentInsertOk) { 
-                        alert('Appointment Added');
-                        // setSelectedDatenput(new Date());
-                        // setNameInput('');
-                        // setMobileInput('');
-                        // setEmailInput('');
-                        // setGenderInput('');
-                        // console.log('clearing input name', nameInput);
-                        // getUsers();
-                        // setIsOpen(false);
-                    }else{
-                        alert('Failed Adding Appointment');
-                    }
+                if (response.data.appointmentInsertOk) { 
+                    alert('Appointment Added');
+                }else{
+                    alert('Failed Adding Appointment');
+                }
             }
-        }
-        
-        
-    
-        
+        }  
     }
-
-    // const getPatients = async (data)=>{
-        const getPatients = async ()=>{
-
-        // if (data) {
-        //     const response = await axios.post(`http://172.16.0.101:3001/patients`, data);
-  
-        // if (response.data) {
-        //     // console.log('response data',response.data)
-        //     setPatientsData(response.data);
-        // }
-        // } else {
-        //     const response = await axios.get(`http://172.16.0.101:3001/patients`);
-  
-        //     if (response.data) {
-        //         // console.log('response data',response.data)
-        //         setPatientsData(response.data);
-        //     }
-        // }
-            const response = await axios.get(`http://172.16.0.101:3001/patients`);
-  
-            if (response.data) {
-                // console.log('response data',response.data)
-                setPatientsData(response.data);
-            }
-        
-    };
     
     const getUsers = async (data)=>{
         
@@ -172,11 +127,9 @@ const AppointmentTable = () => {
                 // console.log('response data',response.data)
                 setUsersData(response.data);
             }
-        }
-        
-  
-        
+        }    
     };
+
     const updateUser = async ()=>{
         
         function formatDate(date) {
@@ -193,8 +146,7 @@ const AppointmentTable = () => {
             return [year, month, day].join('-');
         }        
         let date = formatDate(selectedDateInput);
-        // console.log('date: ', date);
-        // console.log('addUser called');
+
         if (!nameInput || !mobileInput || !genderInput || !selectedDateInput || !emailInput) {
             alert('Empty field/s')
         }else{
@@ -209,12 +161,6 @@ const AppointmentTable = () => {
 
             if (response.data.userUpdateOk) {
             alert('User Upated');
-            // setSelectedDatenput(new Date());
-            // setNameInput('');
-            // setMobileInput('');
-            // setEmailInput('');
-            // setGenderInput('');
-            // console.log('clearing input name', nameInput);
             setIsOpen(false);
             getUsers();
             }else{
@@ -224,16 +170,7 @@ const AppointmentTable = () => {
         
     };
     const newAppointment = ()=>{
-        getPatients();
         getUsers();
-        // setUserId(null);
-        // setSelectedDateInput(new Date());
-        // setNameInput('');
-        // setMobileInput('');
-        // setEmailInput('');
-        // setGenderInput('');
-        // setAppointmentPatientInput('');
-        // // console.log('clearing input name', nameInput);
         setIsOpen(true);
     };
     const setUserAgeFunction = (patientDOB)=>{
@@ -248,8 +185,7 @@ const AppointmentTable = () => {
         }
     }
     const detailsFunction = async (patientIdparam)=>{
-        // console.log('edit user ccalled')
-        // console.log('patienId before fetch', userId)
+
         const responsePatient = await axios.get(`http://172.16.0.101:3001/user/${patientIdparam}`);
         
         if (responsePatient.data[0].id) {
@@ -262,13 +198,6 @@ const AppointmentTable = () => {
             setAppointmentPatientInput(responsePatient.data[0].type);
             setUserId(responsePatient.data[0].id);
             setUserAgeFunction(responsePatient.data[0].dob);
-            // console.log('patienId after setUserId', userId);
-            // console.log('name after setPatientname', nameInput);
-            // if (userId) {
-            //     console.log('userId true', userId)
-            // } else {
-            //     console.log('userId false', userId)
-            // }
             setIsOpen(true);
             
         } else {
@@ -307,19 +236,23 @@ const AppointmentTable = () => {
                 <thead className='table-table2-table-thead-search2'>
                     <tr className='table-table2-table-thead-tr-search2'>
                       
+                        <th><input placeholder='Name' value={searchTypeInput} onChange={(e)=>{setSearchTypeInput(e.target.value)}}/></th>
+                        <th><input placeholder='Doctor' value={searchNameInput} onChange={(e)=>{setSearchNameInput(e.target.value)}}/><button onClick={()=>{setSearchNameInput('');setSearchTypeInput('')}}>X</button></th>
+                        
+                        <th><input placeholder='Date' value={searchTypeInput} onChange={(e)=>{setSearchTypeInput(e.target.value)}}/></th>
                         <th><p onClick={()=>{getUsers({name: searchNameInput, type: searchTypeInput})}}>Find</p></th>
-                        <th><input placeholder='Name' value={searchNameInput} onChange={(e)=>{setSearchNameInput(e.target.value)}}/><button onClick={()=>{setSearchNameInput('');setSearchTypeInput('')}}>X</button></th>
-                        <th><input placeholder='Type' value={searchTypeInput} onChange={(e)=>{setSearchTypeInput(e.target.value)}}/></th>
                         <th><p onClick={()=>newAppointment()}>New</p></th>
                         
                     </tr>
                 </thead>
                 <thead className='table-table2-table-thead'>
                     <tr className='table-table2-table-thead-tr'>
+                        
+                        <th>Patient</th>
+                        <th>Doctor</th>
+                        <th>Date</th>
+                        <th>Time</th>
                         <th>No</th>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Options</th>
                     </tr>
                 </thead>
                 <tbody className='table-table2-table-tbody'>
@@ -328,14 +261,20 @@ const AppointmentTable = () => {
                         
                         return (
                             <tr key={index} className='table-table2-table-tbody-tr'>
-                               <td>{index+1}</td>
+                               
                                 <td>{user.name}</td>
                                 <td>
                                     <button  id={user.status_=== 'Scheduled'? 'bg-green':'bg-black'}>{user.type}</button>
                                 </td>
+                                <td className='maxW50px'>22-Dec-21</td>
                                 <td className='table-table2-table-body-tr-td'>
-                                    <button onClick={()=>{detailsFunction(user.id)}}>Details</button>
+                                    <button style={{background:'green'}} onClick={()=>{detailsFunction(user.id)}}>10:33</button>
                                 </td>
+                                <td className='table-table2-table-body-tr-td'>
+                                    <button onClick={()=>{detailsFunction(user.id)}}>33:33</button>
+                         
+                                </td>
+                                <td><button onClick={()=>{detailsFunction(user.id)}}>{index+1}</button></td>
                             </tr>
                         );
                     })}

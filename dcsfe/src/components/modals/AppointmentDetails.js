@@ -35,12 +35,11 @@ const AppointmentDetails = ({
         {
             return [...prev, {procedure: '', durationMinutes: '', cost: ''}]
         }
-            // [...procedureFields, {procedure: '', durationMinutes: '', cost: ''}]
             )
 
     }
     const addPaymentFieldFunction = ()=>{
-        setPaymentFields([...paymentFields, {payment: '', date: new Date()}])
+        setPaymentFields([...paymentFields, {payment: '', date: new Date(), change: '', balance: ''}])
     }
     const removePaymentFieldFunction= (index, cost)=>{
         const values = [...paymentFields];
@@ -58,26 +57,20 @@ const AppointmentDetails = ({
             values.splice(index, 1);
             return values;
         })
-        // const values = [...procedureFields];
-        // values.splice(index, 1);
-        // // setProcedureFields(values);
-        // setProcedureFields(prev=>values)
-        
         setTotalCost(parseFloat(totalCost - cost));        
         setPaymentBalance(parseFloat(paymentBalance - cost));
 
         setEndTime(
             new Date(
                 new Date(new Date(endtTime).setMinutes(new Date(endtTime).getMinutes()-duration))
-                    ));
-
-        
+                    ));  
     }
 
-    const handleChangeInputPayment = (index, event)=>{
+    const handleChangeInputPayment = async (index, event)=>{
         const values = [...paymentFields];
         values[index][event.target.name] = event.target.value;
-        setPaymentFields(values);
+
+        await setPaymentFields(values);
 
         let totalPayment = 0;
         paymentFields.map((paymentField)=>{
@@ -86,14 +79,23 @@ const AppointmentDetails = ({
                 totalPayment = totalPayment + parseFloat(paymentField.payment);
             }
             return null;
-        })
+        });
         if (totalCost-totalPayment>-1) {
-            setPaymentBalance(parseFloat(totalCost-totalPayment));
-            setPaymentChange(0);
+           await setPaymentBalance(parseFloat(totalCost-totalPayment));
+           await setPaymentChange(0);
+            const values2 = [...paymentFields];
+            values[index]['change'] = 0;
+            values[index]['balance'] = parseFloat(totalCost-totalPayment);
+            await setPaymentFields(values2);
         } else {
-            setPaymentBalance(0);
-            setPaymentChange(totalPayment-totalCost);
+            await setPaymentBalance(0);
+            await setPaymentChange(parseFloat(totalPayment-totalCost));
+            const values2 = [...paymentFields];
+            values[index]['change'] = parseFloat(totalPayment-totalCost);
+            values[index]['balance'] = 0;
+            await setPaymentFields(values2);
         }
+        
         
     }
 
@@ -367,11 +369,17 @@ const AppointmentDetails = ({
                                                 </div>
                                             </div>
                                             
-                                            
-                                            <div className="details-details-modal-body-input-box">
-                                                <span>Change</span>
-                                                <input style={paymentChange>0? {color: 'green', fontWeight: '600', fontSize:'14px'} : {}} disabled value={paymentChange} />
+                                            <div className='display-flex' style={{marginTop:'0px'}}  key={index}>
+                                                <div className="details-details-modal-body-input-box">
+                                                    <span>Change</span>
+                                                    <input style={paymentField.change>0? {color: 'green', fontWeight: '600', fontSize:'14px'} : {}} disabled value={paymentField.change} />
+                                                </div>
+                                                <div className="details-details-modal-body-input-box">
+                                                    <span>Balance After Payment</span>
+                                                    <input style={paymentField.balancee>0? {color: 'red', fontWeight: '600', fontSize:'14px'} : {}} disabled value={paymentField.balance} />
+                                                </div>
                                             </div>
+                                            
                                                 
                                         </div>
                                                                                       
