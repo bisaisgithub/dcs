@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { createAppointment } from "../controller/appointment.controller.js";
+import { createAppointment, getAppointments } from "../controller/appointment.controller.js";
 
 
 
 const appointmentRouter = Router();
 
-// appointmentRouter.get('/users', getUsers);
+appointmentRouter.get('/appointments', getAppointments);
 
 // appointmentRouter.get('/users/:search', getUsersBySearch);
 

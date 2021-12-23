@@ -7,109 +7,115 @@ import setHours from 'date-fns/setHours';
 import setMinutes from 'date-fns/setMinutes';
 
 const AppointmentDetails = ({
-    isOpen, setIsOpen, addAppointmentFunction, updateUser,userId,
-    appointmentPatientInput,setAppointmentPatientInput,genderInput,setGenderInput,
-    nameInput,setNameInput,mobileInput,setMobileInput,emailInput,
-    setEmailInput,selectedDateInput,setSelectedDateInput,userAge,
-    passwordInput,setPasswordInput,patientsData, setAppointmentPatientId, appointmentPatientId,
-    usersData, appointmentDoctorId, setAppointmentDoctorId,appointmentDoctorInput,setAppointmentDoctorInput,
-    startTime,setStartTime,
-    appointmentProcedureInput,setAppointmentProcedureInput,
-    appointmentDurationMinutesInput,setAppointmentDurationMinutesInput,
-    procedureFields, setProcedureFields,endtTime,setEndTime,statusInput,setStatusInput,
-    totalDurationMinutes,setTotalDurationMinutes,setTypeInput,typeInput,
-    setTotalCost,totalCost,
-    setPaymentFields,paymentFields,
-    setPaymentBalance,paymentBalance,
-    paymentChange,setPaymentChange
 
+    app_details_is_open, set_app_details_is_open, 
+    addAppointmentFunction, 
+    app_patient_name, set_app_patient_name,
+    app_date, set_app_date,
+    patientsData, 
+    set_app_patient_id, app_patient_id,
+    usersData, 
+    set_app_user_doctor_id,
+    app_user_doctor_name,set_app_user_doctor_name,
+    app_start_time,set_app_start_time,
+    app_proc_duration_minutes,set_app_proc_duration_minutes,
+    app_proc_fields, set_app_proc_fields,
+    app_end_time, set_app_end_time, 
+    app_status, set_app_status,
+    app_total_proc_duration_minutes, set_app_total_proc_duration_minutes,
+    set_app_type,app_type,
+    set_app_total_proc_cost, app_total_proc_cost,
+    set_app_pay_fields, app_pay_fields,
+    set_app_pay_balance, app_pay_balance,
+    app_pay_change, set_app_pay_change
 
     }) => {
-    if (!isOpen) {
+    if (!app_details_is_open) {
         return null;
     }
-    
 
     const addProcedureFieldFunction = ()=>{
-        setProcedureFields((prev)=>
+        set_app_proc_fields((prev)=>
         {
             return [...prev, {procedure: '', durationMinutes: '', cost: ''}]
         }
             )
+    }
 
-    }
     const addPaymentFieldFunction = ()=>{
-        setPaymentFields([...paymentFields, {payment: '', date: new Date(), change: '', balance: ''}])
+        set_app_pay_fields([...app_pay_fields, {payment: '', date: new Date(), change: '', balance: ''}])
     }
+
     const removePaymentFieldFunction= (index, cost)=>{
-        const values = [...paymentFields];
+        const values = [...app_pay_fields];
         values.splice(index, 1);
-        setPaymentFields(values);
+        set_app_pay_fields(values);
         if (parseFloat(cost)>0) {
-            setPaymentBalance(parseFloat(paymentBalance + parseFloat(cost))); 
+            set_app_pay_balance(parseFloat(app_pay_balance + parseFloat(cost))); 
         }
         
     }
+    
     const removeProcedureFieldFunction = (index, duration, cost) =>{
         
-        setProcedureFields((prev)=>{
+        set_app_proc_fields((prev)=>{
             const values = [...prev];
             values.splice(index, 1);
             return values;
         })
-        setTotalCost(parseFloat(totalCost - cost));        
-        setPaymentBalance(parseFloat(paymentBalance - cost));
+        set_app_total_proc_cost(parseFloat(app_total_proc_cost - cost));        
+        set_app_pay_balance(parseFloat(app_pay_balance - cost));
 
-        setEndTime(
+        set_app_end_time(
             new Date(
-                new Date(new Date(endtTime).setMinutes(new Date(endtTime).getMinutes()-duration))
+                new Date(new Date(app_end_time).setMinutes(new Date(app_end_time).getMinutes()-duration))
                     ));  
     }
 
     const handleChangeInputPayment = async (index, event)=>{
-        const values = [...paymentFields];
+        const values = [...app_pay_fields];
         values[index][event.target.name] = event.target.value;
 
-        await setPaymentFields(values);
+        await set_app_pay_fields(values);
 
         let totalPayment = 0;
-        paymentFields.map((paymentField)=>{
+        app_pay_fields.map((paymentField)=>{
             if (parseInt(paymentField.payment)>0) {
                 
                 totalPayment = totalPayment + parseFloat(paymentField.payment);
             }
             return null;
         });
-        if (totalCost-totalPayment>-1) {
-           await setPaymentBalance(parseFloat(totalCost-totalPayment));
-           await setPaymentChange(0);
-            const values2 = [...paymentFields];
+        if (app_total_proc_cost-totalPayment>-1) {
+           await set_app_pay_balance(parseFloat(app_total_proc_cost-totalPayment));
+           await set_app_pay_change(0);
+            const values2 = [...app_pay_fields];
             values[index]['change'] = 0;
-            values[index]['balance'] = parseFloat(totalCost-totalPayment);
-            await setPaymentFields(values2);
+            values[index]['balance'] = parseFloat(app_total_proc_cost-totalPayment);
+            await set_app_pay_fields(values2);
         } else {
-            await setPaymentBalance(0);
-            await setPaymentChange(parseFloat(totalPayment-totalCost));
-            const values2 = [...paymentFields];
-            values[index]['change'] = parseFloat(totalPayment-totalCost);
+            await set_app_pay_balance(0);
+            await set_app_pay_change(parseFloat(totalPayment-app_total_proc_cost));
+            const values2 = [...app_pay_fields];
+            values[index]['change'] = parseFloat(totalPayment-app_total_proc_cost);
             values[index]['balance'] = 0;
-            await setPaymentFields(values2);
+            await set_app_pay_fields(values2);
         }
         
         
     }
 
     const handleChangeInput =(index, event)=>{
-        if (startTime) {
-            const values = [...procedureFields];
+        if (app_start_time) {
+            const values = [...app_proc_fields];
             values[index][event.target.name] = event.target.value;
-            setProcedureFields(values);
+            set_app_proc_fields(values);
 
             let totalMinutes = 0;
             let totalCostTemporary = 0;
-            setTotalCost(0);
+            set_app_total_proc_cost(0);
             let totalPayment = 0;
-            procedureFields.map((procedureField)=>{
+            app_proc_fields.map((procedureField)=>{
                 if (!parseInt(procedureField.durationMinutes)<1) {
                     totalMinutes = totalMinutes + parseInt(procedureField.durationMinutes);
                 } else {
@@ -142,15 +148,15 @@ const AppointmentDetails = ({
             })
 
             
-            setEndTime(
+            set_app_end_time(
                 new Date(
-                    // new Date(endtTime).setMinutes(endtTime.getMinutes()+totalDurationMinutes)
-                    new Date(new Date(startTime).setMinutes(new Date(startTime).getMinutes()+totalMinutes))
+                    // new Date(app_end_time).setMinutes(app_end_time.getMinutes()+app_total_proc_duration_minutes)
+                    new Date(new Date(app_start_time).setMinutes(new Date(app_start_time).getMinutes()+totalMinutes))
                         ))
                         // console.log('totalMinutes: ', totalMinutes)
-                        // console.log('endtTime', endtTime)
+                        // console.log('app_end_time', app_end_time)
 
-            paymentFields.map((paymentField)=>{
+            app_pay_fields.map((paymentField)=>{
                 if (parseFloat(paymentField.payment)>0) {
                     totalPayment = totalPayment + parseFloat(paymentField.payment);
                 }else{
@@ -158,10 +164,10 @@ const AppointmentDetails = ({
                 }
                 return null;
             });
-            setTotalCost(parseFloat(totalCostTemporary));
-            // console.log('totalCost', totalCost);
+            set_app_total_proc_cost(parseFloat(totalCostTemporary));
+            // console.log('app_total_proc_cost', app_total_proc_cost);
             // console.log('totalPayment' , totalPayment)
-            setPaymentBalance(parseFloat(totalCostTemporary-totalPayment));
+            set_app_pay_balance(parseFloat(totalCostTemporary-totalPayment));
         } else {
             alert('please select start time first')
         }
@@ -170,22 +176,22 @@ const AppointmentDetails = ({
     const setAppointmentPatientIdFunction = (name)=>{
          patientsData.map((patient)=>{
             if (patient.name === name) {
-                setAppointmentPatientId(patient.id);
+                set_app_patient_id(patient.id);
             }
             return null;
 
         });
-        setAppointmentPatientInput(name);
+        set_app_patient_name(name);
     }
 
     const setAppointmentDoctorIdFunction = (name)=>{
             usersData.map((user)=>{
             if (user.name === name) {
-               setAppointmentDoctorId(user.id);
+               set_app_user_doctor_id(user.id);
             }
             return null;
         });
-        setAppointmentDoctorInput(name)
+        set_app_user_doctor_name(name)
     }
     return ReactDOM.createPortal(
         <>
@@ -195,7 +201,7 @@ const AppointmentDetails = ({
                         <div className='details-details-modal-body'>
                             <div className="details-details-modal-body-input-box">
                                 <span>Patient</span>
-                                <select value={appointmentPatientInput} onChange={(e)=>{setAppointmentPatientIdFunction(e.target.value)}}>
+                                <select value={app_patient_name} onChange={(e)=>{setAppointmentPatientIdFunction(e.target.value)}}>
                                     {patientsData && patientsData.map((patient, index)=>{
                                         return (
                                             <option key={index} value={patient.name}>{patient.name}</option>
@@ -206,8 +212,8 @@ const AppointmentDetails = ({
                             </div>
                             <div className="details-details-modal-body-input-box">
                                 <span>Doctor</span>
-                                <select value={appointmentDoctorInput} onChange={(e)=>{setAppointmentDoctorIdFunction(e.target.value)}}>
-                                    {patientsData && usersData.map((user, index)=>{
+                                <select value={app_user_doctor_name} onChange={(e)=>{setAppointmentDoctorIdFunction(e.target.value)}}>
+                                    {usersData && usersData.map((user, index)=>{
                                         return (
                                             <option key={index} value={user.name}>{user.name}</option>
                                         );
@@ -225,14 +231,14 @@ const AppointmentDetails = ({
                                 dateFormat='MMMM d, yyyy' 
                                 className='date-picker' 
                                 placeholderText="Select Date" 
-                                selected={selectedDateInput} 
-                                onChange={date=>setSelectedDateInput(date)} />
+                                selected={app_date} 
+                                onChange={date=>set_app_date(date)} />
                             </div>
                             <div className='details-details-modal-body-input-box'>
                                 <span>Start Time</span>
                                 <DatePicker
-                                    selected={startTime}
-                                    onChange={(dateStartTime) => {setStartTime(dateStartTime);}}
+                                    selected={app_start_time}
+                                    onChange={(dateStartTime) => {set_app_start_time(dateStartTime);}}
                                     showTimeSelect
                                     showTimeSelectOnly
                                     timeIntervals={15}
@@ -245,7 +251,7 @@ const AppointmentDetails = ({
                             </div>
                         </div>
                         {
-                            procedureFields.map((procedureField, index)=>{
+                            app_proc_fields.map((procedureField, index)=>{
                                 return (
                                     
                                     <div style={{marginTop:'0'}} className='details-details-modal-body' key={index}>
@@ -285,16 +291,16 @@ const AppointmentDetails = ({
                             </div>
                             <div className="details-details-modal-body-input-box">
                                 <span>Total Cost</span>
-                                <input type='number' value={totalCost} disabled />
+                                <input type='number' value={app_total_proc_cost} disabled />
                                 
                             </div>
                             <div className="details-details-modal-body-input-box">
                                 <span>End Time</span>
                                 <div className='duration-minutes-container'>
-                                    {/* <input value={endtTime} disabled/> */}
+                                    {/* <input value={app_end_time} disabled/> */}
                                     <DatePicker
-                                        selected={endtTime}
-                                        // onChange={(date) => setStartTime(date)}
+                                        selected={app_end_time}
+                                        // onChange={(date) => set_app_start_time(date)}
                                         showTimeSelect
                                         showTimeSelectOnly
                                         // timeIntervals={30}
@@ -314,14 +320,14 @@ const AppointmentDetails = ({
                         <div className='display-flex'>
                             <div className="details-details-modal-body-input-box">
                                 <span>Status</span>
-                                <select name="status" value={statusInput} onChange={(e)=>{setStatusInput(e.target.value)}}>
+                                <select name="status" value={app_status} onChange={(e)=>{set_app_status(e.target.value)}}>
                                     <option value="">-Select Status-</option>
                                     <option value="On Schedule">On Schedule</option>
                                 </select>       
                             </div>
                             <div className="details-details-modal-body-input-box">
                                 <span>Type</span>
-                                <select name="status" value={typeInput} onChange={(e)=>{setTypeInput(e.target.value)}}>
+                                <select name="status" value={app_type} onChange={(e)=>{set_app_type(e.target.value)}}>
                                     <option value="">-Select Type-</option>
                                     <option value="Scheduled">Scheduled</option>
                                     <option value="Walk-in">Walk-in</option>
@@ -331,13 +337,13 @@ const AppointmentDetails = ({
                         <div className='display-flex' style={{marginTop:'5px'}} >
                             <div className="details-details-modal-body-input-box">
                                 <span>Balance</span>
-                                <input style={paymentBalance>0? {color: 'red', fontWeight: '600', fontSize:'14px'} : {}} disabled value={paymentBalance} />
+                                <input style={app_pay_balance>0? {color: 'red', fontWeight: '600', fontSize:'14px'} : {}} disabled value={app_pay_balance} />
                             </div>
                             
                         </div>
 
                             {
-                                paymentFields.map((paymentField, index)=>{
+                                app_pay_fields.map((paymentField, index)=>{
                                     return (
                                         
                                         <div className='display-flex' style={{marginTop:'0px',flexWrap: 'wrap'}}  key={index}>
@@ -364,7 +370,7 @@ const AppointmentDetails = ({
                                                     className='date-picker' 
                                                     placeholderText="Select Date" 
                                                     selected={paymentField.date} 
-                                                    // onChange={date=>setSelectedDateInput(date)} 
+                                                    // onChange={date=>set_app_date(date)} 
                                                     />
                                                 </div>
                                             </div>
@@ -389,13 +395,13 @@ const AppointmentDetails = ({
                             }
                         
                         <button className='add-remove-button height-80p' onClick={()=>{addPaymentFieldFunction()}}>+</button>
-                        {/* <p>procedureFields: {procedureFields}</p> */}
+                        {/* <p>app_proc_fields: {app_proc_fields}</p> */}
                     </div>                    
                     <div className='details-details-modal-body-button'>                    
                         {/* {userId? (<input type="submit" onClick={updateUser} value='Update' className='percent-40'/>):
                         (<input type="submit" onClick={addUser} value='Add' className='percent-40'/>)}   */}
                         <button className='button-w70' onClick={()=>{addAppointmentFunction()}}>Add Appointment</button>                               
-                        <button className='button-w20' onClick={()=>{setIsOpen(false); setSelectedDateInput(new Date())}}>Close</button>
+                        <button className='button-w20' onClick={()=>{set_app_details_is_open(false); set_app_date(new Date())}}>Close</button>
                     </div>
                 </div>
             </div>

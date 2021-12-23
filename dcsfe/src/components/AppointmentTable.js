@@ -5,48 +5,41 @@ import './Table.css';
 
 
 const AppointmentTable = () => {
-    const [selectedDateInput, setSelectedDateInput] = useState(null);
-    const [isOpen, setIsOpen] = useState(false);
-    const [usersData, setUsersData] = useState([]);
+    const [app_date, set_app_date] = useState(null);
+    const [app_details_is_open, set_app_details_is_open] = useState(false);
+    const [appointmentsData, setAppointmentsData] = useState([]);
     const [patientsData, setPatientsData] = useState([]);
-    const [nameInput, setNameInput] = useState('');
-    const [mobileInput, setMobileInput] = useState('');
-    const [genderInput, setGenderInput] = useState('');
-    const [emailInput, setEmailInput] = useState('');
-    const [userId, setUserId] = useState("");
-    const [appointmentPatientInput, setAppointmentPatientInput] =useState('');
-    const [appointmentPatientId, setAppointmentPatientId] =useState('');
-    const [appointmentDoctorInput, setAppointmentDoctorInput] =useState('');
-    const [appointmentDoctorId, setAppointmentDoctorId] =useState('');
-    const [searchNameInput, setSearchNameInput] = useState('');
-    const [userAge, setUserAge] = useState('');
-    const [passwordInput, setPasswordInput] = useState('');
-    const [searchTypeInput, setSearchTypeInput] = useState('');
-    const [appointmentProcedureInput, setAppointmentProcedureInput] = useState('');
-    const [appointmentDurationMinutesInput, setAppointmentDurationMinutesInput] = useState('');
-    const [procedureFields, setProcedureFields] = useState(()=>
-    
-    {
-        return [
-            {procedure: '', durationMinutes: '', cost: ''},
-        ]
-    }
-        
-    );
-    const [startTime, setStartTime] = useState(null);
-    const [endtTime, setEndTime] = useState(null);
-    const [statusInput, setStatusInput] = useState('');
-    const [totalDurationMinutes, setTotalDurationMinutes] = useState(0);
-    const [typeInput, setTypeInput] = useState('Scheduled');
-    const [totalCost, setTotalCost] = useState(0);
-    const [paymentFields, setPaymentFields] = useState([
-        ]);
-    const [paymentBalance, setPaymentBalance] = useState('');
-    const [paymentChange, setPaymentChange] = useState('');
+    // const [nameInput, setNameInput] = useState('');
+    // const [mobileInput, setMobileInput] = useState('');
+    // const [genderInput, setGenderInput] = useState('');
+    // const [emailInput, setEmailInput] = useState('');
+    // const [userId, setUserId] = useState("");
+    const [app_patient_name, set_app_patient_name] =useState('');
+    const [app_patient_id, set_app_patient_id] =useState('');
+    const [app_user_doctor_name, set_app_user_doctor_name] =useState('');
+    const [app_user_doctor_id, set_app_user_doctor_id] =useState('');
+    const [app_search_patient_name, set_app_search_patient_name] = useState('');
+    // const [userAge, setUserAge] = useState('');
+    // const [passwordInput, setPasswordInput] = useState('');
+    const [app_search_type, set_app_search_type] = useState('');
+    const [app_proc_name, set_app_proc_name] = useState('');
+    const [app_proc_duration_minutes, set_app_proc_duration_minutes] = useState('');
+    const [app_proc_fields, set_app_proc_fields] = useState(()=>{return [{
+        procedure: '', durationMinutes: '', cost: ''},
+        ]});
+    const [app_start_time, set_app_start_time] = useState(null);
+    const [app_end_time, set_app_end_time] = useState(null);
+    const [app_status, set_app_status] = useState('');
+    const [app_total_proc_duration_minutes, set_app_total_proc_duration_minutes] = useState(0);
+    const [app_type, set_app_type] = useState('Scheduled');
+    const [app_total_proc_cost, set_app_total_proc_cost] = useState(0);
+    const [app_pay_fields, set_app_pay_fields] = useState([]);
+    const [app_pay_balance, set_app_pay_balance] = useState('');
+    const [app_pay_change, set_app_pay_change] = useState('');
     // const [template, template] = useState('');
     useEffect(()=>{
         
-        getUsers();
+        // getAppointments();
 
     }, []);
 
@@ -69,39 +62,39 @@ const AppointmentTable = () => {
             }
             return true;
         }
-        // setIsOpen(true);
-        function formatDate(date) {
-            var d = new Date(date),
-                month = '' + (d.getMonth() + 1),
-                day = '' + d.getDate(),
-                year = d.getFullYear();
-            if (month.length < 2) 
-                month = '0' + month;
-            if (day.length < 2) 
-                day = '0' + day;
-            return [year, month, day].join('-');
-        }        
-        let date = formatDate(selectedDateInput);
+        // set_app_details_is_open(true);
+        // function formatDate(date) {
+        //     var d = new Date(date),
+        //         month = '' + (d.getMonth() + 1),
+        //         day = '' + d.getDate(),
+        //         year = d.getFullYear();
+        //     if (month.length < 2) 
+        //         month = '0' + month;
+        //     if (day.length < 2) 
+        //         day = '0' + day;
+        //     return [year, month, day].join('-');
+        // }        
+        // let date = formatDate(app_date);
 
-        if (!appointmentPatientInput || !appointmentDoctorInput || !selectedDateInput ||
-            !startTime || !statusInput || !typeInput) {
+        if (!app_patient_name || !app_user_doctor_name || !app_date ||
+            !app_start_time || !app_status || !app_type) {
                 
             alert('Empty field/s')
         }else{
-            if (!validateEmptyObjectField(procedureFields)) {
+            if (!validateEmptyObjectField(app_proc_fields)) {
                 alert("Empty Procedure/s")
             } else {
-                console.log('procedureFields: ',procedureFields);
+                // console.log('app_proc_fields: ',app_proc_fields);
                 const response = await axios.post("http://172.16.0.101:3001/appointment", {
-                    patient_id: appointmentPatientId,
-                    doctor_id: appointmentDoctorId,
-                    date: date,
-                    start_time: startTime,
-                    end_time: endtTime,
-                    status_: statusInput,
-                    type: typeInput,
-                    procedures: procedureFields,
-                    payments: paymentFields,
+                    app_patient_id: app_patient_id,
+                    app_user_doctor_id: app_user_doctor_id,
+                    app_date: app_date,
+                    app_start_time: app_start_time,
+                    app_end_time: app_end_time,
+                    app_status: app_status,
+                    app_type: app_type,
+                    app_proc_fields: app_proc_fields,
+                    app_pay_fields: app_pay_fields,
                  });   
 
                 if (response.data.appointmentInsertOk) { 
@@ -113,121 +106,129 @@ const AppointmentTable = () => {
         }  
     }
     
-    const getUsers = async (data)=>{
-        
+    const getAppointments = async (data)=>{
+        console.log('getappointment called');
         if (data) {
             const response = await axios.post(`http://172.16.0.101:3001/users`, data);
             if (response.data) {
-                // console.log('response data',response.data)
-                setUsersData(response.data);
+                console.log('response data',response.data)
+                // setAppointmentsData(response.data);
             }
         } else {
-            const response = await axios.get(`http://172.16.0.101:3001/users`);
+            const response = await axios.get(`http://172.16.0.101:3001/appointments`);
             if (response.data) {
-                // console.log('response data',response.data)
-                setUsersData(response.data);
+                console.log('response data',response.data)
+                // setUsersData(response.data);
             }
         }    
     };
 
-    const updateUser = async ()=>{
+    // const updateUser = async ()=>{
         
-        function formatDate(date) {
-            var d = new Date(date),
-                month = '' + (d.getMonth() + 1),
-                day = '' + d.getDate(),
-                year = d.getFullYear();
+    //     function formatDate(date) {
+    //         var d = new Date(date),
+    //             month = '' + (d.getMonth() + 1),
+    //             day = '' + d.getDate(),
+    //             year = d.getFullYear();
         
-            if (month.length < 2) 
-                month = '0' + month;
-            if (day.length < 2) 
-                day = '0' + day;
+    //         if (month.length < 2) 
+    //             month = '0' + month;
+    //         if (day.length < 2) 
+    //             day = '0' + day;
         
-            return [year, month, day].join('-');
-        }        
-        let date = formatDate(selectedDateInput);
+    //         return [year, month, day].join('-');
+    //     }        
+    //     let date = formatDate(app_date);
 
-        if (!nameInput || !mobileInput || !genderInput || !selectedDateInput || !emailInput) {
-            alert('Empty field/s')
-        }else{
-            const response = await axios.put(`http://172.16.0.101:3001/user/${userId}`, {
-            name: nameInput,
-            mobile: mobileInput,
-            gender: genderInput,
-            dob: date,
-            allergen: emailInput,
-            status_: 'Active',
-             });
+    //     if (!nameInput || !mobileInput || !genderInput || !app_date || !emailInput) {
+    //         alert('Empty field/s')
+    //     }else{
+    //         const response = await axios.put(`http://172.16.0.101:3001/user/${userId}`, {
+    //         name: nameInput,
+    //         mobile: mobileInput,
+    //         gender: genderInput,
+    //         dob: date,
+    //         allergen: emailInput,
+    //         status_: 'Active',
+    //          });
 
-            if (response.data.userUpdateOk) {
-            alert('User Upated');
-            setIsOpen(false);
-            getUsers();
-            }else{
-                alert('Failed Updating User');
-            }
-        }
+    //         if (response.data.userUpdateOk) {
+    //         alert('User Upated');
+    //         set_app_details_is_open(false);
+    //         // getUsers();
+    //         }else{
+    //             alert('Failed Updating User');
+    //         }
+    //     }
         
-    };
+    // };
     const newAppointment = ()=>{
-        getUsers();
-        setIsOpen(true);
+        // getUsers();
+        set_app_details_is_open(true);
     };
-    const setUserAgeFunction = (patientDOB)=>{
-        // let age = 0;
-        const ageDiffs = new Date().getFullYear() - new Date(patientDOB).getFullYear();
-        if (new Date().getMonth() < new Date(patientDOB).getMonth()) {
-            // age = ageDiffs -1;
-            setUserAge(ageDiffs -1);
-        } else {
-            // age = ageDiffs;
-            setUserAge(ageDiffs);
-        }
-    }
-    const detailsFunction = async (patientIdparam)=>{
+    // const setUserAgeFunction = (patientDOB)=>{
+    //     // let age = 0;
+    //     const ageDiffs = new Date().getFullYear() - new Date(patientDOB).getFullYear();
+    //     if (new Date().getMonth() < new Date(patientDOB).getMonth()) {
+    //         // age = ageDiffs -1;
+    //         setUserAge(ageDiffs -1);
+    //     } else {
+    //         // age = ageDiffs;
+    //         setUserAge(ageDiffs);
+    //     }
+    // }
+    // const detailsFunction = async (patientIdparam)=>{
 
-        const responsePatient = await axios.get(`http://172.16.0.101:3001/user/${patientIdparam}`);
+    //     const responsePatient = await axios.get(`http://172.16.0.101:3001/user/${patientIdparam}`);
         
-        if (responsePatient.data[0].id) {
-            setSelectedDateInput(new Date(responsePatient.data[0].dob));
-            setNameInput(responsePatient.data[0].name);
-            setMobileInput(responsePatient.data[0].mobile);
-            setEmailInput(responsePatient.data[0].email);
-            // setPasswordInput(responsePatient.data[0].input);
-            setGenderInput(responsePatient.data[0].gender);
-            setAppointmentPatientInput(responsePatient.data[0].type);
-            setUserId(responsePatient.data[0].id);
-            setUserAgeFunction(responsePatient.data[0].dob);
-            setIsOpen(true);
+    //     if (responsePatient.data[0].id) {
+    //         set_app_date(new Date(responsePatient.data[0].dob));
+    //         setNameInput(responsePatient.data[0].name);
+    //         setMobileInput(responsePatient.data[0].mobile);
+    //         setEmailInput(responsePatient.data[0].email);
+    //         // setPasswordInput(responsePatient.data[0].input);
+    //         setGenderInput(responsePatient.data[0].gender);
+    //         set_app_patient_name(responsePatient.data[0].type);
+    //         setUserId(responsePatient.data[0].id);
+    //         setUserAgeFunction(responsePatient.data[0].dob);
+    //         set_app_details_is_open(true);
             
-        } else {
-            console.log('responsePatientId is empty: ', responsePatient.data[0].id)
-        }
-    }
+    //     } else {
+    //         console.log('responsePatientId is empty: ', responsePatient.data[0].id)
+    //     }
+    // }
     return (
         <div className='table-table2-container'>
             <AppointmentDetails
-            isOpen={isOpen} setIsOpen={setIsOpen} addAppointmentFunction={addAppointmentFunction}
-            updateUser={updateUser} userId={userId} appointmentPatientInput={appointmentPatientInput}
-            setAppointmentPatientInput={setAppointmentPatientInput} genderInput={genderInput} setGenderInput={setGenderInput}
-            nameInput={nameInput} setNameInput={setNameInput} mobileInput={mobileInput}
-            setMobileInput={setMobileInput} emailInput={emailInput} setEmailInput={setEmailInput}
-            selectedDateInput={selectedDateInput} setSelectedDateInput={setSelectedDateInput}
-            userAge={userAge} passwordInput={passwordInput} setPasswordInput={setPasswordInput}
-            patientsData={patientsData} appointmentPatientId={appointmentPatientId} setAppointmentPatientId={setAppointmentPatientId}
-            usersData={usersData} appointmentDoctorInput={appointmentDoctorInput} appointmentDoctorId={appointmentDoctorId}
-            setAppointmentDoctorInput={setAppointmentDoctorInput} setAppointmentDoctorId={setAppointmentDoctorId}
-            startTime={startTime} setStartTime={setStartTime} 
-            appointmentProcedureInput={appointmentProcedureInput} setAppointmentProcedureInput={setAppointmentProcedureInput}
-            appointmentDurationMinutesInput={appointmentDurationMinutesInput} setAppointmentDurationMinutesInput={setAppointmentDurationMinutesInput}
-            procedureFields={procedureFields} setProcedureFields={setProcedureFields}
-            endtTime={endtTime} setEndTime={setEndTime} statusInput={statusInput} setStatusInput={setStatusInput}
-            totalDurationMinutes={totalDurationMinutes} setTotalDurationMinutes={setTotalDurationMinutes}
-            typeInput={typeInput} setTypeInput={setTypeInput}
-            totalCost={totalCost} setTotalCost={setTotalCost}
-            paymentFields={paymentFields} setPaymentFields={setPaymentFields}
-            paymentBalance={paymentBalance} setPaymentBalance={setPaymentBalance}
-            paymentChange={paymentChange} setPaymentChange={setPaymentChange}
+            app_details_is_open={app_details_is_open} set_app_details_is_open={set_app_details_is_open} 
+            addAppointmentFunction={addAppointmentFunction}
+            // // updateUser={updateUser} 
+            // userId={userId} 
+            app_patient_name={app_patient_name} set_app_patient_name={set_app_patient_name}
+            // genderInput={genderInput} setGenderInput={setGenderInput}
+            // nameInput={nameInput} setNameInput={setNameInput} 
+            // mobileInput={mobileInput} setMobileInput={setMobileInput} 
+            // emailInput={emailInput} setEmailInput={setEmailInput}
+            app_date={app_date} set_app_date={set_app_date}
+            // userAge={userAge} 
+            // passwordInput={passwordInput} setPasswordInput={setPasswordInput}
+            patientsData={patientsData} 
+            app_patient_id={app_patient_id} set_app_patient_id={set_app_patient_id}
+            // usersData={usersData} 
+            app_user_doctor_name={app_user_doctor_name} set_app_user_doctor_name={set_app_user_doctor_name}
+            app_user_doctor_id={app_user_doctor_id} set_app_user_doctor_id={set_app_user_doctor_id}
+             
+            app_start_time={app_start_time} set_app_start_time={set_app_start_time} 
+            app_proc_name={app_proc_name} set_app_proc_name={set_app_proc_name}
+            app_proc_duration_minutes={app_proc_duration_minutes} set_app_proc_duration_minutes={set_app_proc_duration_minutes}
+            app_proc_fields={app_proc_fields} set_app_proc_fields={set_app_proc_fields}
+            app_end_time={app_end_time} set_app_end_time={set_app_end_time} app_status={app_status} set_app_status={set_app_status}
+            app_total_proc_duration_minutes={app_total_proc_duration_minutes} set_app_total_proc_duration_minutes={set_app_total_proc_duration_minutes}
+            app_type={app_type} set_app_type={set_app_type}
+            app_total_proc_cost={app_total_proc_cost} set_app_total_proc_cost={set_app_total_proc_cost}
+            app_pay_fields={app_pay_fields} set_app_pay_fields={set_app_pay_fields}
+            app_pay_balance={app_pay_balance} set_app_pay_balance={set_app_pay_balance}
+            app_pay_change={app_pay_change} set_app_pay_change={set_app_pay_change}
 
             // setHours={setHours} setMinutes={setMinutes}
             ></AppointmentDetails>
@@ -236,11 +237,13 @@ const AppointmentTable = () => {
                 <thead className='table-table2-table-thead-search2'>
                     <tr className='table-table2-table-thead-tr-search2'>
                       
-                        <th><input placeholder='Name' value={searchTypeInput} onChange={(e)=>{setSearchTypeInput(e.target.value)}}/></th>
-                        <th><input placeholder='Doctor' value={searchNameInput} onChange={(e)=>{setSearchNameInput(e.target.value)}}/><button onClick={()=>{setSearchNameInput('');setSearchTypeInput('')}}>X</button></th>
+                        <th><input placeholder='Name' value={app_search_type} onChange={(e)=>{set_app_search_type(e.target.value)}}/></th>
+                        <th><input placeholder='Doctor' value={app_search_patient_name} onChange={(e)=>{set_app_search_patient_name(e.target.value)}}/><button onClick={()=>{set_app_search_patient_name('');set_app_search_type('')}}>X</button></th>
                         
-                        <th><input placeholder='Date' value={searchTypeInput} onChange={(e)=>{setSearchTypeInput(e.target.value)}}/></th>
-                        <th><p onClick={()=>{getUsers({name: searchNameInput, type: searchTypeInput})}}>Find</p></th>
+                        <th><input placeholder='Date' value={app_search_type} onChange={(e)=>{set_app_search_type(e.target.value)}}/></th>
+                        <th><p onClick={()=>{
+                            // getUsers({name: app_search_patient_name, type: app_search_type})
+                            }}>Find</p></th>
                         <th><p onClick={()=>newAppointment()}>New</p></th>
                         
                     </tr>
@@ -257,7 +260,7 @@ const AppointmentTable = () => {
                 </thead>
                 <tbody className='table-table2-table-tbody'>
                     
-                    {usersData && usersData.map((user, index)=>{
+                    {/* {appointmentsData && appointmentsData.map((appointment, index)=>{
                         
                         return (
                             <tr key={index} className='table-table2-table-tbody-tr'>
@@ -277,7 +280,7 @@ const AppointmentTable = () => {
                                 <td><button onClick={()=>{detailsFunction(user.id)}}>{index+1}</button></td>
                             </tr>
                         );
-                    })}
+                    })} */}
                 </tbody>
             </div>
 

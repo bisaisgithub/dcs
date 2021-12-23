@@ -3,16 +3,21 @@ import {v4 as uuid} from 'uuid';
 import db from "../config/db.js";
 
 
-// export const getPatients = async (req, res)=>{
-//     try {
-//         // console.log('getPatients called');
-//         const response = await db('patient').orderBy('name', 'desc');
-//         // console.log('response patients: ', response);
-//         res.json(response);
-//     } catch (error) {
-//         console.log('catch error: ', error)
-//     }  
-// };
+export const getAppointments = async (req, res)=>{
+    try {
+
+        const response = await db.raw('select * from user s, appointment b, patient c where b.doctor_id = s.id and b.patient_id = c.id ');
+        // const response = await db('appointment')
+        // .join('patient', 'appointment.patient_id', '=', 'patient.id')
+        // .join('user', 'appointment.doctor_id', '=', 'user.id')
+        // .select('appointment.id', 'patient.name', 'user.name')
+        // .orderBy('date', 'desc');
+        // console.log('response patients: ', response);
+        res.json(response);
+    } catch (error) {
+        console.log('catch error: ', error)
+    }  
+};
 
 export const createAppointment = async (req, res)=>{
     // console.log('appointment reqbody: ',req.body.procedure)
@@ -23,14 +28,14 @@ export const createAppointment = async (req, res)=>{
     const appointmentId = uuid();
     try {
         const response = await db('appointment').insert({
-            id: appointmentId,
-            patient_id: req.body.patient_id,
-            doctor_id: req.body.doctor_id,
-            date: req.body.date,
-            start_time: new Date(req.body.start_time).toISOString().split('T')[0] + ' '+ new Date(req.body.start_time).toTimeString().split(' ')[0],
-            end_time: new Date(req.body.end_time).toISOString().split('T')[0] + ' '+ new Date(req.body.end_time).toTimeString().split(' ')[0],
-            status_: req.body.status_,
-            type: req.body.type,
+            app_id: appointmentId,
+            app_patient_id: req.body.app_patient_id,
+            app_user_doctor_id: req.body.app_user_doctor_id,
+            app_date: new Date(req.body.app_date).toISOString().split('T')[0],
+            app_start_time: new Date(req.body.app_start_time).toISOString().split('T')[0] + ' '+ new Date(req.body.app_start_time).toTimeString().split(' ')[0],
+            app_end_time: new Date(req.body.app_end_time).toISOString().split('T')[0] + ' '+ new Date(req.body.app_end_time).toTimeString().split(' ')[0],
+            app_status: req.body.app_status,
+            app_type: req.body.app_type,
         });
         // console.log(response);
         if (response) {
@@ -38,13 +43,13 @@ export const createAppointment = async (req, res)=>{
             req.body.procedures.map((procedure)=>{
                 procedures = [...procedures, 
                     {
-                        id: uuid(),
-                        patient_id: req.body.patient_id,
-                        doctor_id: req.body.doctor_id,
-                        appointment_id: appointmentId,
-                        procedure_name: procedure.procedure,
-                        duration_minutes: procedure.durationMinutes,
-                        procedure_cost: procedure.cost,
+                        proc_id: uuid(),
+                        proc_patient_id: req.body.proc_patient_id,
+                        proc_user_doctor_id: req.body.proc_user_doctor_id,
+                        proc_appointment_id: appointmentId,
+                        proc_name: procedure.proc_name,
+                        proc_duration_minutes: procedure.proc_duration_minutes,
+                        proc_cost: procedure.proc_cost,
                     }
                 ]                
             });
@@ -54,13 +59,13 @@ export const createAppointment = async (req, res)=>{
                 req.body.payments.map((payment)=>{
                     payments = [...payments, 
                     {
-                        id: uuid(),
-                        appointment_id: appointmentId,
-                        patient_id: req.body.patient_id,
-                        payment: payment.payment,
-                        payment_date: new Date(req.body.start_time).toISOString().split('T')[0] + ' '+ new Date(req.body.start_time).toTimeString().split(' ')[0],
-                        change: payment.change,
-                        balance: payment.balance,
+                        pay_id: uuid(),
+                        pay_appointment_id: appointmentId,
+                        pay_patient_id: req.body.pay_patient_id,
+                        pay_amount: payment.pay_amount,
+                        pay_date: new Date(req.body.pay_date).toISOString().split('T')[0] + ' '+ new Date(req.body.pay_date).toTimeString().split(' ')[0],
+                        pay_change: payment.pay_change,
+                        pay_balance: payment.pay_balance,
                     }
                 ]                
             });

@@ -6,15 +6,15 @@ import './Table.css';
 // import 'react-datepicker/dist/react-datepicker.css';
 
 const PatientTable2 = () => {
-    const [selectedDateInput, setSelectedDateInput] = useState(new Date());
+    const [patient_dob, set_patient_dob] = useState(new Date());
     const [isOpen, setIsOpen] = useState(false);
     const [patientsData, setPatientsData] = useState([]);
-    const [nameInput, setNameInput] = useState('');
-    const [mobileInput, setMobileInput] = useState('');
-    const [genderInput, setGenderInput] = useState('');
-    const [allergenInput, setAllergenInput] = useState('');
-    const [patientId, setPatientId] = useState("");
-    const [status_Input, setStatus_Input] =useState('-Select Status-');
+    const [patient_name, set_patient_name] = useState('');
+    const [patient_mobile, set_patient_mobile] = useState('');
+    const [patient_gender, set_patient_gender] = useState('');
+    const [patient_allergen, set_patient_allergen] = useState('');
+    const [patient_id, set_patient_id] = useState("");
+    const [patient_status, set_patient_status] =useState('-Select Status-');
     const [searchNameInput, setSearchNameInput] = useState('');
     const [patientAge, setPatientAge] = useState('');
     const [searchStatusInput, setSearchStatusInput] = useState('');
@@ -36,29 +36,29 @@ const PatientTable2 = () => {
                 day = '0' + day;
             return [year, month, day].join('-');
         }        
-        let date = formatDate(selectedDateInput);
+        let date = formatDate(patient_dob);
         // console.log('date: ', date);
         // console.log('addPatient called');
-        if (!nameInput || !mobileInput || !genderInput || !selectedDateInput || !allergenInput || status_Input === '-Select Status-') {
+        if (!patient_name || !patient_mobile || !patient_gender || !patient_dob || !patient_allergen || patient_status === '-Select Status-') {
             alert('Empty field/s')
         }else{
             const response = await axios.post("http://172.16.0.101:3001/patient", {
-            name: nameInput,
-            mobile: mobileInput,
-            gender: genderInput,
-            dob: date,
-            allergen: allergenInput,
-            status_: status_Input,
+                patient_name: patient_name,
+                patient_mobile: patient_mobile,
+                patient_gender: patient_gender,
+                patient_dob: date,
+                patient_allergen: patient_allergen,
+                patient_status: patient_status,
         });
         // console.log('add patient response.data', response.data)
         if (response.data.insertOk) {
             alert('Patient Added');
             // setSelectedDatenput(new Date());
-            // setNameInput('');
-            // setMobileInput('');
-            // setAllergenInput('');
-            // setGenderInput('');
-            // console.log('clearing input name', nameInput);
+            // set_patient_name('');
+            // set_patient_mobile('');
+            // set_patient_allergen('');
+            // set_patient_gender('');
+            // console.log('clearing input name', patient_name);
             getPatients();
             setIsOpen(false);
         }else{
@@ -101,29 +101,29 @@ const PatientTable2 = () => {
         
             return [year, month, day].join('-');
         }        
-        let date = formatDate(selectedDateInput);
+        let date = formatDate(patient_dob);
         // console.log('date: ', date);
         // console.log('addPatient called');
-        if (!nameInput || !mobileInput || !genderInput || !selectedDateInput || !allergenInput) {
+        if (!patient_name || !patient_mobile || !patient_gender || !patient_dob || !patient_allergen) {
             alert('Empty field/s')
         }else{
-            const response = await axios.put(`http://172.16.0.101:3001/patient/${patientId}`, {
-            name: nameInput,
-            mobile: mobileInput,
-            gender: genderInput,
-            dob: date,
-            allergen: allergenInput,
-            status_: 'Active',
+            const response = await axios.put(`http://172.16.0.101:3001/patient/${patient_id}`, {
+                patient_name: patient_name,
+                patient_mobile: patient_mobile,
+                patient_gender: patient_gender,
+                patient_dob: date,
+                patient_allergen: patient_allergen,
+                patient_status: patient_status,
              });
 
             if (response.data.updateOk) {
             alert('Patient Upated');
             // setSelectedDatenput(new Date());
-            // setNameInput('');
-            // setMobileInput('');
-            // setAllergenInput('');
-            // setGenderInput('');
-            // console.log('clearing input name', nameInput);
+            // set_patient_name('');
+            // set_patient_mobile('');
+            // set_patient_allergen('');
+            // set_patient_gender('');
+            // console.log('clearing input name', patient_name);
             setIsOpen(false);
             getPatients();
             }else{
@@ -133,14 +133,14 @@ const PatientTable2 = () => {
         
     };
     const newPatient = ()=>{
-        setPatientId(null);
-        setSelectedDateInput(new Date());
-        setNameInput('');
-        setMobileInput('');
-        setAllergenInput('');
-        setGenderInput('');
-        setStatus_Input('-Select Status-');
-        // console.log('clearing input name', nameInput);
+        set_patient_id(null);
+        set_patient_dob(new Date());
+        set_patient_name('');
+        set_patient_mobile('');
+        set_patient_allergen('');
+        set_patient_gender('');
+        set_patient_status('-Select Status-');
+        // console.log('clearing input name', patient_name);
         setIsOpen(true);
     };
     const setPatientAgeFunction = (patientDOB)=>{
@@ -156,40 +156,40 @@ const PatientTable2 = () => {
     }
     const detailsFunction = async (patientIdparam)=>{
         // console.log('edit patient ccalled')
-        // console.log('patienId before fetch', patientId)
+        // console.log('patienId before fetch', patient_id)
         const responsePatient = await axios.get(`http://172.16.0.101:3001/patient/${patientIdparam}`);
         
-        if (responsePatient.data[0].id) {
-            setSelectedDateInput(new Date(responsePatient.data[0].dob));
-            setNameInput(responsePatient.data[0].name);
-            setMobileInput(responsePatient.data[0].mobile);
-            setAllergenInput(responsePatient.data[0].allergen);
-            setGenderInput(responsePatient.data[0].gender);
-            setStatus_Input(responsePatient.data[0].status_);
-            setPatientId(responsePatient.data[0].id);
-            setPatientAgeFunction(responsePatient.data[0].dob);
-            // console.log('patienId after setPatientId', patientId);
-            // console.log('name after setPatientname', nameInput);
-            // if (patientId) {
-            //     console.log('patientId true', patientId)
+        if (responsePatient.data[0].patient_id) {
+            set_patient_dob(new Date(responsePatient.data[0].patient_dob));
+            set_patient_name(responsePatient.data[0].patient_name);
+            set_patient_mobile(responsePatient.data[0].patient_mobile);
+            set_patient_allergen(responsePatient.data[0].patient_allergen);
+            set_patient_gender(responsePatient.data[0].patient_gender);
+            set_patient_status(responsePatient.data[0].patient_status);
+            set_patient_id(responsePatient.data[0].patient_id);
+            setPatientAgeFunction(responsePatient.data[0].patient_dob);
+            // console.log('patienId after set_patient_id', patient_id);
+            // console.log('name after setPatientname', patient_name);
+            // if (patient_id) {
+            //     console.log('patient_id true', patient_id)
             // } else {
-            //     console.log('patientId false', patientId)
+            //     console.log('patient_id false', patient_id)
             // }
             setIsOpen(true);
             
         } else {
-            console.log('responsePatientId is empty: ', responsePatient.data[0].id)
+            console.log('responsePatientId is empty: ', responsePatient.data[0].patient_id)
         }
     }
     return (
         <div className='table-table2-container'>
             <PatientDetails
             isOpen={isOpen} setIsOpen={setIsOpen} addPatient={addPatient}
-            updatePatient={updatePatient} patientId={patientId} status_Input={status_Input}
-            setStatus_Input={setStatus_Input} genderInput={genderInput} setGenderInput={setGenderInput}
-            nameInput={nameInput} setNameInput={setNameInput} mobileInput={mobileInput}
-            setMobileInput={setMobileInput} allergenInput={allergenInput} setAllergenInput={setAllergenInput}
-            selectedDateInput={selectedDateInput} setSelectedDateInput={setSelectedDateInput}
+            updatePatient={updatePatient} patient_id={patient_id} patient_status={patient_status}
+            set_patient_status={set_patient_status} patient_gender={patient_gender} set_patient_gender={set_patient_gender}
+            patient_name={patient_name} set_patient_name={set_patient_name} patient_mobile={patient_mobile}
+            set_patient_mobile={set_patient_mobile} patient_allergen={patient_allergen} set_patient_allergen={set_patient_allergen}
+            patient_dob={patient_dob} set_patient_dob={set_patient_dob}
             patientAge={patientAge}
             ></PatientDetails>
             <div className='table-table2-head-container'>
@@ -218,12 +218,12 @@ const PatientTable2 = () => {
                         return (
                             <tr key={index} className='table-table2-table-tbody-tr'>
                                <td>{index+1}</td>
-                                <td>{patient.name}</td>
+                                <td>{patient.patient_name}</td>
                                 <td>
-                                    <button  id={patient.status_=== 'Scheduled'? 'bg-green':'bg-black'}>{patient.status_}</button>
+                                    <button  id={patient.patient_status=== 'Scheduled'? 'bg-green':'bg-black'}>{patient.patient_status}</button>
                                 </td>
                                 <td className='table-table2-table-body-tr-td'>
-                                    <button onClick={()=>{detailsFunction(patient.id)}}>Details</button>
+                                    <button onClick={()=>{detailsFunction(patient.patient_id)}}>Details</button>
                                     <button>Treatments</button>
                                 </td>
                             </tr>
