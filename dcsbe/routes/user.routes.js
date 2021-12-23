@@ -2,6 +2,7 @@ import { Router } from "express";
 import { createUser, 
     // deleteUser, 
     getUserByID, 
+    getUserDoctorList, 
     getUsers, 
     // getUsersBySearch, 
     getUsersBySearch2, 
@@ -11,6 +12,8 @@ import { createUser,
 
 
 const userRouter = Router();
+
+userRouter.get('/user-doctor-list', getUserDoctorList);
 
 userRouter.get('/users', getUsers);
 

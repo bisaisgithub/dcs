@@ -8,19 +8,13 @@ const AppointmentTable = () => {
     const [app_date, set_app_date] = useState(null);
     const [app_details_is_open, set_app_details_is_open] = useState(false);
     const [appointmentsData, setAppointmentsData] = useState([]);
-    const [patientsData, setPatientsData] = useState([]);
-    // const [nameInput, setNameInput] = useState('');
-    // const [mobileInput, setMobileInput] = useState('');
-    // const [genderInput, setGenderInput] = useState('');
-    // const [emailInput, setEmailInput] = useState('');
-    // const [userId, setUserId] = useState("");
+    const [app_patient_list, set_app_patient_list] = useState([]);
+    const [app_user_doctor_list, set_app_user_doctor_list] = useState([]);
     const [app_patient_name, set_app_patient_name] =useState('');
     const [app_patient_id, set_app_patient_id] =useState('');
     const [app_user_doctor_name, set_app_user_doctor_name] =useState('');
     const [app_user_doctor_id, set_app_user_doctor_id] =useState('');
     const [app_search_patient_name, set_app_search_patient_name] = useState('');
-    // const [userAge, setUserAge] = useState('');
-    // const [passwordInput, setPasswordInput] = useState('');
     const [app_search_type, set_app_search_type] = useState('');
     const [app_proc_name, set_app_proc_name] = useState('');
     const [app_proc_duration_minutes, set_app_proc_duration_minutes] = useState('');
@@ -36,21 +30,11 @@ const AppointmentTable = () => {
     const [app_pay_fields, set_app_pay_fields] = useState([]);
     const [app_pay_balance, set_app_pay_balance] = useState('');
     const [app_pay_change, set_app_pay_change] = useState('');
-    // const [template, template] = useState('');
     useEffect(()=>{
         
         // getAppointments();
 
     }, []);
-
-
-    // const formatDate2 = ()=>{
-    //     let d = new Date(2010, 7, 5);
-    //     let ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
-    //     let mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
-    //     let da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
-    //     // console.log(`${da}-${mo}-${ye}`);
-    // }
 
     const addAppointmentFunction = async ()=>{
 
@@ -62,19 +46,6 @@ const AppointmentTable = () => {
             }
             return true;
         }
-        // set_app_details_is_open(true);
-        // function formatDate(date) {
-        //     var d = new Date(date),
-        //         month = '' + (d.getMonth() + 1),
-        //         day = '' + d.getDate(),
-        //         year = d.getFullYear();
-        //     if (month.length < 2) 
-        //         month = '0' + month;
-        //     if (day.length < 2) 
-        //         day = '0' + day;
-        //     return [year, month, day].join('-');
-        // }        
-        // let date = formatDate(app_date);
 
         if (!app_patient_name || !app_user_doctor_name || !app_date ||
             !app_start_time || !app_status || !app_type) {
@@ -84,7 +55,7 @@ const AppointmentTable = () => {
             if (!validateEmptyObjectField(app_proc_fields)) {
                 alert("Empty Procedure/s")
             } else {
-                // console.log('app_proc_fields: ',app_proc_fields);
+
                 const response = await axios.post("http://172.16.0.101:3001/appointment", {
                     app_patient_id: app_patient_id,
                     app_user_doctor_id: app_user_doctor_id,
@@ -112,112 +83,49 @@ const AppointmentTable = () => {
             const response = await axios.post(`http://172.16.0.101:3001/users`, data);
             if (response.data) {
                 console.log('response data',response.data)
-                // setAppointmentsData(response.data);
             }
         } else {
             const response = await axios.get(`http://172.16.0.101:3001/appointments`);
             if (response.data) {
                 console.log('response data',response.data)
-                // setUsersData(response.data);
             }
         }    
     };
 
-    // const updateUser = async ()=>{
-        
-    //     function formatDate(date) {
-    //         var d = new Date(date),
-    //             month = '' + (d.getMonth() + 1),
-    //             day = '' + d.getDate(),
-    //             year = d.getFullYear();
-        
-    //         if (month.length < 2) 
-    //             month = '0' + month;
-    //         if (day.length < 2) 
-    //             day = '0' + day;
-        
-    //         return [year, month, day].join('-');
-    //     }        
-    //     let date = formatDate(app_date);
+    const getPatientList = async ()=>{
+        const resPatientList = await axios.get(`http://172.16.0.101:3001/patient-list`);
+        if (!resPatientList.data) {
+            alert('Failed getting patient list')
+        } 
+        set_app_patient_list(resPatientList.data);
+    }
 
-    //     if (!nameInput || !mobileInput || !genderInput || !app_date || !emailInput) {
-    //         alert('Empty field/s')
-    //     }else{
-    //         const response = await axios.put(`http://172.16.0.101:3001/user/${userId}`, {
-    //         name: nameInput,
-    //         mobile: mobileInput,
-    //         gender: genderInput,
-    //         dob: date,
-    //         allergen: emailInput,
-    //         status_: 'Active',
-    //          });
+    const getUserDoctorList = async ()=>{
+        const resUserDoctorList = await axios.get(`http://172.16.0.101:3001/user-doctor-list`);
+        if (!resUserDoctorList.data) {
+            alert('Failed getting patient list')
+        } 
+        set_app_user_doctor_list(resUserDoctorList.data);
+    }
 
-    //         if (response.data.userUpdateOk) {
-    //         alert('User Upated');
-    //         set_app_details_is_open(false);
-    //         // getUsers();
-    //         }else{
-    //             alert('Failed Updating User');
-    //         }
-    //     }
-        
-    // };
     const newAppointment = ()=>{
-        // getUsers();
-        set_app_details_is_open(true);
+        getUserDoctorList();
+        getPatientList();
+        set_app_details_is_open(true); 
     };
-    // const setUserAgeFunction = (patientDOB)=>{
-    //     // let age = 0;
-    //     const ageDiffs = new Date().getFullYear() - new Date(patientDOB).getFullYear();
-    //     if (new Date().getMonth() < new Date(patientDOB).getMonth()) {
-    //         // age = ageDiffs -1;
-    //         setUserAge(ageDiffs -1);
-    //     } else {
-    //         // age = ageDiffs;
-    //         setUserAge(ageDiffs);
-    //     }
-    // }
-    // const detailsFunction = async (patientIdparam)=>{
+  
 
-    //     const responsePatient = await axios.get(`http://172.16.0.101:3001/user/${patientIdparam}`);
-        
-    //     if (responsePatient.data[0].id) {
-    //         set_app_date(new Date(responsePatient.data[0].dob));
-    //         setNameInput(responsePatient.data[0].name);
-    //         setMobileInput(responsePatient.data[0].mobile);
-    //         setEmailInput(responsePatient.data[0].email);
-    //         // setPasswordInput(responsePatient.data[0].input);
-    //         setGenderInput(responsePatient.data[0].gender);
-    //         set_app_patient_name(responsePatient.data[0].type);
-    //         setUserId(responsePatient.data[0].id);
-    //         setUserAgeFunction(responsePatient.data[0].dob);
-    //         set_app_details_is_open(true);
-            
-    //     } else {
-    //         console.log('responsePatientId is empty: ', responsePatient.data[0].id)
-    //     }
-    // }
     return (
         <div className='table-table2-container'>
             <AppointmentDetails
             app_details_is_open={app_details_is_open} set_app_details_is_open={set_app_details_is_open} 
             addAppointmentFunction={addAppointmentFunction}
-            // // updateUser={updateUser} 
-            // userId={userId} 
             app_patient_name={app_patient_name} set_app_patient_name={set_app_patient_name}
-            // genderInput={genderInput} setGenderInput={setGenderInput}
-            // nameInput={nameInput} setNameInput={setNameInput} 
-            // mobileInput={mobileInput} setMobileInput={setMobileInput} 
-            // emailInput={emailInput} setEmailInput={setEmailInput}
             app_date={app_date} set_app_date={set_app_date}
-            // userAge={userAge} 
-            // passwordInput={passwordInput} setPasswordInput={setPasswordInput}
-            patientsData={patientsData} 
+            app_patient_list={app_patient_list} 
             app_patient_id={app_patient_id} set_app_patient_id={set_app_patient_id}
-            // usersData={usersData} 
             app_user_doctor_name={app_user_doctor_name} set_app_user_doctor_name={set_app_user_doctor_name}
             app_user_doctor_id={app_user_doctor_id} set_app_user_doctor_id={set_app_user_doctor_id}
-             
             app_start_time={app_start_time} set_app_start_time={set_app_start_time} 
             app_proc_name={app_proc_name} set_app_proc_name={set_app_proc_name}
             app_proc_duration_minutes={app_proc_duration_minutes} set_app_proc_duration_minutes={set_app_proc_duration_minutes}
@@ -229,8 +137,8 @@ const AppointmentTable = () => {
             app_pay_fields={app_pay_fields} set_app_pay_fields={set_app_pay_fields}
             app_pay_balance={app_pay_balance} set_app_pay_balance={set_app_pay_balance}
             app_pay_change={app_pay_change} set_app_pay_change={set_app_pay_change}
+            app_user_doctor_list={app_user_doctor_list}
 
-            // setHours={setHours} setMinutes={setMinutes}
             ></AppointmentDetails>
             
             <div className='table-table2-table'>
@@ -242,7 +150,6 @@ const AppointmentTable = () => {
                         
                         <th><input placeholder='Date' value={app_search_type} onChange={(e)=>{set_app_search_type(e.target.value)}}/></th>
                         <th><p onClick={()=>{
-                            // getUsers({name: app_search_patient_name, type: app_search_type})
                             }}>Find</p></th>
                         <th><p onClick={()=>newAppointment()}>New</p></th>
                         

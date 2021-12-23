@@ -11,19 +11,11 @@ const UserDetails = ({
     set_user_email,user_dob,set_user_dob,userAge,
     user_password,set_user_password,user_status,set_user_status
     }) => {
+
     if (!isOpen) {
         return null;
     }
-    // const [user_dob, set_user_dob] = useState(new Date());
-    // const [isOpen, setIsOpen] = useState(false);
-    // const [patientsData, setPatientsData] = useState([]);
-    // const [user_name, set_user_name] = useState('');
-    // const [user_mobile, set_user_mobile] = useState('');
-    // const [user_gender, set_user_gender] = useState('');
-    // const [user_email, set_user_email] = useState('');
-    // const [user_id, setPatientId] = useState("");
-    // const [user_type, set_user_type] =useState('-Select Status-');
-    // const [searchInput, setSearchInput] = useState('');
+
     return ReactDOM.createPortal(
         <>
             <div className='details-details-container'>
@@ -32,7 +24,7 @@ const UserDetails = ({
                     <div className='details-details-modal-body'>
                         <div className='details-details-modal-body-input-box'>
                             <span>Date of Birth</span>
-                            <DatePicker maxDate={new Date()} yearDropdownItemNumber={90} showYearDropdown scrollableYearDropdown={true} dateFormat='yyyy/MM/dd' className='date-picker' placeholder="Enter Date of Birth" selected={user_dob} onChange={date=>set_user_dob(date)} />
+                            <DatePicker maxDate={new Date()} yearDropdownItemNumber={90} showYearDropdown scrollableYearDropdown={true} dateFormat='yyyy/MM/dd' className='date-picker' placeholderText="Click to select" selected={user_dob} onChange={date=>set_user_dob(date)} />
                         </div>
                         <div className='details-details-modal-body-input-box'>
                             <span>Full Name</span>
@@ -52,25 +44,23 @@ const UserDetails = ({
                         </div>
                         <div className="details-details-modal-body-input-box">
                                 <span>Status</span>
-                                {/* {'statusType: ' + user_status} */}
                                 <select value={user_status} onChange={(e)=>{set_user_status(e.target.value)}}>
                                     <option value="Active">Active</option>
                                     <option value="Inactive">Inactive</option>
                                     <option value="Deleted">Deleted</option>
-                                    <option value="-Select Status-">-Select Status-</option>
+                                    <option value="">-Select Status-</option>
                                 </select>
                             </div>
                         <div className="details-details-modal-body-status-gender">
                             <div className="details-details-modal-body-input-box">
                                 <span>Type</span>
-                                {/* {'user_type: '+user_type} */}
                                 <select value={user_type} onChange={(e)=>{set_user_type(e.target.value)}}>
                                     <option value="Dentist">Dentist</option>
                                     <option value="Receptionist">Receptionist</option>
                                     <option value="Surgeon">Surgeon</option>
                                     <option value="Admin">Admin</option>
                                     <option value="Deleted">Deleted</option>
-                                    <option value="-Select Type-">-Select Type-</option>
+                                    <option value="">-Select Type-</option>
                                 </select>
                             </div>
                             <div className='details-details-modal-body-gender'>
@@ -91,8 +81,6 @@ const UserDetails = ({
 
                     </div>
                     <div className='details-details-modal-body-button'>                    
-                        {/* {user_id? (<input type="submit" onClick={updateUser} value='Update' className='percent-40'/>):
-                        (<input type="submit" onClick={addUser} value='Add' className='percent-40'/>)}   */}
                         <button onClick={user_id? updateUser : addUser}>{user_id? 'Update' : 'Add'}</button>                               
                         <button onClick={()=>{setIsOpen(false); set_user_dob(new Date())}}>Close</button>
                     </div>

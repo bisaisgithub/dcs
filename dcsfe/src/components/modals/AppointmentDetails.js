@@ -12,9 +12,9 @@ const AppointmentDetails = ({
     addAppointmentFunction, 
     app_patient_name, set_app_patient_name,
     app_date, set_app_date,
-    patientsData, 
+    app_patient_list, 
     set_app_patient_id, app_patient_id,
-    usersData, 
+    app_user_doctor_list, 
     set_app_user_doctor_id,
     app_user_doctor_name,set_app_user_doctor_name,
     app_start_time,set_app_start_time,
@@ -174,7 +174,7 @@ const AppointmentDetails = ({
     }
     
     const setAppointmentPatientIdFunction = (name)=>{
-         patientsData.map((patient)=>{
+         app_patient_list.map((patient)=>{
             if (patient.name === name) {
                 set_app_patient_id(patient.id);
             }
@@ -185,7 +185,7 @@ const AppointmentDetails = ({
     }
 
     const setAppointmentDoctorIdFunction = (name)=>{
-            usersData.map((user)=>{
+            app_user_doctor_list.map((user)=>{
             if (user.name === name) {
                set_app_user_doctor_id(user.id);
             }
@@ -202,9 +202,9 @@ const AppointmentDetails = ({
                             <div className="details-details-modal-body-input-box">
                                 <span>Patient</span>
                                 <select value={app_patient_name} onChange={(e)=>{setAppointmentPatientIdFunction(e.target.value)}}>
-                                    {patientsData && patientsData.map((patient, index)=>{
+                                    {app_patient_list && app_patient_list.map((patient, index)=>{
                                         return (
-                                            <option key={index} value={patient.name}>{patient.name}</option>
+                                            <option key={index} value={patient.patient_name}>{patient.patient_name}</option>
                                         );
                                     })}
                                     <option value="">-Select Patient-</option>
@@ -213,9 +213,9 @@ const AppointmentDetails = ({
                             <div className="details-details-modal-body-input-box">
                                 <span>Doctor</span>
                                 <select value={app_user_doctor_name} onChange={(e)=>{setAppointmentDoctorIdFunction(e.target.value)}}>
-                                    {usersData && usersData.map((user, index)=>{
+                                    {app_user_doctor_list && app_user_doctor_list.map((user, index)=>{
                                         return (
-                                            <option key={index} value={user.name}>{user.name}</option>
+                                            <option key={index} value={user.user_name}>{user.user_name}</option>
                                         );
                                     })}
                                     <option value="">-Select Doctor-</option>

@@ -23,7 +23,7 @@ const PatientDetails = ({
                     <div className='details-details-modal-body'>
                         <div className='details-details-modal-body-input-box'>
                             <span>Date of Birth</span>
-                            <DatePicker maxDate={new Date()} yearDropdownItemNumber={90} showYearDropdown scrollableYearDropdown={true} dateFormat='yyyy/MM/dd' className='date-picker' placeholder="Enter Date of Birth" selected={patient_dob} onChange={date=>set_patient_dob(date)} />
+                            <DatePicker maxDate={new Date()} yearDropdownItemNumber={90} showYearDropdown scrollableYearDropdown={true} dateFormat='yyyy/MM/dd' className='date-picker' placeholderText="Click to select    " selected={patient_dob} onChange={date=>set_patient_dob(date)} />
                         </div>
                         <div className='details-details-modal-body-input-box'>
                             <span>Full Name</span>
@@ -45,7 +45,7 @@ const PatientDetails = ({
                                     <option value="Inactive">Inactive</option>
                                     <option value="Scheduled">Scheduled</option>
                                     <option value="Deleted">Deleted</option>
-                                    <option value="-Select Status-">-Select Status-</option>
+                                    <option value="">-Select Status-</option>
                                 </select>
                             </div>
                             <div className='details-details-modal-body-gender'>
@@ -66,8 +66,6 @@ const PatientDetails = ({
 
                     </div>
                     <div className='details-details-modal-body-button'>                    
-                        {/* {patient_id? (<input type="submit" onClick={updatePatient} value='Update' className='percent-40'/>):
-                        (<input type="submit" onClick={addPatient} value='Add' className='percent-40'/>)}   */}
                         <button onClick={patient_id? updatePatient : addPatient}>{patient_id? 'Update' : 'Add'}</button>                               
                         <button onClick={()=>{setIsOpen(false); set_patient_dob(new Date())}}>Close</button>
                     </div>

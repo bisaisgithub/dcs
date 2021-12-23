@@ -3,11 +3,14 @@ import { createPatient, getPatients,
      getPatientByID, 
      updatePatient, 
     //  getPatientBySearch, 
-     getPatientsBySearch2 } from "../controller/patient.controller.js";
+     getPatientsBySearch2, 
+     getPatientList} from "../controller/patient.controller.js";
 
 const patientRouter = Router();
 
 patientRouter.get('/patients', getPatients);
+
+patientRouter.get('/patient-list', getPatientList);
 
 patientRouter.post('/patients', getPatientsBySearch2);
 
