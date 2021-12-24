@@ -6,13 +6,22 @@ import db from "../config/db.js";
 export const getAppointments = async (req, res)=>{
     try {
 
-        const response = await db.raw('select * from user s, appointment b, patient c where b.doctor_id = s.id and b.patient_id = c.id ');
-        // const response = await db('appointment')
-        // .join('patient', 'appointment.patient_id', '=', 'patient.id')
-        // .join('user', 'appointment.doctor_id', '=', 'user.id')
-        // .select('appointment.id', 'patient.name', 'user.name')
-        // .orderBy('date', 'desc');
-        // console.log('response patients: ', response);
+        // const response = await db.raw(
+        //     `SELECT b.patient_name, c.user_name 
+        //     FROM appointment s
+        //         INNER JOIN patient b ON s.app_patient_id = b.patient_id
+        //         INNER JOIN user c ON s.app_user_doctor_id  = c.user_id
+        //     where s.app_id = '12ac529f-d0ff-42d5-9f43-35597a46ec85'
+        //     ORDER BY b.patient_name`
+        //     );
+     
+        const response = await db.from('appointment').select(
+            'patient.patient_name', 'user.user_name', 'appointment.app_date',
+            'appointment.app_start_time', 'appointment.app_end_time',
+            )
+            .innerJoin('user', 'appointment.app_user_doctor_id', 'user.user_id')
+            .innerJoin('patient', 'appointment.app_patient_id', 'patient.patient_id');
+            // console.log('response', response);
         res.json(response);
     } catch (error) {
         console.log('catch error: ', error)
@@ -20,11 +29,6 @@ export const getAppointments = async (req, res)=>{
 };
 
 export const createAppointment = async (req, res)=>{
-    // console.log('appointment reqbody: ',req.body.procedure)
-    // console.log('procedure', req.body.procedure[0].procedure)
-    
-
-    
     const appointmentId = uuid();
     try {
         const response = await db('appointment').insert({
@@ -37,15 +41,14 @@ export const createAppointment = async (req, res)=>{
             app_status: req.body.app_status,
             app_type: req.body.app_type,
         });
-        // console.log(response);
         if (response) {
             let procedures = [];
-            req.body.procedures.map((procedure)=>{
+            req.body.app_proc_fields.map((procedure)=>{
                 procedures = [...procedures, 
                     {
                         proc_id: uuid(),
-                        proc_patient_id: req.body.proc_patient_id,
-                        proc_user_doctor_id: req.body.proc_user_doctor_id,
+                        proc_patient_id: req.body.app_patient_id,
+                        proc_user_doctor_id: req.body.app_user_doctor_id,
                         proc_appointment_id: appointmentId,
                         proc_name: procedure.proc_name,
                         proc_duration_minutes: procedure.proc_duration_minutes,
@@ -56,14 +59,14 @@ export const createAppointment = async (req, res)=>{
             const responseProcedures = await db('procedure').insert(procedures);
             if (responseProcedures) {
                 let payments = [];
-                req.body.payments.map((payment)=>{
+                req.body.app_pay_fields.map((payment)=>{
                     payments = [...payments, 
                     {
                         pay_id: uuid(),
                         pay_appointment_id: appointmentId,
-                        pay_patient_id: req.body.pay_patient_id,
+                        pay_patient_id: req.body.app_patient_id,
                         pay_amount: payment.pay_amount,
-                        pay_date: new Date(req.body.pay_date).toISOString().split('T')[0] + ' '+ new Date(req.body.pay_date).toTimeString().split(' ')[0],
+                        pay_date: new Date(payment.pay_date).toISOString().split('T')[0] + ' '+ new Date(payment.pay_date).toTimeString().split(' ')[0],
                         pay_change: payment.pay_change,
                         pay_balance: payment.pay_balance,
                     }
@@ -79,6 +82,7 @@ export const createAppointment = async (req, res)=>{
             } else {
                 res.json({appointmentInsertOk: false});
             }
+            // res.json({appointmentInsertOk: true});
             
         } else {
             res.json({appointmentInsertOk: false});
