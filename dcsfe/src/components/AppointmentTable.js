@@ -125,6 +125,12 @@ const AppointmentTable = () => {
         return `${da}-${mo}-${ye}`
     }
 
+    var timeOptions = {
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true
+      }
+
     return (
         <div className='table-table2-container'>
             <AppointmentDetails
@@ -190,11 +196,17 @@ const AppointmentTable = () => {
                                     <button  id={user.status_=== 'Scheduled'? 'bg-green':'bg-black'}>{user.type}</button>
                                 </td> */}
                                 <td className='maxW50px'>{formatDate(appointment.app_date)}</td>
-                                <td className='table-table2-table-body-tr-td'>
-                                    <button style={{background:'green'}} onClick={()=>{}}>10:33</button>
+                                <td className='table-table2-table-body-tr-td '>
+                                    <button className='minW50px' style={{background:'green'}} onClick={()=>{}}>{
+                                    // new Date(appointment.app_start_time).toTimeString().split(' ')[0].slice(0, new Date(appointment.app_start_time).toTimeString().split(' ')[0].length - 3)
+                                    new Date(appointment.app_start_time).toLocaleString('en-US', timeOptions)
+                                    }</button>
                                 </td>
                                 <td className='table-table2-table-body-tr-td'>
-                                    <button onClick={()=>{}}>33:33</button>
+                                    <button className='minW50px' onClick={()=>{}}>{
+                                        new Date(appointment.app_end_time).toLocaleString('en-US', timeOptions)
+                                    // new Date(appointment.app_end_time).toTimeString().split(' ')[0].slice(0, new Date(appointment.app_end_time).toTimeString().split(' ')[0].length - 3)
+                                    }</button>
                          
                                 </td>
                                 <td><button onClick={()=>{}}>{index+1}</button></td>

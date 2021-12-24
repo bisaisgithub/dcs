@@ -20,7 +20,8 @@ export const getAppointments = async (req, res)=>{
             'appointment.app_start_time', 'appointment.app_end_time',
             )
             .innerJoin('user', 'appointment.app_user_doctor_id', 'user.user_id')
-            .innerJoin('patient', 'appointment.app_patient_id', 'patient.patient_id');
+            .innerJoin('patient', 'appointment.app_patient_id', 'patient.patient_id')
+            .orderBy(['appointment.app_date', { column: 'appointment.app_start_time', order: 'asc' }]);
             // console.log('response', response);
         res.json(response);
     } catch (error) {
