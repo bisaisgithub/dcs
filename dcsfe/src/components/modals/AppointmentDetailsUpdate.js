@@ -7,9 +7,9 @@ import setHours from 'date-fns/setHours';
 import setMinutes from 'date-fns/setMinutes';
 import Select from 'react-select';
 
-const AppointmentDetails = ({
+const AppointmentDetailsUpdate = ({
 
-    app_details_is_open, set_app_details_is_open, 
+    app_details2_is_open, set_app_details2_is_open, 
     addAppointmentFunction, 
     app_patient_name, set_app_patient_name,
     app_date, set_app_date,
@@ -32,7 +32,7 @@ const AppointmentDetails = ({
     app_pay_date, set_app_pay_date,
 
     }) => {
-    if (!app_details_is_open) {
+    if (!app_details2_is_open) {
         return null;
     }
 
@@ -422,15 +422,15 @@ const AppointmentDetails = ({
                     <div className='details-details-modal-body-button'>                    
                         {/* {userId? (<input type="submit" onClick={updateUser} value='Update' className='percent-40'/>):
                         (<input type="submit" onClick={addUser} value='Add' className='percent-40'/>)}   */}
-                        <button className='button-w70' onClick={()=>{addAppointmentFunction()}}>Add Appointment</button>                               
-                        <button className='button-w20' onClick={()=>{set_app_details_is_open(false); set_app_date(new Date())}}>Close</button>
+                        <button className='button-w70' onClick={()=>{}}>Update Appointment</button>                               
+                        <button className='button-w20' onClick={()=>{set_app_details2_is_open(false); set_app_date(new Date())}}>Close</button>
                     </div>
                 </div>
             </div>
         </>,
-        document.getElementById('appointment-details')
+        document.getElementById('appointment-details2')
         
     );
 };
 
-export default AppointmentDetails;
+export default AppointmentDetailsUpdate;

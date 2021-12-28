@@ -129,9 +129,10 @@
     width: 98%;
     /* line-height: 35px; */
     line-height: 25px;
-    background-color: #e9115bf0;
+    /* background-color: #e9115bf0; */
+    background-color: #3c3f44;
     display: inline-block;
-    font-weight: 600 !important;
+    /* font-weight: 600 !important; */
     color: #eee;
     border: 1px solid transparent;
     border-radius: 5px 5px;

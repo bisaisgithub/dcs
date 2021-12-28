@@ -29,6 +29,29 @@ export const getAppointments = async (req, res)=>{
     }  
 };
 
+export const getAppointmentsBySearch = async (req, res)=>{
+    console.log('req.body', req.body)
+    try {
+        const response = await db.from('appointment').select(
+            'patient.patient_name', 'user.user_name', 'appointment.app_date',
+            'appointment.app_start_time', 'appointment.app_end_time',
+            )
+            .innerJoin('user', 'appointment.app_user_doctor_id', 'user.user_id')
+            .innerJoin('patient', 'appointment.app_patient_id', 'patient.patient_id')
+            .where('user.user_name', 'like', `%${req.body.app_search_user_doctor_name}%`)
+            .where('patient.patient_name', 'like', `%${req.body.app_search_patient_name}%`)
+            .where('appointment.app_date', 'like', `%${
+                // new Date(req.body.app_search_date).toISOString().split('T')[0]
+                req.body.app_search_date === ''? '' : req.body.app_search_date.split('/')[2]+'-'+req.body.app_search_date.split('/')[0]+'-'+req.body.app_search_date.split('/')[1]
+            }%`)
+            .orderBy(['appointment.app_date', { column: 'appointment.app_start_time', order: 'asc' }]);
+            // console.log('response', response);
+        res.json(response);
+    } catch (error) {
+        console.log('catch error: ', error)
+    }  
+};
+
 export const createAppointment = async (req, res)=>{
     const appointmentId = uuid();
     try {
@@ -59,31 +82,56 @@ export const createAppointment = async (req, res)=>{
             });
             const responseProcedures = await db('procedure').insert(procedures);
             if (responseProcedures) {
-                let payments = [];
-                req.body.app_pay_fields.map((payment)=>{
-                    payments = [...payments, 
-                    {
-                        pay_id: uuid(),
-                        pay_appointment_id: appointmentId,
-                        pay_patient_id: req.body.app_patient_id,
-                        pay_amount: payment.pay_amount,
-                        pay_date: new Date(payment.pay_date).toISOString().split('T')[0] + ' '+ new Date(payment.pay_date).toTimeString().split(' ')[0],
-                        pay_change: payment.pay_change,
-                        pay_balance: payment.pay_balance,
+                if (req.body.app_pay_fields.length) {
+                    let payments = [];
+                    req.body.app_pay_fields.map((payment)=>{
+                        payments = [...payments, 
+                            {
+                                pay_id: uuid(),
+                                pay_appointment_id: appointmentId,
+                                pay_patient_id: req.body.app_patient_id,
+                                pay_amount: payment.pay_amount,
+                                pay_date: new Date(payment.pay_date).toISOString().split('T')[0] + ' '+ new Date(payment.pay_date).toTimeString().split(' ')[0],
+                                pay_change: payment.pay_change,
+                                pay_balance: payment.pay_balance,
+                            }
+                        ]                
+                    });
+                    const responsePayment = await db('payment').insert(payments);
+                    if (responsePayment) {
+                        const userUpdateResponse = await db('patient').where('patient_id', req.body.app_patient_id).update({
+                            patient_status: 'Scheduled',
+                        });
+                        console.log('userUpdateResponse: ', userUpdateResponse)
+                        if (userUpdateResponse) {
+                            res.json({appointmentInsertOk: true});
+                        } else {
+                            res.json({appointmentInsertOk: false});
+                        }  
+                    } else {
+                        res.json({appointmentInsertOk: true});
                     }
-                ]                
-            });
-                const responsePayment = await db('payment').insert(payments);
-                if (responsePayment) {
-                    res.json({appointmentInsertOk: true});
                 } else {
-                    res.json({appointmentInsertOk: false});
+                   try {
+                        const userUpdateResponse = await db('patient').where('patient_id', req.body.app_patient_id).update({
+                            patient_status: 'Scheduled',
+                        });
+                        console.log('userUpdateResponse: ', userUpdateResponse)
+                        if (userUpdateResponse) {
+                            res.json({appointmentInsertOk: true});
+                        } else {
+                            res.json({appointmentInsertOk: false});
+                        }  
+                   } catch (error) {
+                       console.log('error catched: ', error);
+                       res.json({appointmentInsertOk: false});
+                   }
+                      
                 }
                 
             } else {
                 res.json({appointmentInsertOk: false});
             }
-            // res.json({appointmentInsertOk: true});
             
         } else {
             res.json({appointmentInsertOk: false});
@@ -93,7 +141,6 @@ export const createAppointment = async (req, res)=>{
         console.log('error: ', error);
         res.json({appointmentInsertOk: false});
     }
-    
 };
 
 // export const getPatientByID = async (req, res)=>{

@@ -1,12 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import AppointmentDetails from './modals/AppointmentDetails.js';
+import AppointmentDetailsUpdate from './modals/AppointmentDetailsUpdate';
 import './Table.css';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+// import setHours from 'date-fns/setHours';
+// import setMinutes from 'date-fns/setMinutes';
+// import Select from 'react-select';
 
 
 const AppointmentTable = () => {
     const [app_date, set_app_date] = useState(null);
     const [app_details_is_open, set_app_details_is_open] = useState(false);
+    const [app_details2_is_open, set_app_details2_is_open] = useState(false);
     const [appointmentsData, setAppointmentsData] = useState([]);
     const [app_patient_list, set_app_patient_list] = useState([]);
     const [app_user_doctor_list, set_app_user_doctor_list] = useState([]);
@@ -15,6 +22,8 @@ const AppointmentTable = () => {
     const [app_user_doctor_name, set_app_user_doctor_name] =useState('');
     const [app_user_doctor_id, set_app_user_doctor_id] =useState('');
     const [app_search_patient_name, set_app_search_patient_name] = useState('');
+    const [app_search_user_doctor_name, set_app_search_user_doctor_name] = useState('');
+    const [app_search_date, set_app_search_date] = useState('');
     const [app_search_type, set_app_search_type] = useState('');
     const [app_proc_name, set_app_proc_name] = useState('');
     const [app_proc_duration_minutes, set_app_proc_duration_minutes] = useState('');
@@ -31,6 +40,7 @@ const AppointmentTable = () => {
     const [app_pay_balance, set_app_pay_balance] = useState('');
     const [app_pay_change, set_app_pay_change] = useState('');
     const [app_pay_date, set_app_pay_date] = useState('');
+
     useEffect(()=>{
         
         getAppointments();
@@ -79,16 +89,15 @@ const AppointmentTable = () => {
     }
     
     const getAppointments = async (data)=>{
-        console.log('getappointment called');
+        console.log('getAppointments data', data);
         if (data) {
-            const response = await axios.post(`http://172.16.0.101:3001/users`, data);
+            const response = await axios.post(`http://172.16.0.101:3001/appointments`, data);
             if (response.data) {
-                console.log('response data',response.data)
+                setAppointmentsData(response.data)
             }
         } else {
             const response = await axios.get(`http://172.16.0.101:3001/appointments`);
             if (response.data) {
-                console.log('response data',response.data);
                 setAppointmentsData(response.data)
             }
         }    
@@ -131,6 +140,10 @@ const AppointmentTable = () => {
         hour12: true
       }
 
+    const AppointmentDetailsFunction = ()=>{
+        set_app_details2_is_open(true);
+    }
+
     return (
         <div className='table-table2-container'>
             <AppointmentDetails
@@ -158,17 +171,68 @@ const AppointmentTable = () => {
             app_pay_date={app_pay_date} set_app_pay_date={set_app_pay_date}
 
             ></AppointmentDetails>
+
+            <AppointmentDetailsUpdate
+                app_details2_is_open={app_details2_is_open} set_app_details2_is_open={set_app_details2_is_open} 
+                addAppointmentFunction={addAppointmentFunction}
+                app_patient_name={app_patient_name} set_app_patient_name={set_app_patient_name}
+                app_date={app_date} set_app_date={set_app_date}
+                app_patient_list={app_patient_list} 
+                app_patient_id={app_patient_id} set_app_patient_id={set_app_patient_id}
+                app_user_doctor_name={app_user_doctor_name} set_app_user_doctor_name={set_app_user_doctor_name}
+                app_user_doctor_id={app_user_doctor_id} set_app_user_doctor_id={set_app_user_doctor_id}
+                app_start_time={app_start_time} set_app_start_time={set_app_start_time} 
+                app_proc_name={app_proc_name} set_app_proc_name={set_app_proc_name}
+                app_proc_duration_minutes={app_proc_duration_minutes} set_app_proc_duration_minutes={set_app_proc_duration_minutes}
+                app_proc_fields={app_proc_fields} set_app_proc_fields={set_app_proc_fields}
+                app_end_time={app_end_time} set_app_end_time={set_app_end_time} 
+                app_status={app_status} set_app_status={set_app_status}
+                app_total_proc_duration_minutes={app_total_proc_duration_minutes} set_app_total_proc_duration_minutes={set_app_total_proc_duration_minutes}
+                app_type={app_type} set_app_type={set_app_type}
+                app_total_proc_cost={app_total_proc_cost} set_app_total_proc_cost={set_app_total_proc_cost}
+                app_pay_fields={app_pay_fields} set_app_pay_fields={set_app_pay_fields}
+                app_pay_balance={app_pay_balance} set_app_pay_balance={set_app_pay_balance}
+                app_pay_change={app_pay_change} set_app_pay_change={set_app_pay_change}
+                app_user_doctor_list={app_user_doctor_list}
+                app_pay_date={app_pay_date} set_app_pay_date={set_app_pay_date}
+
+            ></AppointmentDetailsUpdate>
             
             <div className='table-table2-table'>
                 <thead className='table-table2-table-thead-search2'>
                     <tr className='table-table2-table-thead-tr-search2'>
                       
-                        <th><input placeholder='Name' value={app_search_type} onChange={(e)=>{set_app_search_type(e.target.value)}}/></th>
-                        <th><input placeholder='Doctor' value={app_search_patient_name} onChange={(e)=>{set_app_search_patient_name(e.target.value)}}/><button onClick={()=>{set_app_search_patient_name('');set_app_search_type('')}}>X</button></th>
+                        <th><input placeholder='Name' value={app_search_patient_name} onChange={(e)=>{set_app_search_patient_name(e.target.value)}}/></th>
+                        <th><input placeholder='Doctor' value={app_search_user_doctor_name} 
+                                onChange={(e)=>{set_app_search_user_doctor_name(e.target.value)}}/>
+                            <button onClick={()=>{
+                                set_app_search_patient_name('');set_app_search_user_doctor_name('')
+                                set_app_search_date('');
+                                }}>X</button>
+                        </th>
                         
-                        <th><input placeholder='Date' value={app_search_type} onChange={(e)=>{set_app_search_type(e.target.value)}}/></th>
-                        <th><p onClick={()=>{
-                            }}>Find</p></th>
+                        <th>
+                            {/* <input placeholder='Date' value={app_search_type} onChange={(e)=>{set_app_search_type(e.target.value)}}/> */}
+                            <DatePicker 
+                                // minDate={new Date()} 
+                                yearDropdownItemNumber={90} 
+                                showYearDropdown 
+                                scrollableYearDropdown={true} 
+                                // dateFormat='MMMM d, yyyy' 
+                                // dateFormat="dd-MMM-yyyy"
+                                dateFormat="dd-MMM"
+                                // className='date-picker' 
+                                placeholderText="Date" 
+                                selected={app_search_date} 
+                                onChange={date=>set_app_search_date(date)} />
+                        </th>
+                        <th><p onClick={()=>{getAppointments({
+                            app_search_patient_name, 
+                            app_search_user_doctor_name, 
+                            app_search_date
+                            : app_search_date === ''? '' : new Date(app_search_date).toLocaleString().split(',')[0]
+                            ,
+                            })}}>Find</p></th>
                         <th><p onClick={()=>newAppointment()}>New</p></th>
                         
                     </tr>
@@ -192,24 +256,20 @@ const AppointmentTable = () => {
                                
                                 <td>{appointment.patient_name}</td>
                                 <td>{appointment.user_name}</td>
-                                {/* <td>
-                                    <button  id={user.status_=== 'Scheduled'? 'bg-green':'bg-black'}>{user.type}</button>
-                                </td> */}
                                 <td className='maxW50px'>{formatDate(appointment.app_date)}</td>
                                 <td className='table-table2-table-body-tr-td '>
-                                    <button className='minW50px' style={{background:'green'}} onClick={()=>{}}>{
+                                    <button className='minW50px' style={{background:'#3c3f44'}} onClick={()=>{}}>{
                                     // new Date(appointment.app_start_time).toTimeString().split(' ')[0].slice(0, new Date(appointment.app_start_time).toTimeString().split(' ')[0].length - 3)
-                                    new Date(appointment.app_start_time).toLocaleString('en-US', timeOptions)
+                                    new Date(appointment.app_start_time).toLocaleString('en-PH', timeOptions)
                                     }</button>
                                 </td>
                                 <td className='table-table2-table-body-tr-td'>
                                     <button className='minW50px' onClick={()=>{}}>{
-                                        new Date(appointment.app_end_time).toLocaleString('en-US', timeOptions)
+                                        new Date(appointment.app_end_time).toLocaleString('en-PH', timeOptions)
                                     // new Date(appointment.app_end_time).toTimeString().split(' ')[0].slice(0, new Date(appointment.app_end_time).toTimeString().split(' ')[0].length - 3)
                                     }</button>
-                         
                                 </td>
-                                <td><button onClick={()=>{}}>{index+1}</button></td>
+                                <td><button style={{background:'#e9115bf0'}} onClick={()=>{AppointmentDetailsFunction()}}>{index+1}</button></td>
                             </tr>
                         );
                     })}
