@@ -3,6 +3,29 @@ import {v4 as uuid} from 'uuid';
 import db from "../config/db.js";
 
 
+export const getAppointmentById = async (req, res)=>{
+    let data = {};
+    try {
+        const resAppointmentById = await db('appointment')
+        .where('app_id', req.params.id).first();
+        // res.json(resAppointmentById);
+        if (resAppointmentById) {
+            const resProceduresById = await db('procedure')
+            .where('proc_appointment_id', req.params.id);
+            if (resProceduresById) {
+                data = {...resAppointmentById, resProceduresById}
+                res.json(data);
+            } else {
+                res.json(resAppointmentById);
+            }
+        } else {
+            res.json({message: 'Appointment Not Found'})
+        }
+    } catch (error) {
+        console.log('error: ', error);
+    }
+}
+
 export const getAppointments = async (req, res)=>{
     try {
 
@@ -17,7 +40,7 @@ export const getAppointments = async (req, res)=>{
      
         const response = await db.from('appointment').select(
             'patient.patient_name', 'user.user_name', 'appointment.app_date',
-            'appointment.app_start_time', 'appointment.app_end_time',
+            'appointment.app_start_time', 'appointment.app_end_time', 'appointment.app_id'
             )
             .innerJoin('user', 'appointment.app_user_doctor_id', 'user.user_id')
             .innerJoin('patient', 'appointment.app_patient_id', 'patient.patient_id')

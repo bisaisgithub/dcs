@@ -15,11 +15,13 @@ const AppointmentTable = () => {
     const [app_details_is_open, set_app_details_is_open] = useState(false);
     const [app_details2_is_open, set_app_details2_is_open] = useState(false);
     const [appointmentsData, setAppointmentsData] = useState([]);
+    const [app_patient_name_id, set_app_patient_name_id] = useState({});
+    const [app_user_doctor_name_id, set_app_user_doctor_name_id] = useState({});
     const [app_patient_list, set_app_patient_list] = useState([]);
     const [app_user_doctor_list, set_app_user_doctor_list] = useState([]);
-    const [app_patient_name, set_app_patient_name] =useState('');
+    // const [app_patient_name, set_app_patient_name] =useState('');
     const [app_patient_id, set_app_patient_id] =useState('');
-    const [app_user_doctor_name, set_app_user_doctor_name] =useState('');
+    // const [app_user_doctor_name, set_app_user_doctor_name] =useState('');
     const [app_user_doctor_id, set_app_user_doctor_id] =useState('');
     const [app_search_patient_name, set_app_search_patient_name] = useState('');
     const [app_search_user_doctor_name, set_app_search_user_doctor_name] = useState('');
@@ -89,7 +91,6 @@ const AppointmentTable = () => {
     }
     
     const getAppointments = async (data)=>{
-        console.log('getAppointments data', data);
         if (data) {
             const response = await axios.post(`http://172.16.0.101:3001/appointments`, data);
             if (response.data) {
@@ -103,12 +104,17 @@ const AppointmentTable = () => {
         }    
     };
 
-    const getPatientList = async ()=>{
+    const getPatientList = async (id)=>{
         const resPatientList = await axios.get(`http://172.16.0.101:3001/patient-list`);
         if (!resPatientList.data) {
             alert('Failed getting patient list')
         } 
         set_app_patient_list(resPatientList.data);
+        resPatientList.data.map((patient)=>{
+            if (patient.patient_id === id) {
+                set_app_patient_name_id({value: patient.patient_id, label: patient.patient_name});
+            }
+        })
     }
 
     const getUserDoctorList = async ()=>{
@@ -117,6 +123,7 @@ const AppointmentTable = () => {
             alert('Failed getting patient list')
         } 
         set_app_user_doctor_list(resUserDoctorList.data);
+        
     }
 
     const newAppointment = ()=>{
@@ -138,10 +145,41 @@ const AppointmentTable = () => {
         hour: 'numeric',
         minute: 'numeric',
         hour12: true
-      }
+    }
 
-    const AppointmentDetailsFunction = ()=>{
-        set_app_details2_is_open(true);
+
+    const AppointmentDetailsFunction = async (id)=>{
+        
+        
+        const resAppointment = await axios.get(`http://172.16.0.101:3001/appointment/${id}`);
+        console.log('resAppointment: ', resAppointment);
+        if (resAppointment.data.app_patient_id) {
+            // app_patient_list.map((patient)=>{
+            //     if (patient.patient_id === resAppointment.data.app_patient_id) {
+            //         set_app_patient_name_id((prev)=>{
+            //             prev = {value: resAppointment.app_patient_id, label: patient.patient_name};
+            //             return prev;
+            //         })
+            //         console.log('app_patient_name_id: ', app_patient_name_id);
+            //         return null;
+            //     }
+            //     console.log('app_patient_name_id not equl: ', app_patient_name_id);
+            //     return null;
+            // })
+            await getPatientList(resAppointment.data.app_patient_id);
+            set_app_user_doctor_id(resAppointment.data.app_user_doctor_id);
+            set_app_date(new Date(resAppointment.data.app_date));
+            set_app_start_time(new Date(resAppointment.data.app_start_time));
+            set_app_status(resAppointment.data.app_status);
+            set_app_type(resAppointment.data.app_type);
+            set_app_proc_fields([]);
+            getUserDoctorList();
+            set_app_details2_is_open(true);
+        } else {
+            alert('patient ID not Found');
+        }
+        
+
     }
 
     return (
@@ -149,11 +187,11 @@ const AppointmentTable = () => {
             <AppointmentDetails
             app_details_is_open={app_details_is_open} set_app_details_is_open={set_app_details_is_open} 
             addAppointmentFunction={addAppointmentFunction}
-            app_patient_name={app_patient_name} set_app_patient_name={set_app_patient_name}
+            // app_patient_name={app_patient_name} set_app_patient_name={set_app_patient_name}
             app_date={app_date} set_app_date={set_app_date}
             app_patient_list={app_patient_list} 
             app_patient_id={app_patient_id} set_app_patient_id={set_app_patient_id}
-            app_user_doctor_name={app_user_doctor_name} set_app_user_doctor_name={set_app_user_doctor_name}
+            // app_user_doctor_name={app_user_doctor_name} set_app_user_doctor_name={set_app_user_doctor_name}
             app_user_doctor_id={app_user_doctor_id} set_app_user_doctor_id={set_app_user_doctor_id}
             app_start_time={app_start_time} set_app_start_time={set_app_start_time} 
             app_proc_name={app_proc_name} set_app_proc_name={set_app_proc_name}
@@ -175,11 +213,11 @@ const AppointmentTable = () => {
             <AppointmentDetailsUpdate
                 app_details2_is_open={app_details2_is_open} set_app_details2_is_open={set_app_details2_is_open} 
                 addAppointmentFunction={addAppointmentFunction}
-                app_patient_name={app_patient_name} set_app_patient_name={set_app_patient_name}
+                // app_patient_name={app_patient_name} set_app_patient_name={set_app_patient_name}
                 app_date={app_date} set_app_date={set_app_date}
                 app_patient_list={app_patient_list} 
                 app_patient_id={app_patient_id} set_app_patient_id={set_app_patient_id}
-                app_user_doctor_name={app_user_doctor_name} set_app_user_doctor_name={set_app_user_doctor_name}
+                // app_user_doctor_name={app_user_doctor_name} set_app_user_doctor_name={set_app_user_doctor_name}
                 app_user_doctor_id={app_user_doctor_id} set_app_user_doctor_id={set_app_user_doctor_id}
                 app_start_time={app_start_time} set_app_start_time={set_app_start_time} 
                 app_proc_name={app_proc_name} set_app_proc_name={set_app_proc_name}
@@ -195,6 +233,8 @@ const AppointmentTable = () => {
                 app_pay_change={app_pay_change} set_app_pay_change={set_app_pay_change}
                 app_user_doctor_list={app_user_doctor_list}
                 app_pay_date={app_pay_date} set_app_pay_date={set_app_pay_date}
+                app_patient_name_id={app_patient_name_id}
+                app_user_doctor_name_id={app_user_doctor_name_id}
 
             ></AppointmentDetailsUpdate>
             
@@ -269,7 +309,7 @@ const AppointmentTable = () => {
                                     // new Date(appointment.app_end_time).toTimeString().split(' ')[0].slice(0, new Date(appointment.app_end_time).toTimeString().split(' ')[0].length - 3)
                                     }</button>
                                 </td>
-                                <td><button style={{background:'#e9115bf0'}} onClick={()=>{AppointmentDetailsFunction()}}>{index+1}</button></td>
+                                <td><button style={{background:'#e9115bf0'}} onClick={()=>{AppointmentDetailsFunction(appointment.app_id)}}>{index+1}</button></td>
                             </tr>
                         );
                     })}

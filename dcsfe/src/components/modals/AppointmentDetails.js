@@ -226,7 +226,7 @@ const AppointmentDetails = ({
                                     })}
                                     <option value="">-Select Patient-</option>
                                 </select>        */}
-                                <Select options={options2} defaultValue={{ label: 'Patient5'}}  onChange={(value)=>{set_app_patient_id(value.value)}}/>
+                                <Select options={options2} onChange={(value)=>{set_app_patient_id(value.value)}}/>
                             </div>
                             <div className="details-details-modal-body-input-box">
                                 <span>Doctor</span>

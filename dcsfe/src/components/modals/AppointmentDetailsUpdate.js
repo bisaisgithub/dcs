@@ -30,6 +30,7 @@ const AppointmentDetailsUpdate = ({
     set_app_pay_balance, app_pay_balance,
     app_pay_change, set_app_pay_change,
     app_pay_date, set_app_pay_date,
+    app_patient_name_id,
 
     }) => {
     if (!app_details2_is_open) {
@@ -226,7 +227,7 @@ const AppointmentDetailsUpdate = ({
                                     })}
                                     <option value="">-Select Patient-</option>
                                 </select>        */}
-                                <Select options={options2} defaultValue={{ label: 'Patient5'}}  onChange={(value)=>{set_app_patient_id(value.value)}}/>
+                                <Select options={options2} defaultValue={app_patient_name_id}  onChange={(value)=>{set_app_patient_id(value.value)}}/>
                             </div>
                             <div className="details-details-modal-body-input-box">
                                 <span>Doctor</span>
