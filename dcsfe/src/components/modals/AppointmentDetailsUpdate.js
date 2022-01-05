@@ -31,7 +31,8 @@ const AppointmentDetailsUpdate = ({
     app_pay_change, set_app_pay_change,
     app_pay_date, set_app_pay_date,
     app_patient_name_id,
-
+    app_proc_fields2,
+    
     }) => {
     if (!app_details2_is_open) {
         return null;
@@ -206,10 +207,18 @@ const AppointmentDetailsUpdate = ({
 
     let options2 = [{value: '', label: 'test'}];
 
+
     app_patient_list.map((patient)=>{
         options2 = [...options2, {value: patient.patient_id, label: patient.patient_name}]
         return null;
     })
+
+    const handlePayDate = async (i, e, d)=>{
+        console.log('e: ', e);
+        console.log('d: ',d)
+        // const values = [...app_pay_fields];
+        // values[i][e.target.name] = d;
+    }
 
     return ReactDOM.createPortal(
         <>
@@ -273,6 +282,40 @@ const AppointmentDetailsUpdate = ({
                                 />
                             </div>
                         </div>
+                        {
+                            app_proc_fields2.map((app_proc_field, index)=>{
+                                return (
+                                    
+                                    <div style={{marginTop:'0'}} className='details-details-modal-body' key={index}>
+                                        <div className="details-details-modal-body-input-box3">
+                                            <span style={index? {display: 'none'}:{}}>Procedure</span>
+                                            <select disabled name="proc_name" value={app_proc_field.proc_name} onChange={(event)=>{handleChangeInput(index, event)}}>
+                                                <option value="">-Select Procedure-</option>
+                                                <option value="Consultation">Consultation</option>
+                                                <option value="Extraction">Extraction</option>
+                                                <option value="Cleaning">Cleaning</option>
+                                            </select>       
+                                        </div>
+                                        <div className="details-details-modal-body-input-box3">
+                                            <span style={index? {display: 'none'}:{}}>Duration Minutes</span>
+                                                <select disabled name="proc_duration_minutes" value={app_proc_field.proc_duration_minutes} onChange={(event)=>{handleChangeInput(index, event)}}>
+                                                    <option value=''>-Select Minutes-</option>
+                                                    <option value={15}>15</option>
+                                                    <option value={30}>30</option>
+                                                    <option value={60}>60</option>
+                                                </select>
+                                        </div>
+                                        <div className="details-details-modal-body-input-box3">
+                                            <span style={index? {display: 'none'}:{}}>Cost</span>
+                                            <div className='duration-minutes-container'>
+                                                <input disabled type='number' name="proc_cost" value={app_proc_field.proc_cost} onChange={(event)=>{handleChangeInput(index, event)}}/>
+                                                <button className='add-remove-button' onClick={()=>{}}>E</button>
+                                            </div>                                    
+                                        </div>
+                                    </div>
+                                );
+                            })
+                        }
                         {
                             app_proc_fields.map((app_proc_field, index)=>{
                                 return (
@@ -387,13 +430,17 @@ const AppointmentDetailsUpdate = ({
                                                     <DatePicker 
                                                     // minDate={new Date()} 
                                                     yearDropdownItemNumber={90} 
-                                                    showYearDropdown 
+                                                    showYearDropdown
+                                                    showTimeSelect
+                                                    timeIntervals={15}
                                                     scrollableYearDropdown={true} 
                                                     dateFormat='MMMM d, yyyy h:mm aa' 
                                                     className='date-picker' 
                                                     placeholderText="Select Date" 
                                                     selected={app_pay_field.pay_date} 
-                                                    onChange={date=>set_app_pay_date(date)} 
+                                                    name='pay_date'
+                                                    onChange={(date, event)=>handlePayDate(index, date, event)}
+                                                    
                                                     />
                                                 </div>
                                             </div>

@@ -26,7 +26,7 @@ const AppointmentDetails = ({
     app_total_proc_duration_minutes, set_app_total_proc_duration_minutes,
     set_app_type,app_type,
     set_app_total_proc_cost, app_total_proc_cost,
-    set_app_pay_fields, app_pay_fields,
+    set_app_pay_amount, app_pay_amount,
     set_app_pay_balance, app_pay_balance,
     app_pay_change, set_app_pay_change,
     app_pay_date, set_app_pay_date,
@@ -45,13 +45,13 @@ const AppointmentDetails = ({
     }
 
     const addPaymentFieldFunction = ()=>{
-        set_app_pay_fields([...app_pay_fields, {pay_amount: '', pay_date: new Date(), pay_change: '', pay_balance: ''}])
+        set_app_pay_amount([...app_pay_amount, {pay_amount: '', pay_date: new Date(), pay_change: '', pay_balance: ''}])
     }
 
     const removePaymentFieldFunction= (index, proc_cost)=>{
-        const values = [...app_pay_fields];
+        const values = [...app_pay_amount];
         values.splice(index, 1);
-        set_app_pay_fields(values);
+        set_app_pay_amount(values);
         if (parseFloat(proc_cost)>0) {
             console.log('proc_cost : ', proc_cost);
             set_app_pay_balance(parseFloat(app_pay_balance + parseFloat(proc_cost))); 
@@ -66,7 +66,7 @@ const AppointmentDetails = ({
             const values = [...prev];
             values.splice(index, 1);
             return values;
-        })
+        });
         set_app_total_proc_cost(parseFloat(app_total_proc_cost - proc_cost));        
         set_app_pay_balance(parseFloat(app_pay_balance - proc_cost));
 
@@ -77,13 +77,13 @@ const AppointmentDetails = ({
     }
 
     const handleChangeInputPayment = async (index, event)=>{
-        const values = [...app_pay_fields];
+        const values = [...app_pay_amount];
         values[index][event.target.name] = event.target.value;
 
-        await set_app_pay_fields(values);
+        await set_app_pay_amount(values);
 
         let totalPayment = 0;
-        app_pay_fields.map((app_pay_field)=>{
+        app_pay_amount.map((app_pay_field)=>{
             if (parseInt(app_pay_field.pay_amount)>0) {
                 
                 totalPayment = totalPayment + parseFloat(app_pay_field.pay_amount);
@@ -93,17 +93,17 @@ const AppointmentDetails = ({
         if (app_total_proc_cost-totalPayment>-1) {
            await set_app_pay_balance(parseFloat(app_total_proc_cost-totalPayment));
            await set_app_pay_change(0);
-            const values2 = [...app_pay_fields];
+            const values2 = [...app_pay_amount];
             values[index]['pay_change'] = 0;
             values[index]['pay_balance'] = parseFloat(app_total_proc_cost-totalPayment);
-            await set_app_pay_fields(values2);
+            await set_app_pay_amount(values2);
         } else {
             await set_app_pay_balance(0);
             await set_app_pay_change(parseFloat(totalPayment-app_total_proc_cost));
-            const values2 = [...app_pay_fields];
+            const values2 = [...app_pay_amount];
             values[index]['pay_change'] = parseFloat(totalPayment-app_total_proc_cost);
             values[index]['pay_balance'] = 0;
-            await set_app_pay_fields(values2);
+            await set_app_pay_amount(values2);
         }
         
         
@@ -182,16 +182,16 @@ const AppointmentDetails = ({
                     new Date(new Date(app_start_time).setMinutes(new Date(app_start_time).getMinutes()+totalMinutes))
                         ));
 
-            app_pay_fields.map((app_pay_field)=>{
-                if (parseFloat(app_pay_field.payment)>0) {
-                    totalPayment = totalPayment + parseFloat(app_pay_field.payment);
-                }else{
-                    totalPayment = totalPayment + 0;
-                }
-                return null;
-            });
+            // app_pay_amount.map((app_pay_field)=>{
+            //     if (parseFloat(app_pay_field.payment)>0) {
+            //         totalPayment = totalPayment + parseFloat(app_pay_field.payment);
+            //     }else{
+            //         totalPayment = totalPayment + 0;
+            //     }
+            //     return null;
+            // });
             set_app_total_proc_cost(parseFloat(totalCostTemporary));
-            set_app_pay_balance(parseFloat(totalCostTemporary-totalPayment));
+            set_app_pay_balance(parseFloat(totalCostTemporary-app_pay_amount));
         } else {
             alert('please select start time first')
         }
@@ -205,10 +205,13 @@ const AppointmentDetails = ({
 
     let options2 = [{value: '', label: 'test'}];
 
+
     app_patient_list.map((patient)=>{
         options2 = [...options2, {value: patient.patient_id, label: patient.patient_name}]
         return null;
-    })
+    });
+
+    
 
     return ReactDOM.createPortal(
         <>
@@ -299,7 +302,41 @@ const AppointmentDetails = ({
                                             <span style={index? {display: 'none'}:{}}>Cost</span>
                                             <div className='duration-minutes-container'>
                                                 <input type='number' name="proc_cost" value={app_proc_field.proc_cost} onChange={(event)=>{handleChangeInput(index, event)}}/>
-                                                <button className='add-remove-button' onClick={()=>{removeProcedureFieldFunction(index, app_proc_field.proc_duration_minutes, app_proc_field.proc_cost)}}>-</button>
+                                                <button className='add-remove-button' 
+                                                // onClick={()=>{removeProcedureFieldFunction(index, app_proc_field.proc_duration_minutes, app_proc_field.proc_cost)}}
+                                                onClick={()=>{
+                                                    let totalCost = 0;
+                                                    let totalMinutes = 0;
+                                                    set_app_proc_fields((prev)=>{
+                                                        const values = [...prev];
+                                                        values.splice(index, 1);
+                                                        values.map((value)=>{
+                                                            if (value.proc_cost > 0) {
+                                                               totalCost = totalCost+parseFloat(value.proc_cost); 
+                                                            }
+                                                            if (value.proc_duration_minutes> 0) {
+                                                                totalMinutes = totalMinutes+parseInt(value.proc_duration_minutes);
+                                                            }
+                                                        });
+                                                        set_app_end_time(
+                                                            new Date(
+                                                                new Date(new Date(app_end_time).setMinutes(new Date(app_end_time).getMinutes()-totalMinutes))
+                                                                    )); 
+                                                        set_app_total_proc_cost(parseFloat(totalCost));
+                                                        if (app_pay_amount) {
+                                                            if (parseFloat(totalCost-app_pay_amount)>0) {
+                                                               set_app_pay_change(0);
+                                                               set_app_pay_balance(parseFloat(totalCost-app_pay_amount))
+                                                            }else{
+                                                                set_app_pay_change(parseFloat(app_pay_amount-totalCost));
+                                                                set_app_pay_balance(0)
+                                                            }
+                                                        }
+                                                         
+                                                        return values;
+                                                    });
+                                                }}
+                                                >-</button>
                                             </div>                                    
                                         </div>
                                     </div>
@@ -356,66 +393,83 @@ const AppointmentDetails = ({
                                 </select>       
                             </div>
                         </div>
-                        <div className='display-flex' style={{marginTop:'5px'}} >
+                        {/* <div className='display-flex' style={{marginTop:'5px'}} >
                             <div className="details-details-modal-body-input-box">
                                 <span>Balance</span>
                                 <input style={app_pay_balance>0? {color: 'red', fontWeight: '600', fontSize:'14px'} : {}} disabled value={app_pay_balance} />
                             </div>
                             
+                        </div> */}
+
+
+                                        
+                        <div className='display-flex' style={{marginTop:'0px',flexWrap: 'wrap'}}>
+                            <div className='display-flex' style={{marginTop:'0px'}} >
+                                <div className='details-details-modal-body-input-box'>
+                                    <span style={false? {display: 'none'}:{}} >Payment</span>
+                                    <div className='display-flex'>
+                                        
+                                        <input type='number' value={app_pay_amount}
+                                         onChange={(e)=>{
+                                             let totalCost = 0;
+                                             app_proc_fields.map((proc_field)=>{
+                                                 if (parseFloat(proc_field.proc_cost)>0) {
+                                                    totalCost = totalCost + proc_field.proc_cost
+                                                 }
+                                                 return null;
+                                             })
+                                             if (totalCost-e.target.value>-1 ) {
+                                                 set_app_pay_change(0)
+                                                 set_app_pay_balance(parseFloat(totalCost-e.target.value));
+                                             }else{
+                                                 set_app_pay_balance(0);
+                                                 set_app_pay_change(parseFloat(e.target.value-totalCost));
+                                             }
+                                             set_app_pay_amount(e.target.value);
+                                         }} />
+                                        {/* <button className='add-remove-button height-80p' onClick={()=>{removePaymentFieldFunction(index, app_pay_field.pay_amount)}}>-</button> */}
+                                    </div>
+                                </div>
+                                    
+                                    
+                                <div className='details-details-modal-body-input-box'>
+                                    <span style={false? {display: 'none'}:{}}>Date of Payment</span>
+                                        
+                                    <DatePicker 
+                                    // minDate={new Date()} 
+                                    yearDropdownItemNumber={90}
+                                    showTimeSelect
+                                    showYearDropdown 
+                                    scrollableYearDropdown={true} 
+                                    dateFormat='MMMM d, yyyy h:mm aa' 
+                                    className='date-picker' 
+                                    placeholderText="Select Date" 
+                                    selected={app_pay_date} 
+                                    onChange={date=>set_app_pay_date(date)} 
+                                    />
+                                </div>
+                            </div>
+                            
+                            <div className='display-flex' style={{marginTop:'0px'}} >
+                                <div className="details-details-modal-body-input-box">
+                                    <span>Change</span>
+                                    <input
+                                     style={app_pay_change>0? {color: 'green', fontWeight: '600', fontSize:'14px'} : {}} 
+                                     disabled value={app_pay_change} 
+                                     />
+                                </div>
+                                <div className="details-details-modal-body-input-box">
+                                    <span>Balance After Payment</span>
+                                    <input 
+                                    style={app_pay_balance>0? {color: 'red', fontWeight: '600', fontSize:'14px'} : {}} 
+                                    disabled value={app_pay_balance} 
+                                    />
+                                </div>
+                            </div>
+                            
+                                
                         </div>
 
-                            {
-                                app_pay_fields.map((app_pay_field, index)=>{
-                                    return (
-                                        
-                                        <div className='display-flex' style={{marginTop:'0px',flexWrap: 'wrap'}}  key={index}>
-                                            <div className='display-flex' style={{marginTop:'0px'}}  key={index}>
-                                                <div className='details-details-modal-body-input-box'>
-                                                    <span style={false? {display: 'none'}:{}} >Payment</span>
-                                                    <div className='display-flex'>
-                                                        
-                                                        <input type='number' name='pay_amount' value={app_pay_field.payment} onChange={(event)=>{handleChangeInputPayment(index, event)}}/>
-                                                        <button className='add-remove-button height-80p' onClick={()=>{removePaymentFieldFunction(index, app_pay_field.pay_amount)}}>-</button>
-                                                    </div>
-                                                </div>
-                                                    
-                                                    
-                                                <div className='details-details-modal-body-input-box'>
-                                                    <span style={false? {display: 'none'}:{}}>Date of Payment</span>
-                                                        
-                                                    <DatePicker 
-                                                    // minDate={new Date()} 
-                                                    yearDropdownItemNumber={90} 
-                                                    showYearDropdown 
-                                                    scrollableYearDropdown={true} 
-                                                    dateFormat='MMMM d, yyyy h:mm aa' 
-                                                    className='date-picker' 
-                                                    placeholderText="Select Date" 
-                                                    selected={app_pay_field.pay_date} 
-                                                    onChange={date=>set_app_pay_date(date)} 
-                                                    />
-                                                </div>
-                                            </div>
-                                            
-                                            <div className='display-flex' style={{marginTop:'0px'}}  key={index}>
-                                                <div className="details-details-modal-body-input-box">
-                                                    <span>Change</span>
-                                                    <input style={app_pay_field.pay_change>0? {color: 'green', fontWeight: '600', fontSize:'14px'} : {}} disabled value={app_pay_field.pay_change} />
-                                                </div>
-                                                <div className="details-details-modal-body-input-box">
-                                                    <span>Balance After Payment</span>
-                                                    <input style={app_pay_field.pay_balance>0? {color: 'red', fontWeight: '600', fontSize:'14px'} : {}} disabled value={app_pay_field.pay_balance} />
-                                                </div>
-                                            </div>
-                                            
-                                                
-                                        </div>
-                                                                                      
-                                        // </div>
-                                    );
-                                })
-                            }
-                        
                         <button className='add-remove-button height-80p' onClick={()=>{addPaymentFieldFunction()}}>+</button>
                         {/* <p>app_proc_fields: {app_proc_fields}</p> */}
                     </div>                    

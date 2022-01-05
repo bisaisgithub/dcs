@@ -32,13 +32,14 @@ const AppointmentTable = () => {
     const [app_proc_fields, set_app_proc_fields] = useState(()=>{return [{
         proc_name: '', proc_duration_minutes: '', proc_cost: ''},
         ]});
+    const [app_proc_fields2, set_app_proc_fields2] = useState([]);
     const [app_start_time, set_app_start_time] = useState(null);
     const [app_end_time, set_app_end_time] = useState(null);
     const [app_status, set_app_status] = useState('');
     const [app_total_proc_duration_minutes, set_app_total_proc_duration_minutes] = useState(0);
     const [app_type, set_app_type] = useState('Scheduled');
     const [app_total_proc_cost, set_app_total_proc_cost] = useState(0);
-    const [app_pay_fields, set_app_pay_fields] = useState([]);
+    const [app_pay_amount, set_app_pay_amount] = useState('');
     const [app_pay_balance, set_app_pay_balance] = useState('');
     const [app_pay_change, set_app_pay_change] = useState('');
     const [app_pay_date, set_app_pay_date] = useState('');
@@ -78,7 +79,7 @@ const AppointmentTable = () => {
                     app_status: app_status,
                     app_type: app_type,
                     app_proc_fields: app_proc_fields,
-                    app_pay_fields: app_pay_fields,
+                    app_pay_amount: app_pay_amount,
                  });   
 
                 if (response.data.appointmentInsertOk) { 
@@ -108,13 +109,16 @@ const AppointmentTable = () => {
         const resPatientList = await axios.get(`http://172.16.0.101:3001/patient-list`);
         if (!resPatientList.data) {
             alert('Failed getting patient list')
-        } 
-        set_app_patient_list(resPatientList.data);
-        resPatientList.data.map((patient)=>{
-            if (patient.patient_id === id) {
-                set_app_patient_name_id({value: patient.patient_id, label: patient.patient_name});
-            }
-        })
+        }else{
+            // resPatientList.data.map((patient)=>{
+            //     if (patient.patient_id === id) {
+            //         set_app_patient_name_id({value: patient.patient_id, label: patient.patient_name});
+            //     }
+            // });
+            
+            set_app_patient_list(resPatientList.data);
+        }
+        
     }
 
     const getUserDoctorList = async ()=>{
@@ -147,9 +151,7 @@ const AppointmentTable = () => {
         hour12: true
     }
 
-
-    const AppointmentDetailsFunction = async (id)=>{
-        
+    const AppointmentDetailsFunction = async (id, patient_name)=>{
         
         const resAppointment = await axios.get(`http://172.16.0.101:3001/appointment/${id}`);
         console.log('resAppointment: ', resAppointment);
@@ -166,15 +168,40 @@ const AppointmentTable = () => {
             //     console.log('app_patient_name_id not equl: ', app_patient_name_id);
             //     return null;
             // })
-            await getPatientList(resAppointment.data.app_patient_id);
+            set_app_patient_name_id({value: resAppointment.data.app_patient_id, label: patient_name});
+            getPatientList(resAppointment.data.app_patient_id);
+            set_app_details2_is_open(true);
             set_app_user_doctor_id(resAppointment.data.app_user_doctor_id);
             set_app_date(new Date(resAppointment.data.app_date));
             set_app_start_time(new Date(resAppointment.data.app_start_time));
             set_app_status(resAppointment.data.app_status);
             set_app_type(resAppointment.data.app_type);
             set_app_proc_fields([]);
+            set_app_proc_fields2((prev)=>{
+               return resAppointment.data.resProceduresById
+            });
+
+            let totalMinutes = 0;
+            let totalCost = 0;
+            resAppointment.data.resProceduresById.map((app_proc_field2)=>{
+                
+                if (app_proc_field2.proc_duration_minutes > 0) {
+                    totalMinutes = totalMinutes + app_proc_field2.proc_duration_minutes
+                }
+                if (app_proc_field2.proc_cost > 0) {
+                    totalCost = totalCost + app_proc_field2.proc_cost
+                }
+            });
+            console.log('totalMinutes: ',totalMinutes)
+
+            set_app_end_time(
+                new Date(
+                    new Date(new Date(resAppointment.data.app_start_time).setMinutes(new Date(resAppointment.data.app_start_time).getMinutes()+totalMinutes))
+                        ));
+            set_app_total_proc_cost(totalCost);
+
             getUserDoctorList();
-            set_app_details2_is_open(true);
+            
         } else {
             alert('patient ID not Found');
         }
@@ -202,7 +229,7 @@ const AppointmentTable = () => {
             app_total_proc_duration_minutes={app_total_proc_duration_minutes} set_app_total_proc_duration_minutes={set_app_total_proc_duration_minutes}
             app_type={app_type} set_app_type={set_app_type}
             app_total_proc_cost={app_total_proc_cost} set_app_total_proc_cost={set_app_total_proc_cost}
-            app_pay_fields={app_pay_fields} set_app_pay_fields={set_app_pay_fields}
+            app_pay_amount={app_pay_amount} set_app_pay_amount={set_app_pay_amount}
             app_pay_balance={app_pay_balance} set_app_pay_balance={set_app_pay_balance}
             app_pay_change={app_pay_change} set_app_pay_change={set_app_pay_change}
             app_user_doctor_list={app_user_doctor_list}
@@ -228,13 +255,14 @@ const AppointmentTable = () => {
                 app_total_proc_duration_minutes={app_total_proc_duration_minutes} set_app_total_proc_duration_minutes={set_app_total_proc_duration_minutes}
                 app_type={app_type} set_app_type={set_app_type}
                 app_total_proc_cost={app_total_proc_cost} set_app_total_proc_cost={set_app_total_proc_cost}
-                app_pay_fields={app_pay_fields} set_app_pay_fields={set_app_pay_fields}
+                app_pay_amount={app_pay_amount} set_app_pay_amount={set_app_pay_amount}
                 app_pay_balance={app_pay_balance} set_app_pay_balance={set_app_pay_balance}
                 app_pay_change={app_pay_change} set_app_pay_change={set_app_pay_change}
                 app_user_doctor_list={app_user_doctor_list}
                 app_pay_date={app_pay_date} set_app_pay_date={set_app_pay_date}
                 app_patient_name_id={app_patient_name_id}
                 app_user_doctor_name_id={app_user_doctor_name_id}
+                app_proc_fields2={app_proc_fields2}
 
             ></AppointmentDetailsUpdate>
             
@@ -309,7 +337,7 @@ const AppointmentTable = () => {
                                     // new Date(appointment.app_end_time).toTimeString().split(' ')[0].slice(0, new Date(appointment.app_end_time).toTimeString().split(' ')[0].length - 3)
                                     }</button>
                                 </td>
-                                <td><button style={{background:'#e9115bf0'}} onClick={()=>{AppointmentDetailsFunction(appointment.app_id)}}>{index+1}</button></td>
+                                <td><button style={{background:'#e9115bf0'}} onClick={()=>{AppointmentDetailsFunction(appointment.app_id, appointment.patient_name)}}>{index+1}</button></td>
                             </tr>
                         );
                     })}

@@ -9,15 +9,20 @@ export const getAppointmentById = async (req, res)=>{
         const resAppointmentById = await db('appointment')
         .where('app_id', req.params.id).first();
         // res.json(resAppointmentById);
+        data = await resAppointmentById;
         if (resAppointmentById) {
             const resProceduresById = await db('procedure')
             .where('proc_appointment_id', req.params.id);
             if (resProceduresById) {
-                data = {...resAppointmentById, resProceduresById}
-                res.json(data);
-            } else {
-                res.json(resAppointmentById);
+                data = {...data, resProceduresById}
             }
+            const resPaymentsById = await db('payment')
+            .where('pay_appointment_id', req.params.id);
+            console.log('resPaymentsById: ', resPaymentsById);
+            if (resProceduresById) {
+                data = {...data, resPaymentsById}
+            }
+            res.json(data);
         } else {
             res.json({message: 'Appointment Not Found'})
         }
