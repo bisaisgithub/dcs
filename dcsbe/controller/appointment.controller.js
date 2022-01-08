@@ -58,7 +58,7 @@ export const getAppointments = async (req, res)=>{
 };
 
 export const getAppointmentsBySearch = async (req, res)=>{
-    console.log('req.body', req.body)
+    // console.log('req.body', req.body)
     try {
         const response = await db.from('appointment').select(
             'patient.patient_name', 'user.user_name', 'appointment.app_date',

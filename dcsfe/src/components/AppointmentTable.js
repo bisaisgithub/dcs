@@ -30,7 +30,7 @@ const AppointmentTable = () => {
     const [app_proc_name, set_app_proc_name] = useState('');
     const [app_proc_duration_minutes, set_app_proc_duration_minutes] = useState('');
     const [app_proc_fields, set_app_proc_fields] = useState(()=>{return [{
-        proc_name: '', proc_duration_minutes: '', proc_cost: ''},
+        proc_name: '', proc_duration_minutes: 0, proc_cost: 0},
         ]});
     const [app_proc_fields2, set_app_proc_fields2] = useState([]);
     const [app_start_time, set_app_start_time] = useState(null);
@@ -42,7 +42,8 @@ const AppointmentTable = () => {
     const [app_pay_amount, set_app_pay_amount] = useState('');
     const [app_pay_balance, set_app_pay_balance] = useState('');
     const [app_pay_change, set_app_pay_change] = useState('');
-    const [app_pay_date, set_app_pay_date] = useState('');
+    const [app_pay_date, set_app_pay_date] = useState(new Date());
+    const [showAddPayment, set_showAddPayment] =useState(false);
 
     useEffect(()=>{
         
@@ -234,6 +235,7 @@ const AppointmentTable = () => {
             app_pay_change={app_pay_change} set_app_pay_change={set_app_pay_change}
             app_user_doctor_list={app_user_doctor_list}
             app_pay_date={app_pay_date} set_app_pay_date={set_app_pay_date}
+            showAddPayment={showAddPayment} set_showAddPayment={set_showAddPayment}
 
             ></AppointmentDetails>
 

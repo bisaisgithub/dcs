@@ -185,6 +185,13 @@ input[type="text"]{
 .height-80p{
     height: 80%;
 }
+.add-payment-button{
+    color: white;
+    margin: 0 5px;
+    padding: 10px 10px;
+    font-size: 15px;
+    background: linear-gradient(135deg, #71b7e6, #9b59b6);
+}
 @media(max-height: 370px) {
     .details-details-modal-body-container{
         max-height: 300px ;
