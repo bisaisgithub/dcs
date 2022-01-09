@@ -77,38 +77,38 @@ const AppointmentDetails = ({
     //                 ));  
     // }
 
-    const handleChangeInputPayment = async (index, event)=>{
-        const values = [...app_pay_amount];
-        values[index][event.target.name] = event.target.value;
+    // const handleChangeInputPayment = async (index, event)=>{
+    //     const values = [...app_pay_amount];
+    //     values[index][event.target.name] = event.target.value;
 
-        await set_app_pay_amount(values);
+    //     await set_app_pay_amount(values);
 
-        let totalPayment = 0;
-        app_pay_amount.map((app_pay_field)=>{
-            if (parseInt(app_pay_field.pay_amount)>0) {
+    //     let totalPayment = 0;
+    //     app_pay_amount.map((app_pay_field)=>{
+    //         if (parseInt(app_pay_field.pay_amount)>0) {
                 
-                totalPayment = totalPayment + parseFloat(app_pay_field.pay_amount);
-            }
-            return null;
-        });
-        if (app_total_proc_cost-totalPayment>-1) {
-           await set_app_pay_balance(parseFloat(app_total_proc_cost-totalPayment));
-           await set_app_pay_change(0);
-            const values2 = [...app_pay_amount];
-            values[index]['pay_change'] = 0;
-            values[index]['pay_balance'] = parseFloat(app_total_proc_cost-totalPayment);
-            await set_app_pay_amount(values2);
-        } else {
-            await set_app_pay_balance(0);
-            await set_app_pay_change(parseFloat(totalPayment-app_total_proc_cost));
-            const values2 = [...app_pay_amount];
-            values[index]['pay_change'] = parseFloat(totalPayment-app_total_proc_cost);
-            values[index]['pay_balance'] = 0;
-            await set_app_pay_amount(values2);
-        }
+    //             totalPayment = totalPayment + parseFloat(app_pay_field.pay_amount);
+    //         }
+    //         return null;
+    //     });
+    //     if (app_total_proc_cost-totalPayment>-1) {
+    //        await set_app_pay_balance(parseFloat(app_total_proc_cost-totalPayment));
+    //        await set_app_pay_change(0);
+    //         const values2 = [...app_pay_amount];
+    //         values[index]['pay_change'] = 0;
+    //         values[index]['pay_balance'] = parseFloat(app_total_proc_cost-totalPayment);
+    //         await set_app_pay_amount(values2);
+    //     } else {
+    //         await set_app_pay_balance(0);
+    //         await set_app_pay_change(parseFloat(totalPayment-app_total_proc_cost));
+    //         const values2 = [...app_pay_amount];
+    //         values[index]['pay_change'] = parseFloat(totalPayment-app_total_proc_cost);
+    //         values[index]['pay_balance'] = 0;
+    //         await set_app_pay_amount(values2);
+    //     }
         
         
-    }
+    // }
 
     const recalculateEndTime = (start_time)=>{
         // console.log('recalculateEndTime param', start_time);
@@ -138,13 +138,9 @@ const AppointmentDetails = ({
         if (app_start_time) {
             const values = [...app_proc_fields];
             values[index][event.target.name] = event.target.value;
-
-            
-
             let totalMinutes = 0;
             let totalCost = 0;
             values.map((value)=>{
-                
                 if (!value.proc_name == '') {                    
                     if (parseInt(value.proc_duration_minutes)>0) {
                         totalMinutes = totalMinutes + parseInt(value.proc_duration_minutes);
@@ -174,8 +170,7 @@ const AppointmentDetails = ({
                     value.proc_cost = parseFloat(value.proc_cost);
                 }else{
                     // value.proc_cost = 0;
-                }
-                
+                } 
             })
             set_app_total_proc_cost(parseFloat(totalCost).toFixed(2));
             

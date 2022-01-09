@@ -82,6 +82,7 @@ export const getAppointmentsBySearch = async (req, res)=>{
 
 export const createAppointment = async (req, res)=>{
     const appointmentId = uuid();
+    console.log('req.body: ', req.body);
     try {
         const response = await db('appointment').insert({
             app_id: appointmentId,
@@ -110,7 +111,8 @@ export const createAppointment = async (req, res)=>{
             });
             const responseProcedures = await db('procedure').insert(procedures);
             if (responseProcedures) {
-                if (req.body.app_pay_fields.length) {
+                // if (req.body.app_pay_fields.length) {
+                    if (false) {
                     let payments = [];
                     req.body.app_pay_fields.map((payment)=>{
                         payments = [...payments, 

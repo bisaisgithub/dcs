@@ -64,11 +64,11 @@ const AppointmentTable = () => {
 
         if (!app_patient_id || !app_user_doctor_id || !app_date ||
             !app_start_time || !app_status || !app_type) {
-                
             alert('Empty field/s')
         }else{
 
             if (!validateEmptyObjectField(app_proc_fields) || !app_proc_fields.length) {
+                console.log('validateEmptyObjectField: ', validateEmptyObjectField(app_proc_fields))
                 alert("Empty Procedure/s")
             } else {
                 const response = await axios.post("http://172.16.0.101:3001/appointment", {
@@ -80,7 +80,7 @@ const AppointmentTable = () => {
                     app_status: app_status,
                     app_type: app_type,
                     app_proc_fields: app_proc_fields,
-                    app_pay_amount: app_pay_amount,
+                    // app_pay_amount: app_pay_amount,
                  });   
 
                 if (response.data.appointmentInsertOk) { 
