@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import AppointmentDetails from './modals/AppointmentDetails.js';
-import AppointmentDetailsUpdate from './modals/AppointmentDetailsUpdate';
+// import AppointmentDetailsUpdate from './modals/AppointmentDetailsUpdate';
 import './Table.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -80,7 +80,7 @@ const AppointmentTable = () => {
                     app_status: app_status,
                     app_type: app_type,
                     app_proc_fields: app_proc_fields,
-                    // app_pay_amount: app_pay_amount,
+                    app_pay_fields: {app_pay_amount, app_pay_balance, app_pay_change, app_pay_date:formatDateYYYYMMDD(app_pay_date)},
                  });   
 
                 if (response.data.appointmentInsertOk) { 
@@ -144,6 +144,14 @@ const AppointmentTable = () => {
         let da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
         // console.log(`${da}-${mo}-${ye}`);
         return `${da}-${mo}-${ye}`
+    }
+
+    const formatDateYYYYMMDD = (dt)=>{
+        let year  = dt.getFullYear();
+        let month = (dt.getMonth() + 1).toString().padStart(2, "0");
+        let day   = dt.getDate().toString().padStart(2, "0");
+        // console.log(year + '-' + month + '-' + day);
+        return year + '-' + month + '-' + day;
     }
 
     var timeOptions = {
@@ -239,7 +247,7 @@ const AppointmentTable = () => {
 
             ></AppointmentDetails>
 
-            <AppointmentDetailsUpdate
+            {/* <AppointmentDetailsUpdate
                 app_details2_is_open={app_details2_is_open} set_app_details2_is_open={set_app_details2_is_open} 
                 addAppointmentFunction={addAppointmentFunction}
                 // app_patient_name={app_patient_name} set_app_patient_name={set_app_patient_name}
@@ -266,7 +274,7 @@ const AppointmentTable = () => {
                 app_user_doctor_name_id={app_user_doctor_name_id}
                 app_proc_fields2={app_proc_fields2}
 
-            ></AppointmentDetailsUpdate>
+            ></AppointmentDetailsUpdate> */}
             
             <div className='table-table2-table'>
                 <thead className='table-table2-table-thead-search2'>
@@ -300,7 +308,8 @@ const AppointmentTable = () => {
                             app_search_patient_name, 
                             app_search_user_doctor_name, 
                             app_search_date
-                            : app_search_date === ''? '' : new Date(app_search_date).toLocaleString().split(',')[0]
+                            // : app_search_date === ''? '' : new Date(app_search_date).toLocaleString().split(',')[0]
+                            : app_search_date === ''? '' : formatDateYYYYMMDD(app_search_date)
                             ,
                             })}}>Find</p></th>
                         <th><p onClick={()=>newAppointment()}>New</p></th>

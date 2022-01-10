@@ -58,7 +58,7 @@ export const getAppointments = async (req, res)=>{
 };
 
 export const getAppointmentsBySearch = async (req, res)=>{
-    // console.log('req.body', req.body)
+    console.log('req.body', req.body)
     try {
         const response = await db.from('appointment').select(
             'patient.patient_name', 'user.user_name', 'appointment.app_date',
@@ -70,10 +70,11 @@ export const getAppointmentsBySearch = async (req, res)=>{
             .where('patient.patient_name', 'like', `%${req.body.app_search_patient_name}%`)
             .where('appointment.app_date', 'like', `%${
                 // new Date(req.body.app_search_date).toISOString().split('T')[0]
-                req.body.app_search_date === ''? '' : req.body.app_search_date.split('/')[2]+'-'+req.body.app_search_date.split('/')[0]+'-'+req.body.app_search_date.split('/')[1]
+                req.body.app_search_date === ''? '' : req.body.app_search_date
             }%`)
             .orderBy(['appointment.app_date', { column: 'appointment.app_start_time', order: 'asc' }]);
             // console.log('response', response);
+            console.log('date: ',req.body.app_search_date)
         res.json(response);
     } catch (error) {
         console.log('catch error: ', error)
@@ -82,7 +83,7 @@ export const getAppointmentsBySearch = async (req, res)=>{
 
 export const createAppointment = async (req, res)=>{
     const appointmentId = uuid();
-    console.log('req.body: ', req.body);
+    // console.log('req.body: ', req.body);
     try {
         const response = await db('appointment').insert({
             app_id: appointmentId,
@@ -111,24 +112,29 @@ export const createAppointment = async (req, res)=>{
             });
             const responseProcedures = await db('procedure').insert(procedures);
             if (responseProcedures) {
-                // if (req.body.app_pay_fields.length) {
-                    if (false) {
-                    let payments = [];
-                    req.body.app_pay_fields.map((payment)=>{
-                        payments = [...payments, 
+                console.log('req.body.app_pay_fields.pay_amount: ', req.body.app_pay_fields.pay_amount)
+                if (req.body.app_pay_fields.app_pay_amount) {
+                    // if (false) {
+                    // let payments = [];
+                    // req.body.app_pay_fields.map((payment)=>{
+                    //     payments = [...payments,
+                    // console.log('req.body: ', req.body) 
+                    console.log('pay_amount is true')
+                    let payments =
                             {
                                 pay_id: uuid(),
                                 pay_appointment_id: appointmentId,
                                 pay_patient_id: req.body.app_patient_id,
-                                pay_amount: payment.pay_amount,
-                                pay_date: new Date(payment.pay_date).toISOString().split('T')[0] + ' '+ new Date(payment.pay_date).toTimeString().split(' ')[0],
-                                pay_change: payment.pay_change,
-                                pay_balance: payment.pay_balance,
+                                pay_amount: req.body.app_pay_fields.app_pay_amount,
+                                pay_date: req.body.app_pay_fields.app_pay_date,
+                                pay_change: req.body.app_pay_fields.app_pay_change,
+                                pay_balance: req.body.app_pay_fields.app_pay_balance,
                             }
-                        ]                
-                    });
+                    //     ]                
+                    // });
                     const responsePayment = await db('payment').insert(payments);
                     if (responsePayment) {
+                        console.log('responsePayment: ', responsePayment)
                         const userUpdateResponse = await db('patient').where('patient_id', req.body.app_patient_id).update({
                             patient_status: 'Scheduled',
                         });
@@ -139,9 +145,10 @@ export const createAppointment = async (req, res)=>{
                             res.json({appointmentInsertOk: false});
                         }  
                     } else {
-                        res.json({appointmentInsertOk: true});
+                        res.json({appointmentInsertOk: false});
                     }
                 } else {
+                    console.log('pay_amount is false')
                    try {
                         const userUpdateResponse = await db('patient').where('patient_id', req.body.app_patient_id).update({
                             patient_status: 'Scheduled',
