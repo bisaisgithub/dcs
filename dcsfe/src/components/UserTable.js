@@ -31,11 +31,11 @@ const UserTable = () => {
             !user_email || !user_password || !user_type || !user_status) {
             alert('Empty field/s')
         }else{
-            const response = await axios.post("http://172.16.0.101:3001/user", {
+            const response = await axios.post("http://172.16.0.103:3001/user", {
                 user_name: user_name,
                 user_mobile: user_mobile,
                 user_gender: user_gender,
-                user_dob: user_dob,
+                user_dob: formatDateYYYYMMDD(user_dob),
                 user_email: user_email,
                 user_type: user_type,
                 user_password: user_password,
@@ -54,12 +54,12 @@ const UserTable = () => {
     
     const getUsers = async (data)=>{
         if (data) {
-            const response = await axios.post(`http://172.16.0.101:3001/users`, data);
+            const response = await axios.post(`http://172.16.0.103:3001/users`, data);
             if (response.data) {
                 setUsersData(response.data);
             }
         } else {
-            const response = await axios.get(`http://172.16.0.101:3001/users`);
+            const response = await axios.get(`http://172.16.0.103:3001/users`);
             if (response.data) {
                 setUsersData(response.data);
             }
@@ -70,11 +70,11 @@ const UserTable = () => {
         if (!user_name || !user_mobile || !user_gender || !user_dob || !user_email) {
             alert('Empty field/s')
         }else{
-            const response = await axios.put(`http://172.16.0.101:3001/user/${user_id}`, {
+            const response = await axios.put(`http://172.16.0.103:3001/user/${user_id}`, {
                 user_name: user_name,
                 user_mobile: user_mobile,
                 user_gender: user_gender,
-                user_dob: user_dob,
+                user_dob: formatDateYYYYMMDD(user_dob),
                 user_email: user_email,
                 user_status: user_status,
                 user_type: user_type,
@@ -111,7 +111,7 @@ const UserTable = () => {
         }
     }
     const detailsFunction = async (patientIdparam)=>{
-        const responsePatient = await axios.get(`http://172.16.0.101:3001/user/${patientIdparam}`);
+        const responsePatient = await axios.get(`http://172.16.0.103:3001/user/${patientIdparam}`);
         
         if (responsePatient.data[0].user_id) {
             set_user_dob(new Date(responsePatient.data[0].user_dob));
@@ -127,6 +127,14 @@ const UserTable = () => {
         } else {
             console.log('responsePatientId is empty: ', responsePatient.data[0].user_id)
         }
+    }
+
+    const formatDateYYYYMMDD = (dt)=>{
+        let year  = dt.getFullYear();
+        let month = (dt.getMonth() + 1).toString().padStart(2, "0");
+        let day   = dt.getDate().toString().padStart(2, "0");
+        // console.log(year + '-' + month + '-' + day);
+        return year + '-' + month + '-' + day;
     }
 
     return (

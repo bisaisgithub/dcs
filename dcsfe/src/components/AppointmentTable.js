@@ -71,10 +71,10 @@ const AppointmentTable = () => {
                 console.log('validateEmptyObjectField: ', validateEmptyObjectField(app_proc_fields))
                 alert("Empty Procedure/s")
             } else {
-                const response = await axios.post("http://172.16.0.101:3001/appointment", {
+                const response = await axios.post("http://172.16.0.103:3001/appointment", {
                     app_patient_id: app_patient_id,
                     app_user_doctor_id: app_user_doctor_id,
-                    app_date: app_date,
+                    app_date: formatDateYYYYMMDD(app_date),
                     app_start_time: app_start_time,
                     app_end_time: app_end_time,
                     app_status: app_status,
@@ -94,12 +94,12 @@ const AppointmentTable = () => {
     
     const getAppointments = async (data)=>{
         if (data) {
-            const response = await axios.post(`http://172.16.0.101:3001/appointments`, data);
+            const response = await axios.post(`http://172.16.0.103:3001/appointments`, data);
             if (response.data) {
                 setAppointmentsData(response.data)
             }
         } else {
-            const response = await axios.get(`http://172.16.0.101:3001/appointments`);
+            const response = await axios.get(`http://172.16.0.103:3001/appointments`);
             if (response.data) {
                 setAppointmentsData(response.data)
             }
@@ -107,7 +107,7 @@ const AppointmentTable = () => {
     };
 
     const getPatientList = async (id)=>{
-        const resPatientList = await axios.get(`http://172.16.0.101:3001/patient-list`);
+        const resPatientList = await axios.get(`http://172.16.0.103:3001/patient-list`);
         if (!resPatientList.data) {
             alert('Failed getting patient list')
         }else{
@@ -123,7 +123,7 @@ const AppointmentTable = () => {
     }
 
     const getUserDoctorList = async ()=>{
-        const resUserDoctorList = await axios.get(`http://172.16.0.101:3001/user-doctor-list`);
+        const resUserDoctorList = await axios.get(`http://172.16.0.103:3001/user-doctor-list`);
         if (!resUserDoctorList.data) {
             alert('Failed getting patient list')
         } 
@@ -162,7 +162,7 @@ const AppointmentTable = () => {
 
     const AppointmentDetailsFunction = async (id, patient_name)=>{
         
-        const resAppointment = await axios.get(`http://172.16.0.101:3001/appointment/${id}`);
+        const resAppointment = await axios.get(`http://172.16.0.103:3001/appointment/${id}`);
         console.log('resAppointment: ', resAppointment);
         if (resAppointment.data.app_patient_id) {
             // app_patient_list.map((patient)=>{

@@ -31,7 +31,7 @@ export const createPatient = async (req, res)=>{
             patient_name: req.body.patient_name,
             patient_mobile: req.body.patient_mobile,
             patient_gender: req.body.patient_gender,
-            patient_dob: new Date(req.body.patient_dob).toISOString().split('T')[0],
+            patient_dob: req.body.patient_dob,
             patient_allergen: req.body.patient_allergen,
             patient_status: req.body.patient_status,
         });

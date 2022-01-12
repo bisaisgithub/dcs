@@ -45,21 +45,21 @@ const AppointmentDetails = ({
             )
     }
 
-    const addPaymentFieldFunction = ()=>{
-        set_app_pay_amount([...app_pay_amount, {pay_amount: '', pay_date: new Date(), pay_change: '', pay_balance: ''}])
-    }
+    // const addPaymentFieldFunction = ()=>{
+    //     set_app_pay_amount([...app_pay_amount, {pay_amount: '', pay_date: new Date(), pay_change: '', pay_balance: ''}])
+    // }
 
-    const removePaymentFieldFunction= (index, proc_cost)=>{
-        const values = [...app_pay_amount];
-        values.splice(index, 1);
-        set_app_pay_amount(values);
-        if (parseFloat(proc_cost)>0) {
-            console.log('proc_cost : ', proc_cost);
-            set_app_pay_balance(parseFloat(app_pay_balance + parseFloat(proc_cost))); 
-        }else{
-            console.log(' else proc_cost:', proc_cost)
-        }
-    }
+    // const removePaymentFieldFunction= (index, proc_cost)=>{
+    //     const values = [...app_pay_amount];
+    //     values.splice(index, 1);
+    //     set_app_pay_amount(values);
+    //     if (parseFloat(proc_cost)>0) {
+    //         console.log('proc_cost : ', proc_cost);
+    //         set_app_pay_balance(parseFloat(app_pay_balance + parseFloat(proc_cost))); 
+    //     }else{
+    //         console.log(' else proc_cost:', proc_cost)
+    //     }
+    // }
     
     // const removeProcedureFieldFunction = (index, duration, proc_cost) =>{
         

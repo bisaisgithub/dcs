@@ -58,7 +58,7 @@ export const getAppointments = async (req, res)=>{
 };
 
 export const getAppointmentsBySearch = async (req, res)=>{
-    console.log('req.body', req.body)
+    // console.log('req.body', req.body)
     try {
         const response = await db.from('appointment').select(
             'patient.patient_name', 'user.user_name', 'appointment.app_date',
@@ -89,7 +89,7 @@ export const createAppointment = async (req, res)=>{
             app_id: appointmentId,
             app_patient_id: req.body.app_patient_id,
             app_user_doctor_id: req.body.app_user_doctor_id,
-            app_date: new Date(req.body.app_date).toISOString().split('T')[0],
+            app_date: req.body.app_date,
             app_start_time: new Date(req.body.app_start_time).toISOString().split('T')[0] + ' '+ new Date(req.body.app_start_time).toTimeString().split(' ')[0],
             app_end_time: new Date(req.body.app_end_time).toISOString().split('T')[0] + ' '+ new Date(req.body.app_end_time).toTimeString().split(' ')[0],
             app_status: req.body.app_status,
