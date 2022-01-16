@@ -1,15 +1,26 @@
 // Update with your config settings.
+// import dotenv from 'dotenv';
+const dotenv = require('dotenv');
+dotenv.config()
 
 module.exports = {
 
   development: {
     client: 'mysql2',
     connection: {
-      host : '127.0.0.1',
-      port : DB_PORT,
-      user : DB_USER,
-      password : DB_PASSWORD,
-      database : DB_NAME
+      host : 
+      process.env.DB_HOST,
+      // '127.0.0.1',
+      port : process.env.DB_PORT,
+      user : 
+      process.env.DB_USER,
+      // 'root',
+      password : 
+      process.env.DB_PASSWORD,
+      // 'root',
+      database : 
+      process.env.DB_NAME,
+      // 'dcs'
     }
   },
 

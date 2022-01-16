@@ -25,6 +25,11 @@ var corsOptions = {
 // origin: '*'
 }
 
+// console.log(' process.env.DB_PORT: ',  process.env.DB_PORT);
+// console.log(' process.env.DB_USER: ',  process.env.DB_USER);
+// console.log(' process.env.DB_PASSWORD: ',  process.env.DB_PASSWORD);
+// console.log(' process.env.DB_NAME: ',  process.env.DB_NAME);
+
 const originF = (req, res)=>{
     var origin = req.get('origin');
     console.log(origin);

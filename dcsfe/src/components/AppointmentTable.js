@@ -43,6 +43,10 @@ const AppointmentTable = () => {
     const [app_pay_balance, set_app_pay_balance] = useState('');
     const [app_pay_change, set_app_pay_change] = useState('');
     const [app_pay_date, set_app_pay_date] = useState(new Date());
+    const [app_pay_fields, set_app_pay_fields] = useState([{
+        pay_amount: '', pay_date: new Date(), 
+        pay_balance: app_pay_balance, pay_change: app_pay_change
+    }])
     const [showAddPayment, set_showAddPayment] =useState(false);
     const [app_id, set_app_id] = useState('');
 
@@ -162,6 +166,7 @@ const AppointmentTable = () => {
     }
 
     const AppointmentDetailsFunction = async (app_id, patient_name)=>{
+        set_app_proc_fields([]);
         set_app_id(app_id);
         set_app_patient_name_id({value: app_id, label: patient_name});
         const resAppointment = await axios.get(`http://${process.env.REACT_APP_BE_IP}appointment/${app_id}`);
@@ -238,6 +243,7 @@ const AppointmentTable = () => {
             showAddPayment={showAddPayment} set_showAddPayment={set_showAddPayment}
             app_patient_name_id={app_patient_name_id}
             app_id={app_id}
+            app_pay_fields={app_pay_fields} set_app_pay_fields={set_app_pay_fields}
 
             ></AppointmentDetails>
 

@@ -1,2 +1,5 @@
 dotenv for be ip address- done
+recalc for proc and pay fields
+proc fields calc
+pay fields calc
 appointment edit process
