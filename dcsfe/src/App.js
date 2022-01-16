@@ -1,7 +1,6 @@
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-
 import './App2.css';
 // import Login from './pages/Login';
 import Patient from './pages/Patient.js';
@@ -9,10 +8,9 @@ import Dashboard from './pages/Dashboard.js';
 import User from './pages/User.js';
 import Admin from './pages/Admin.js';
 import Appointment from './pages/Appointment.js'
-
-
 import Nav from './components/nav/Nav.js';
 // import NavTest from './components2/NavTest';
+
 
 function App() {
   return (

@@ -4,6 +4,9 @@ import cookieParser from 'cookie-parser';
 import patientRouter from '../routes/patient.routes.js';
 import userRouter from '../routes/user.routes.js';
 import appointmentRouter from '../routes/appointment.routes.js';
+// const dotenv = require('dotenv')
+import dotenv from 'dotenv';
+dotenv.config()
 
 var whitelist = ['http://127.0.0.1:3000', 'http://localhost:3000', 'http://172.16.0.104:3000', 'http://172.16.0.103:3000',
                 'http://172.16.0.100:3000', 'http://172.16.0.103:3000', 'http://172.16.0.103:3001', 'http://172.16.0.101:3001',

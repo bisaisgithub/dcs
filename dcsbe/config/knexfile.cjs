@@ -6,10 +6,10 @@ module.exports = {
     client: 'mysql2',
     connection: {
       host : '127.0.0.1',
-      port : 3306,
-      user : 'root',
-      password : 'root',
-      database : 'dcs'
+      port : DB_PORT,
+      user : DB_USER,
+      password : DB_PASSWORD,
+      database : DB_NAME
     }
   },
 

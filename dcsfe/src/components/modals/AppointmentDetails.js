@@ -31,6 +31,8 @@ const AppointmentDetails = ({
     app_pay_change, set_app_pay_change,
     app_pay_date, set_app_pay_date,
     showAddPayment, set_showAddPayment,
+    app_patient_name_id,
+    app_id,
 
     }) => {
     if (!app_details_is_open) {
@@ -135,6 +137,7 @@ const AppointmentDetails = ({
     }
 
     const handleChangeInput =(index, event)=>{
+        console.log('app_proc_fields: ',app_proc_fields)
         if (app_start_time) {
             const values = [...app_proc_fields];
             values[index][event.target.name] = event.target.value;
@@ -171,6 +174,7 @@ const AppointmentDetails = ({
                 }else{
                     // value.proc_cost = 0;
                 } 
+                return null;
             })
             set_app_total_proc_cost(parseFloat(totalCost).toFixed(2));
             
@@ -195,13 +199,10 @@ const AppointmentDetails = ({
 
     let options2 = [{value: '', label: 'test'}];
 
-
     app_patient_list.map((patient)=>{
         options2 = [...options2, {value: patient.patient_id, label: patient.patient_name}]
         return null;
     });
-
-    
 
     return ReactDOM.createPortal(
         <>
@@ -219,7 +220,7 @@ const AppointmentDetails = ({
                                     })}
                                     <option value="">-Select Patient-</option>
                                 </select>        */}
-                                <Select options={options2} onChange={(value)=>{set_app_patient_id(value.value)}}/>
+                                <Select options={options2} defaultValue={app_patient_name_id} onChange={(value)=>{set_app_patient_id(value.value)}}/>
                             </div>
                             <div className="details-details-modal-body-input-box">
                                 <span>Doctor</span>
@@ -272,7 +273,7 @@ const AppointmentDetails = ({
                                     <div style={{marginTop:'0'}} className='details-details-modal-body' key={index}>
                                         <div className="details-details-modal-body-input-box3">
                                             <span style={index? {display: 'none'}:{}}>Procedure</span>
-                                            <select name="proc_name" value={app_proc_field.proc_name} onChange={(event)=>{handleChangeInput(index, event)}}>
+                                            <select name="proc_name" value={app_proc_field.proc_name} disabled={app_id} onChange={(event)=>{handleChangeInput(index, event)}}>
                                                 <option value="">-Select Procedure-</option>
                                                 <option value="Consultation">Consultation</option>
                                                 <option value="Extraction">Extraction</option>
@@ -281,7 +282,7 @@ const AppointmentDetails = ({
                                         </div>
                                         <div className="details-details-modal-body-input-box3">
                                             <span style={index? {display: 'none'}:{}}>Duration Minutes</span>
-                                                <select name="proc_duration_minutes" value={app_proc_field.proc_duration_minutes} onChange={(event)=>{handleChangeInput(index, event)}}>
+                                                <select name="proc_duration_minutes" disabled={app_id} value={app_proc_field.proc_duration_minutes} onChange={(event)=>{handleChangeInput(index, event)}}>
                                                     <option value={0}>-Select Minutes-</option>
                                                     <option value={15}>15</option>
                                                     <option value={30}>30</option>
@@ -291,7 +292,7 @@ const AppointmentDetails = ({
                                         <div className="details-details-modal-body-input-box3">
                                             <span style={index? {display: 'none'}:{}}>Cost</span>
                                             <div className='duration-minutes-container'>
-                                                <input type='number' name="proc_cost" value={app_proc_field.proc_cost} onChange={(event)=>{handleChangeInput(index, event)}}/>
+                                                <input type='number' name="proc_cost" disabled={app_id} value={app_proc_field.proc_cost} onChange={(event)=>{handleChangeInput(index, event)}}/>
                                                 <button className='add-remove-button' 
                                                 // onClick={()=>{removeProcedureFieldFunction(index, app_proc_field.proc_duration_minutes, app_proc_field.proc_cost)}}
                                                 onClick={async ()=>{
@@ -308,6 +309,7 @@ const AppointmentDetails = ({
                                                             if (value.proc_duration_minutes> -1) {
                                                                 totalMinutes = totalMinutes+parseInt(value.proc_duration_minutes);
                                                             }
+                                                            return null;
                                                         });
                                                         set_app_end_time(
                                                             new Date(
@@ -469,7 +471,7 @@ const AppointmentDetails = ({
                     <div className='details-details-modal-body-button'>                    
                         {/* {userId? (<input type="submit" onClick={updateUser} value='Update' className='percent-40'/>):
                         (<input type="submit" onClick={addUser} value='Add' className='percent-40'/>)}   */}
-                        <button className='button-w70' onClick={()=>{addAppointmentFunction()}}>Add Appointment</button>                               
+                        <button className='button-w70' onClick={()=>{addAppointmentFunction()}}>{app_id? 'Update Appointment': 'Add Appointment'}</button>                               
                         <button className='button-w20' onClick={()=>{set_app_details_is_open(false); set_app_date(new Date())}}>Close</button>
                     </div>
                 </div>

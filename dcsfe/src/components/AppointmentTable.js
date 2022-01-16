@@ -13,10 +13,10 @@ import 'react-datepicker/dist/react-datepicker.css';
 const AppointmentTable = () => {
     const [app_date, set_app_date] = useState(null);
     const [app_details_is_open, set_app_details_is_open] = useState(false);
-    const [app_details2_is_open, set_app_details2_is_open] = useState(false);
+    // const [app_details2_is_open, set_app_details2_is_open] = useState(false);
     const [appointmentsData, setAppointmentsData] = useState([]);
     const [app_patient_name_id, set_app_patient_name_id] = useState({});
-    const [app_user_doctor_name_id, set_app_user_doctor_name_id] = useState({});
+    // const [app_user_doctor_name_id, set_app_user_doctor_name_id] = useState({});
     const [app_patient_list, set_app_patient_list] = useState([]);
     const [app_user_doctor_list, set_app_user_doctor_list] = useState([]);
     // const [app_patient_name, set_app_patient_name] =useState('');
@@ -26,13 +26,13 @@ const AppointmentTable = () => {
     const [app_search_patient_name, set_app_search_patient_name] = useState('');
     const [app_search_user_doctor_name, set_app_search_user_doctor_name] = useState('');
     const [app_search_date, set_app_search_date] = useState('');
-    const [app_search_type, set_app_search_type] = useState('');
+    // const [app_search_type, set_app_search_type] = useState('');
     const [app_proc_name, set_app_proc_name] = useState('');
     const [app_proc_duration_minutes, set_app_proc_duration_minutes] = useState('');
     const [app_proc_fields, set_app_proc_fields] = useState(()=>{return [{
         proc_name: '', proc_duration_minutes: 0, proc_cost: 0},
         ]});
-    const [app_proc_fields2, set_app_proc_fields2] = useState([]);
+    // const [app_proc_fields2, set_app_proc_fields2] = useState([]);
     const [app_start_time, set_app_start_time] = useState(null);
     const [app_end_time, set_app_end_time] = useState(null);
     const [app_status, set_app_status] = useState('');
@@ -44,6 +44,7 @@ const AppointmentTable = () => {
     const [app_pay_change, set_app_pay_change] = useState('');
     const [app_pay_date, set_app_pay_date] = useState(new Date());
     const [showAddPayment, set_showAddPayment] =useState(false);
+    const [app_id, set_app_id] = useState('');
 
     useEffect(()=>{
         
@@ -71,7 +72,7 @@ const AppointmentTable = () => {
                 console.log('validateEmptyObjectField: ', validateEmptyObjectField(app_proc_fields))
                 alert("Empty Procedure/s")
             } else {
-                const response = await axios.post("http://172.16.0.103:3001/appointment", {
+                const response = await axios.post(`http://${process.env.REACT_APP_BE_IP}appointment`, {
                     app_patient_id: app_patient_id,
                     app_user_doctor_id: app_user_doctor_id,
                     app_date: formatDateYYYYMMDD(app_date),
@@ -94,12 +95,12 @@ const AppointmentTable = () => {
     
     const getAppointments = async (data)=>{
         if (data) {
-            const response = await axios.post(`http://172.16.0.103:3001/appointments`, data);
+            const response = await axios.post(`http://${process.env.REACT_APP_BE_IP}appointments`, data);
             if (response.data) {
                 setAppointmentsData(response.data)
             }
         } else {
-            const response = await axios.get(`http://172.16.0.103:3001/appointments`);
+            const response = await axios.get(`http://${process.env.REACT_APP_BE_IP}appointments`);
             if (response.data) {
                 setAppointmentsData(response.data)
             }
@@ -107,7 +108,7 @@ const AppointmentTable = () => {
     };
 
     const getPatientList = async (id)=>{
-        const resPatientList = await axios.get(`http://172.16.0.103:3001/patient-list`);
+        const resPatientList = await axios.get(`http://${process.env.REACT_APP_BE_IP}patient-list`);
         if (!resPatientList.data) {
             alert('Failed getting patient list')
         }else{
@@ -123,7 +124,7 @@ const AppointmentTable = () => {
     }
 
     const getUserDoctorList = async ()=>{
-        const resUserDoctorList = await axios.get(`http://172.16.0.103:3001/user-doctor-list`);
+        const resUserDoctorList = await axios.get(`http://${process.env.REACT_APP_BE_IP}user-doctor-list`);
         if (!resUserDoctorList.data) {
             alert('Failed getting patient list')
         } 
@@ -160,48 +161,39 @@ const AppointmentTable = () => {
         hour12: true
     }
 
-    const AppointmentDetailsFunction = async (id, patient_name)=>{
-        
-        const resAppointment = await axios.get(`http://172.16.0.103:3001/appointment/${id}`);
+    const AppointmentDetailsFunction = async (app_id, patient_name)=>{
+        set_app_id(app_id);
+        set_app_patient_name_id({value: app_id, label: patient_name});
+        const resAppointment = await axios.get(`http://${process.env.REACT_APP_BE_IP}appointment/${app_id}`);
         console.log('resAppointment: ', resAppointment);
         if (resAppointment.data.app_patient_id) {
-            // app_patient_list.map((patient)=>{
-            //     if (patient.patient_id === resAppointment.data.app_patient_id) {
-            //         set_app_patient_name_id((prev)=>{
-            //             prev = {value: resAppointment.app_patient_id, label: patient.patient_name};
-            //             return prev;
-            //         })
-            //         console.log('app_patient_name_id: ', app_patient_name_id);
-            //         return null;
-            //     }
-            //     console.log('app_patient_name_id not equl: ', app_patient_name_id);
-            //     return null;
-            // })
-            set_app_patient_name_id({value: resAppointment.data.app_patient_id, label: patient_name});
+            
             getPatientList(resAppointment.data.app_patient_id);
-            set_app_details2_is_open(true);
+            set_app_details_is_open(true);
             set_app_user_doctor_id(resAppointment.data.app_user_doctor_id);
             set_app_date(new Date(resAppointment.data.app_date));
             set_app_start_time(new Date(resAppointment.data.app_start_time));
             set_app_status(resAppointment.data.app_status);
             set_app_type(resAppointment.data.app_type);
             set_app_proc_fields([]);
-            set_app_proc_fields2((prev)=>{
-               return resAppointment.data.resProceduresById
-            });
+            set_app_proc_fields(
+                resAppointment.data.resProceduresById
+                // (prev)=>{return resAppointment.data.resProceduresById}
+                );
 
             let totalMinutes = 0;
             let totalCost = 0;
-            resAppointment.data.resProceduresById.map((app_proc_field2)=>{
+            resAppointment.data.resProceduresById.map((app_proc_field)=>{
                 
-                if (app_proc_field2.proc_duration_minutes > 0) {
-                    totalMinutes = totalMinutes + app_proc_field2.proc_duration_minutes
+                if (app_proc_field.proc_duration_minutes > 0) {
+                    totalMinutes = totalMinutes + app_proc_field.proc_duration_minutes
                 }
-                if (app_proc_field2.proc_cost > 0) {
-                    totalCost = totalCost + app_proc_field2.proc_cost
+                if (app_proc_field.proc_cost > 0) {
+                    totalCost = totalCost + app_proc_field.proc_cost
                 }
+                return null;
             });
-            console.log('totalMinutes: ',totalMinutes)
+            // console.log('totalMinutes: ',totalMinutes)
 
             set_app_end_time(
                 new Date(
@@ -244,6 +236,8 @@ const AppointmentTable = () => {
             app_user_doctor_list={app_user_doctor_list}
             app_pay_date={app_pay_date} set_app_pay_date={set_app_pay_date}
             showAddPayment={showAddPayment} set_showAddPayment={set_showAddPayment}
+            app_patient_name_id={app_patient_name_id}
+            app_id={app_id}
 
             ></AppointmentDetails>
 
@@ -276,7 +270,7 @@ const AppointmentTable = () => {
 
             ></AppointmentDetailsUpdate> */}
             
-            <div className='table-table2-table'>
+            <table className='table-table2-table'>
                 <thead className='table-table2-table-thead-search2'>
                     <tr className='table-table2-table-thead-tr-search2'>
                       
@@ -353,7 +347,7 @@ const AppointmentTable = () => {
                         );
                     })}
                 </tbody>
-            </div>
+            </table>
 
         </div>
     )
