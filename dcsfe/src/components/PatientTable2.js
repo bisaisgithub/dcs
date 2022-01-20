@@ -27,7 +27,7 @@ const PatientTable2 = () => {
         if (!patient_name || !patient_mobile || !patient_gender || !patient_dob || !patient_allergen || !patient_status) {
             alert('Empty field/s')
         }else{
-            const response = await axios.post("http://172.16.0.103:3001/patient", {
+            const response = await axios.post(`${process.env.REACT_APP_BE_LINK}patient`, {
                 patient_name: patient_name,
                 patient_mobile: patient_mobile,
                 patient_gender: patient_gender,
@@ -49,13 +49,13 @@ const PatientTable2 = () => {
     const getPatients = async (data)=>{
 
         if (data) {
-            const response = await axios.post(`http://172.16.0.103:3001/patients`, data);
+            const response = await axios.post(`${process.env.REACT_APP_BE_LINK}patients`, data);
   
         if (response.data) {
             setPatientsData(response.data);
         }
         } else {
-            const response = await axios.get(`http://172.16.0.103:3001/patients`);
+            const response = await axios.get(`${process.env.REACT_APP_BE_LINK}patients`);
   
         if (response.data) {
             setPatientsData(response.data);
@@ -68,7 +68,7 @@ const PatientTable2 = () => {
         if (!patient_name || !patient_mobile || !patient_gender || !patient_dob || !patient_allergen || !patient_status) {
             alert('Empty field/s')
         }else{
-            const response = await axios.put(`http://172.16.0.103:3001/patient/${patient_id}`, {
+            const response = await axios.put(`${process.env.REACT_APP_BE_LINK}patient/${patient_id}`, {
                 patient_name: patient_name,
                 patient_mobile: patient_mobile,
                 patient_gender: patient_gender,
@@ -106,7 +106,8 @@ const PatientTable2 = () => {
         }
     }
     const detailsFunction = async (patientIdparam)=>{
-        const responsePatient = await axios.get(`http://172.16.0.103:3001/patient/${patientIdparam}`);
+        const responsePatient = await axios.get(`${process.env.REACT_APP_BE_LINK}patient/${patientIdparam}`);
+        
         
         if (responsePatient.data[0].patient_id) {
             set_patient_dob(new Date(responsePatient.data[0].patient_dob));
@@ -144,7 +145,7 @@ const PatientTable2 = () => {
             <div className='table-table2-head-container'>
                 
             </div>
-            <div className='table-table2-table'>
+            <table className='table-table2-table'>
                 <thead className='table-table2-table-thead-search2'>
                     <tr className='table-table2-table-thead-tr-search2'>
                         <th><p onClick={()=>{getPatients({name: searchNameInput, status_: searchStatusInput})}}>Find</p></th>
@@ -179,7 +180,7 @@ const PatientTable2 = () => {
                         );
                     })}
                 </tbody>
-            </div>
+            </table>
 
         </div>
     )

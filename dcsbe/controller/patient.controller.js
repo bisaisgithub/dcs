@@ -1,8 +1,6 @@
 import {v4 as uuid} from 'uuid';
 import db from "../config/db.js";
 
-
-
 export const getPatients = async (req, res)=>{
     try {
         // console.log('getPatients called');

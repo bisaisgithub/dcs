@@ -82,16 +82,16 @@ export const getAppointmentsBySearch = async (req, res)=>{
 };
 
 export const createAppointment = async (req, res)=>{
+    // console.log('req.body.app_pay_fields: ', req.body)
     const appointmentId = uuid();
-    // console.log('req.body: ', req.body);
     try {
         const response = await db('appointment').insert({
             app_id: appointmentId,
             app_patient_id: req.body.app_patient_id,
             app_user_doctor_id: req.body.app_user_doctor_id,
             app_date: req.body.app_date,
-            app_start_time: new Date(req.body.app_start_time).toISOString().split('T')[0] + ' '+ new Date(req.body.app_start_time).toTimeString().split(' ')[0],
-            app_end_time: new Date(req.body.app_end_time).toISOString().split('T')[0] + ' '+ new Date(req.body.app_end_time).toTimeString().split(' ')[0],
+            app_start_time: new Date(req.body.app_start_time).toMysqlFormat(),
+            app_end_time: new Date(req.body.app_end_time).toMysqlFormat(),
             app_status: req.body.app_status,
             app_type: req.body.app_type,
         });
@@ -113,56 +113,56 @@ export const createAppointment = async (req, res)=>{
             const responseProcedures = await db('procedure').insert(procedures);
             if (responseProcedures) {
                 console.log('req.body.app_pay_fields.pay_amount: ', req.body.app_pay_fields.pay_amount)
-                if (req.body.app_pay_fields.app_pay_amount) {
-                    // if (false) {
-                    // let payments = [];
-                    // req.body.app_pay_fields.map((payment)=>{
-                    //     payments = [...payments,
-                    // console.log('req.body: ', req.body) 
-                    console.log('pay_amount is true')
-                    let payments =
-                            {
-                                pay_id: uuid(),
-                                pay_appointment_id: appointmentId,
-                                pay_patient_id: req.body.app_patient_id,
-                                pay_amount: req.body.app_pay_fields.app_pay_amount,
-                                pay_date: req.body.app_pay_fields.app_pay_date,
-                                pay_change: req.body.app_pay_fields.app_pay_change,
-                                pay_balance: req.body.app_pay_fields.app_pay_balance,
-                            }
-                    //     ]                
-                    // });
-                    const responsePayment = await db('payment').insert(payments);
-                    if (responsePayment) {
-                        console.log('responsePayment: ', responsePayment)
-                        const userUpdateResponse = await db('patient').where('patient_id', req.body.app_patient_id).update({
-                            patient_status: 'Scheduled',
-                        });
-                        console.log('userUpdateResponse: ', userUpdateResponse)
-                        if (userUpdateResponse) {
-                            res.json({appointmentInsertOk: true});
-                        } else {
-                            res.json({appointmentInsertOk: false});
-                        }  
-                    } else {
-                        res.json({appointmentInsertOk: false});
-                    }
+                if (req.body.app_pay_fields>0) {
+                    // // if (false) {
+                    // // let payments = [];
+                    // // req.body.app_pay_fields.map((payment)=>{
+                    // //     payments = [...payments,
+                    // // console.log('req.body: ', req.body) 
+                    // console.log('pay_amount is true')
+                    // let payments =
+                    //         {
+                    //             pay_id: uuid(),
+                    //             pay_appointment_id: appointmentId,
+                    //             pay_patient_id: req.body.app_patient_id,
+                    //             pay_amount: req.body.app_pay_fields.app_pay_amount,
+                    //             pay_date: req.body.app_pay_fields.app_pay_date,
+                    //             pay_change: req.body.app_pay_fields.app_pay_change,
+                    //             pay_balance: req.body.app_pay_fields.app_pay_balance,
+                    //         }
+                    // //     ]                
+                    // // });
+                    // const responsePayment = await db('payment').insert(payments);
+                    // if (responsePayment) {
+                    //     console.log('responsePayment: ', responsePayment)
+                    //     const userUpdateResponse = await db('patient').where('patient_id', req.body.app_patient_id).update({
+                    //         patient_status: 'Scheduled',
+                    //     });
+                    //     console.log('userUpdateResponse: ', userUpdateResponse)
+                    //     if (userUpdateResponse) {
+                    //         res.json({appointmentInsertOk: true});
+                    //     } else {
+                    //         res.json({appointmentInsertOk: false});
+                    //     }  
+                    // } else {
+                    //     res.json({appointmentInsertOk: false});
+                    // }
                 } else {
                     console.log('pay_amount is false')
-                   try {
-                        const userUpdateResponse = await db('patient').where('patient_id', req.body.app_patient_id).update({
-                            patient_status: 'Scheduled',
-                        });
-                        console.log('userUpdateResponse: ', userUpdateResponse)
-                        if (userUpdateResponse) {
-                            res.json({appointmentInsertOk: true});
-                        } else {
-                            res.json({appointmentInsertOk: false});
-                        }  
-                   } catch (error) {
-                       console.log('error catched: ', error);
-                       res.json({appointmentInsertOk: false});
-                   }
+                //    try {
+                //         const userUpdateResponse = await db('patient').where('patient_id', req.body.app_patient_id).update({
+                //             patient_status: 'Scheduled',
+                //         });
+                //         console.log('userUpdateResponse: ', userUpdateResponse)
+                //         if (userUpdateResponse) {
+                //             res.json({appointmentInsertOk: true});
+                //         } else {
+                //             res.json({appointmentInsertOk: false});
+                //         }  
+                //    } catch (error) {
+                //        console.log('error catched: ', error);
+                //        res.json({appointmentInsertOk: false});
+                //    }
                       
                 }
                 

@@ -31,7 +31,7 @@ const UserTable = () => {
             !user_email || !user_password || !user_type || !user_status) {
             alert('Empty field/s')
         }else{
-            const response = await axios.post("http://172.16.0.103:3001/user", {
+            const response = await axios.post(`${process.env.REACT_APP_BE_LINK}user`, {
                 user_name: user_name,
                 user_mobile: user_mobile,
                 user_gender: user_gender,
@@ -54,12 +54,12 @@ const UserTable = () => {
     
     const getUsers = async (data)=>{
         if (data) {
-            const response = await axios.post(`http://172.16.0.103:3001/users`, data);
+            const response = await axios.post(`${process.env.REACT_APP_BE_LINK}users`, data);
             if (response.data) {
                 setUsersData(response.data);
             }
         } else {
-            const response = await axios.get(`http://172.16.0.103:3001/users`);
+            const response = await axios.get(`${process.env.REACT_APP_BE_LINK}users`);
             if (response.data) {
                 setUsersData(response.data);
             }
@@ -70,7 +70,7 @@ const UserTable = () => {
         if (!user_name || !user_mobile || !user_gender || !user_dob || !user_email) {
             alert('Empty field/s')
         }else{
-            const response = await axios.put(`http://172.16.0.103:3001/user/${user_id}`, {
+            const response = await axios.put(`${process.env.REACT_APP_BE_LINK}user/${user_id}`, {
                 user_name: user_name,
                 user_mobile: user_mobile,
                 user_gender: user_gender,
@@ -111,7 +111,7 @@ const UserTable = () => {
         }
     }
     const detailsFunction = async (patientIdparam)=>{
-        const responsePatient = await axios.get(`http://172.16.0.103:3001/user/${patientIdparam}`);
+        const responsePatient = await axios.get(`${process.env.REACT_APP_BE_LINK}user/${patientIdparam}`);
         
         if (responsePatient.data[0].user_id) {
             set_user_dob(new Date(responsePatient.data[0].user_dob));
@@ -158,7 +158,7 @@ const UserTable = () => {
                 </div>
                 </div>
             </div>
-            <div className='table-table2-table'>
+            <table className='table-table2-table'>
                 <thead className='table-table2-table-thead-search2'>
                     <tr className='table-table2-table-thead-tr-search2'>
                         <th><p onClick={()=>{getUsers({name: searchNameInput, type: searchTypeInput})}}>Find</p></th>
@@ -193,7 +193,7 @@ const UserTable = () => {
                         );
                     })}
                 </tbody>
-            </div>
+            </table>
 
         </div>
     )

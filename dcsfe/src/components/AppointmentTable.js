@@ -37,16 +37,18 @@ const AppointmentTable = () => {
     const [app_end_time, set_app_end_time] = useState(null);
     const [app_status, set_app_status] = useState('');
     const [app_total_proc_duration_minutes, set_app_total_proc_duration_minutes] = useState(0);
-    const [app_type, set_app_type] = useState('Scheduled');
+    const [app_type, set_app_type] = useState('');
     const [app_total_proc_cost, set_app_total_proc_cost] = useState(0);
     const [app_pay_amount, set_app_pay_amount] = useState('');
     const [app_pay_balance, set_app_pay_balance] = useState('');
     const [app_pay_change, set_app_pay_change] = useState('');
     const [app_pay_date, set_app_pay_date] = useState(new Date());
-    const [app_pay_fields, set_app_pay_fields] = useState([{
-        pay_amount: '', pay_date: new Date(), 
-        pay_balance: app_pay_balance, pay_change: app_pay_change
-    }])
+    const [app_pay_fields, set_app_pay_fields] = useState([
+            // {
+            // pay_amount: '', pay_date: new Date(), 
+            // pay_balance: app_pay_balance, pay_change: app_pay_change
+            // }
+        ])
     const [showAddPayment, set_showAddPayment] =useState(false);
     const [app_id, set_app_id] = useState('');
 
@@ -57,18 +59,17 @@ const AppointmentTable = () => {
     }, []);
 
     const addAppointmentFunction = async ()=>{
-
         function validateEmptyObjectField(array){
             for (var i=0; i < array.length; i++) {
-                if (array[i].procedure === "") {
+                if (array[i].proc_name === "") {
                     return false;
                 }
             }
             return true;
         }
-
         if (!app_patient_id || !app_user_doctor_id || !app_date ||
-            !app_start_time || !app_status || !app_type) {
+            // !app_start_time || 
+            !app_status || !app_type) {
             alert('Empty field/s')
         }else{
 
@@ -76,7 +77,7 @@ const AppointmentTable = () => {
                 console.log('validateEmptyObjectField: ', validateEmptyObjectField(app_proc_fields))
                 alert("Empty Procedure/s")
             } else {
-                const response = await axios.post(`http://${process.env.REACT_APP_BE_IP}appointment`, {
+                const response = await axios.post(`${process.env.REACT_APP_BE_LINK}appointment`, {
                     app_patient_id: app_patient_id,
                     app_user_doctor_id: app_user_doctor_id,
                     app_date: formatDateYYYYMMDD(app_date),
@@ -85,7 +86,7 @@ const AppointmentTable = () => {
                     app_status: app_status,
                     app_type: app_type,
                     app_proc_fields: app_proc_fields,
-                    app_pay_fields: {app_pay_amount, app_pay_balance, app_pay_change, app_pay_date:formatDateYYYYMMDD(app_pay_date)},
+                    app_pay_fields: app_pay_fields
                  });   
 
                 if (response.data.appointmentInsertOk) { 
@@ -99,12 +100,12 @@ const AppointmentTable = () => {
     
     const getAppointments = async (data)=>{
         if (data) {
-            const response = await axios.post(`http://${process.env.REACT_APP_BE_IP}appointments`, data);
+            const response = await axios.post(`${process.env.REACT_APP_BE_LINK}appointments`, data);
             if (response.data) {
                 setAppointmentsData(response.data)
             }
         } else {
-            const response = await axios.get(`http://${process.env.REACT_APP_BE_IP}appointments`);
+            const response = await axios.get(`${process.env.REACT_APP_BE_LINK}appointments`);
             if (response.data) {
                 setAppointmentsData(response.data)
             }
@@ -112,7 +113,7 @@ const AppointmentTable = () => {
     };
 
     const getPatientList = async (id)=>{
-        const resPatientList = await axios.get(`http://${process.env.REACT_APP_BE_IP}patient-list`);
+        const resPatientList = await axios.get(`${process.env.REACT_APP_BE_LINK}patient-list`);
         if (!resPatientList.data) {
             alert('Failed getting patient list')
         }else{
@@ -128,7 +129,7 @@ const AppointmentTable = () => {
     }
 
     const getUserDoctorList = async ()=>{
-        const resUserDoctorList = await axios.get(`http://${process.env.REACT_APP_BE_IP}user-doctor-list`);
+        const resUserDoctorList = await axios.get(`${process.env.REACT_APP_BE_LINK}user-doctor-list`);
         if (!resUserDoctorList.data) {
             alert('Failed getting patient list')
         } 
@@ -137,8 +138,26 @@ const AppointmentTable = () => {
     }
 
     const newAppointment = ()=>{
+        console.log('app_patient_name_id: ', app_patient_name_id);
         getUserDoctorList();
         getPatientList();
+        set_app_patient_name_id('');
+        set_app_user_doctor_id('');
+        set_app_date(null);
+        set_app_start_time(null);
+        set_app_end_time(null);
+        set_app_proc_fields([{
+            proc_name: '', proc_duration_minutes: 0, proc_cost: 0},
+            ]);
+        set_app_total_proc_cost(0);
+        set_app_status('');
+        set_app_type('');
+        set_app_pay_fields([
+            // {
+            // pay_amount: '', pay_date: new Date(), 
+            // pay_balance: app_pay_balance, pay_change: app_pay_change
+            // }
+        ]);
         set_app_details_is_open(true); 
     };
     
@@ -169,7 +188,7 @@ const AppointmentTable = () => {
         set_app_proc_fields([]);
         set_app_id(app_id);
         set_app_patient_name_id({value: app_id, label: patient_name});
-        const resAppointment = await axios.get(`http://${process.env.REACT_APP_BE_IP}appointment/${app_id}`);
+        const resAppointment = await axios.get(`${process.env.REACT_APP_BE_LINK} appointment/${app_id}`);
         console.log('resAppointment: ', resAppointment);
         if (resAppointment.data.app_patient_id) {
             
@@ -246,35 +265,6 @@ const AppointmentTable = () => {
             app_pay_fields={app_pay_fields} set_app_pay_fields={set_app_pay_fields}
 
             ></AppointmentDetails>
-
-            {/* <AppointmentDetailsUpdate
-                app_details2_is_open={app_details2_is_open} set_app_details2_is_open={set_app_details2_is_open} 
-                addAppointmentFunction={addAppointmentFunction}
-                // app_patient_name={app_patient_name} set_app_patient_name={set_app_patient_name}
-                app_date={app_date} set_app_date={set_app_date}
-                app_patient_list={app_patient_list} 
-                app_patient_id={app_patient_id} set_app_patient_id={set_app_patient_id}
-                // app_user_doctor_name={app_user_doctor_name} set_app_user_doctor_name={set_app_user_doctor_name}
-                app_user_doctor_id={app_user_doctor_id} set_app_user_doctor_id={set_app_user_doctor_id}
-                app_start_time={app_start_time} set_app_start_time={set_app_start_time} 
-                app_proc_name={app_proc_name} set_app_proc_name={set_app_proc_name}
-                app_proc_duration_minutes={app_proc_duration_minutes} set_app_proc_duration_minutes={set_app_proc_duration_minutes}
-                app_proc_fields={app_proc_fields} set_app_proc_fields={set_app_proc_fields}
-                app_end_time={app_end_time} set_app_end_time={set_app_end_time} 
-                app_status={app_status} set_app_status={set_app_status}
-                app_total_proc_duration_minutes={app_total_proc_duration_minutes} set_app_total_proc_duration_minutes={set_app_total_proc_duration_minutes}
-                app_type={app_type} set_app_type={set_app_type}
-                app_total_proc_cost={app_total_proc_cost} set_app_total_proc_cost={set_app_total_proc_cost}
-                app_pay_amount={app_pay_amount} set_app_pay_amount={set_app_pay_amount}
-                app_pay_balance={app_pay_balance} set_app_pay_balance={set_app_pay_balance}
-                app_pay_change={app_pay_change} set_app_pay_change={set_app_pay_change}
-                app_user_doctor_list={app_user_doctor_list}
-                app_pay_date={app_pay_date} set_app_pay_date={set_app_pay_date}
-                app_patient_name_id={app_patient_name_id}
-                app_user_doctor_name_id={app_user_doctor_name_id}
-                app_proc_fields2={app_proc_fields2}
-
-            ></AppointmentDetailsUpdate> */}
             
             <table className='table-table2-table'>
                 <thead className='table-table2-table-thead-search2'>
@@ -339,12 +329,12 @@ const AppointmentTable = () => {
                                 <td className='table-table2-table-body-tr-td '>
                                     <button className='minW50px' style={{background:'#3c3f44'}} onClick={()=>{}}>{
                                     // new Date(appointment.app_start_time).toTimeString().split(' ')[0].slice(0, new Date(appointment.app_start_time).toTimeString().split(' ')[0].length - 3)
-                                    new Date(appointment.app_start_time).toLocaleString('en-PH', timeOptions)
+                                    new Date(new Date(appointment.app_start_time).toString()+' UTC').toLocaleString('en-PH', timeOptions)
                                     }</button>
                                 </td>
                                 <td className='table-table2-table-body-tr-td'>
                                     <button className='minW50px' onClick={()=>{}}>{
-                                        new Date(appointment.app_end_time).toLocaleString('en-PH', timeOptions)
+                                        new Date(new Date(appointment.app_end_time).toString()+ ' UTC').toLocaleString('en-PH', timeOptions)
                                     // new Date(appointment.app_end_time).toTimeString().split(' ')[0].slice(0, new Date(appointment.app_end_time).toTimeString().split(' ')[0].length - 3)
                                     }</button>
                                 </td>
