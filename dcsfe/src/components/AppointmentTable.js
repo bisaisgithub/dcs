@@ -30,7 +30,7 @@ const AppointmentTable = () => {
     const [app_proc_name, set_app_proc_name] = useState('');
     const [app_proc_duration_minutes, set_app_proc_duration_minutes] = useState('');
     const [app_proc_fields, set_app_proc_fields] = useState(()=>{return [{
-        proc_name: '', proc_duration_minutes: 0, proc_cost: 0},
+        proc_name: '', proc_duration_minutes: 0, proc_cost: 0, proc_id: null},
         ]});
     // const [app_proc_fields2, set_app_proc_fields2] = useState([]);
     const [app_start_time, set_app_start_time] = useState(null);
@@ -188,7 +188,7 @@ const AppointmentTable = () => {
         set_app_proc_fields([]);
         set_app_id(app_id);
         set_app_patient_name_id({value: app_id, label: patient_name});
-        const resAppointment = await axios.get(`${process.env.REACT_APP_BE_LINK} appointment/${app_id}`);
+        const resAppointment = await axios.get(`${process.env.REACT_APP_BE_LINK}appointment/${app_id}`);
         console.log('resAppointment: ', resAppointment);
         if (resAppointment.data.app_patient_id) {
             
@@ -288,7 +288,7 @@ const AppointmentTable = () => {
                                 scrollableYearDropdown={true} 
                                 // dateFormat='MMMM d, yyyy' 
                                 // dateFormat="dd-MMM-yyyy"
-                                dateFormat="dd-MMM"
+                                dateFormat="dd-MMM-yy"
                                 // className='date-picker' 
                                 placeholderText="Date" 
                                 selected={app_search_date} 

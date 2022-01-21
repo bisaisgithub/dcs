@@ -466,7 +466,7 @@ const AppointmentDetails = ({
 
                         <button className='add-payment-button height-80p' onClick={()=>{
                             // addPaymentFieldFunction()
-                            set_app_pay_fields([...app_pay_fields, {pay_amount: '', pay_date: new Date(), pay_change: '', pay_balance: ''}])
+                            set_app_pay_fields([...app_pay_fields, {pay_amount: '', pay_date: new Date(), pay_change: '', pay_balance: '', pay_id: null}])
                             }}>Add Payment
                             {/* {showAddPayment? 'Hide Add Payment' : 'Add Payment'} */}
                         </button>

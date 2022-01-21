@@ -5,7 +5,7 @@ exports.up = function(knex) {
         table.string('pay_appointment_id').notNullable();
         table.string('pay_patient_id').notNullable();
         table.double('pay_amount').notNullable();
-        table.date('pay_date').notNullable();
+        table.datetime('pay_date').notNullable();
         table.double('pay_change');
         table.double('pay_balance');
         table.timestamps(true, true);
