@@ -128,8 +128,6 @@ export const createAppointment = async (req, res)=>{
                             }
                         ]                
                     });
-                    console.log('req.body: ', req.body);
-                    console.log('payments: ', payments);
                     const responsePayment = await db('payment').insert(payments);
                     if (responsePayment) {
                         console.log('responsePayment: ', responsePayment)
