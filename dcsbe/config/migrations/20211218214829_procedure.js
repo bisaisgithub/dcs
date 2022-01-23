@@ -6,6 +6,7 @@ exports.up = function(knex) {
         table.string('proc_name').notNullable();
         table.integer('proc_duration_minutes').notNullable();
         table.double('proc_cost').notNullable();
+        table.boolean('is_deleted');
         table.timestamps(true, true);
         table.foreign('proc_appointment_id').references('app_id').inTable('appointment');
     });

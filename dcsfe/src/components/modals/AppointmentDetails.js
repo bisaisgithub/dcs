@@ -448,7 +448,7 @@ const AppointmentDetails = ({
                     <div className='details-details-modal-body-button'>                    
                         {/* {userId? (<input type="submit" onClick={updateUser} value='Update' className='percent-40'/>):
                         (<input type="submit" onClick={addUser} value='Add' className='percent-40'/>)}   */}
-                        <button className='button-w70' onClick={()=>{addAppointmentFunction()}}>{app_patient_name_id? 'Update Appointment': 'Add Appointment'}</button>                               
+                        <button className='button-w70' onClick={()=>{addAppointmentFunction()}}>{app_patient_name_id.value? 'Update Appointment': 'Add Appointment'}</button>                               
                         <button className='button-w20' onClick={()=>{set_app_details_is_open(false); set_app_date(new Date())}}>Close</button>
                     </div>
                 </div>

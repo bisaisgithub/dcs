@@ -39,12 +39,13 @@ const AppointmentTable = () => {
     const [app_pay_fields, set_app_pay_fields] = useState([])
     const [showAddPayment, set_showAddPayment] =useState(false);
     const [app_id, set_app_id] = useState(null);
+    const [render, set_render] = useState(0);
 
     useEffect(()=>{
         
         getAppointments();
 
-    }, []);
+    }, [render]);
 
     const addAppointmentFunction = async ()=>{
         function validateEmptyObjectField(array){
@@ -79,6 +80,9 @@ const AppointmentTable = () => {
 
                 if (response.data.appointmentInsertOk) { 
                     alert('Appointment Added');
+                    await set_render(prev=>prev+1);
+                    console.log(render);
+                    set_app_details_is_open(false);
                 }else{
                     alert('Failed Adding Appointment');
                 }

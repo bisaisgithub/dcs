@@ -7,6 +7,7 @@ exports.up = function(knex) {
         table.datetime('pay_date').notNullable();
         table.double('pay_change');
         table.double('pay_balance');
+        table.boolean('is_deleted');
         table.timestamps(true, true);
         table.foreign('pay_appointment_id').references('app_id').inTable('appointment');
     });

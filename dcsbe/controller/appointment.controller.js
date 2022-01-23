@@ -105,6 +105,7 @@ export const createAppointment = async (req, res)=>{
                         proc_name: procedure.proc_name,
                         proc_duration_minutes: procedure.proc_duration_minutes,
                         proc_cost: procedure.proc_cost,
+                        is_deleted: false
                     }
                 ]                
             });
@@ -122,6 +123,7 @@ export const createAppointment = async (req, res)=>{
                                 pay_date: new Date(app_pay_field.pay_date).toMysqlFormat(),
                                 pay_change: app_pay_field.pay_change,
                                 pay_balance: app_pay_field.pay_balance,
+                                is_deleted: false
                             }
                         ]                
                     });
