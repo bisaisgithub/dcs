@@ -48,29 +48,33 @@ const AppointmentDetails = ({
             values[index][event.target.name] = event.target.value;
 
             await set_app_pay_fields(values);
-
-            let totalPayment = 0;
-            app_pay_fields.map((app_pay_field)=>{
-                if (parseInt(app_pay_field.pay_amount)>0) {
-                    totalPayment = totalPayment + parseFloat(app_pay_field.pay_amount);
+            values.map(async (field, index)=>{
+                let totalPayment = 0;
+                for(let i = 0; i<= index; i++){
+                    let pay_amount = 0;
+                    if (app_pay_fields[i].pay_amount>0) {
+                        pay_amount = app_pay_fields[i].pay_amount
+                    }
+                    totalPayment = totalPayment + parseFloat(pay_amount);
                 }
-                return null;
-            });
-            if (app_total_proc_cost-totalPayment>-1) {
-               await set_app_pay_balance(parseFloat(app_total_proc_cost-totalPayment));
-               await set_app_pay_change(0);
-                const values2 = [...app_pay_fields];
-                values[index]['pay_change'] = 0;
-                values[index]['pay_balance'] = parseFloat(app_total_proc_cost-totalPayment);
-                await set_app_pay_fields(values2);
-            } else {
-                await set_app_pay_balance(0);
-                await set_app_pay_change(parseFloat(totalPayment-app_total_proc_cost));
-                const values2 = [...app_pay_fields];
-                values[index]['pay_change'] = parseFloat(totalPayment-app_total_proc_cost);
-                values[index]['pay_balance'] = 0;
-                await set_app_pay_fields(values2);
-            }
+                if (app_total_proc_cost-totalPayment>-1) {
+                //    await set_app_pay_balance(parseFloat(app_total_proc_cost-totalPayment));
+                //    await set_app_pay_change(0);
+                    const values2 = [...app_pay_fields];
+                    values[index]['pay_change'] = 0;
+                    values[index]['pay_balance'] = parseFloat(app_total_proc_cost-totalPayment);
+                    await set_app_pay_fields(values2);
+                } else {
+                    // await set_app_pay_balance(0);
+                    // await set_app_pay_change(parseFloat(totalPayment-app_total_proc_cost));
+                    const values2 = [...app_pay_fields];
+                    values[index]['pay_change'] = parseFloat(totalPayment-app_total_proc_cost);
+                    values[index]['pay_balance'] = 0;
+                    await set_app_pay_fields(values2);
+                }
+            })
+
+            
         }else{
             const values = [...app_pay_fields];
             values[index][ename] = date;
@@ -166,12 +170,13 @@ const AppointmentDetails = ({
                                 <Select options={options2} defaultValue={app_patient_name_id.value? app_patient_name_id : ({value: '', label: 'Select Patient'}) } 
                                 onChange={(value)=>{
                                     set_app_patient_id(value.value);
-                                    console.log('test app_id', app_id);
                                     }}/>
                             </div>
                             <div className="details-details-modal-body-input-box">
                                 <span>Doctor</span>
-                                <select value={app_user_doctor_id} onChange={(e)=>{set_app_user_doctor_id(e.target.value)}}>
+                                <select value={app_user_doctor_id} onChange={(e)=>{
+                                    set_app_user_doctor_id(e.target.value)
+                                    }}>
                                     {app_user_doctor_list && app_user_doctor_list.map((user, index)=>{
                                         return (
                                             <option key={index} value={user.user_id}>{user.user_name}</option>
@@ -218,20 +223,6 @@ const AppointmentDetails = ({
                                 <DatePicker
                                     disabled
                                     selected={app_start_time}
-                                    // onChange={(dateStartTime) => {
-                                    //     set_app_start_time((prev)=>{
-                                    //         let totalMinutes = 0;
-                                    //         app_proc_fields.map((app_proc_field)=>{
-                                    //             totalMinutes = totalMinutes + parseInt(app_proc_field.proc_duration_minutes);
-                                    //             return null;
-                                    //         })
-                                    //         set_app_end_time(
-                                    //             new Date(
-                                    //                 new Date(new Date(dateStartTime).setMinutes(new Date(dateStartTime).getMinutes()+totalMinutes))
-                                    //                     ));
-                                    //         return dateStartTime;
-                                    //     });
-                                    // }}
                                     showTimeSelect
                                     showTimeSelectOnly
                                     timeIntervals={15}
@@ -426,14 +417,14 @@ const AppointmentDetails = ({
                                             <div className="details-details-modal-body-input-box">
                                                 <span>Change</span>
                                                 <input
-                                                style={app_pay_change>0? {color: 'green', fontWeight: '600', fontSize:'14px'} : {}} 
+                                                style={payfield.pay_change>0? {color: 'green', fontWeight: '600', fontSize:'14px'} : {}} 
                                                 disabled value={payfield.pay_change} 
                                                 />
                                             </div>
                                             <div className="details-details-modal-body-input-box">
                                                 <span>Balance</span>
                                                 <input 
-                                                style={app_pay_balance>0? {color: 'red', fontWeight: '600', fontSize:'14px'} : {}} 
+                                                style={payfield.pay_balance>0? {color: 'red', fontWeight: '600', fontSize:'14px'} : {}} 
                                                 disabled value={payfield.pay_balance} 
                                                 />
                                             </div>

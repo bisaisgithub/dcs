@@ -101,8 +101,6 @@ export const createAppointment = async (req, res)=>{
                 procedures = [...procedures, 
                     {
                         proc_id: uuid(),
-                        proc_patient_id: req.body.app_patient_id,
-                        proc_user_doctor_id: req.body.app_user_doctor_id,
                         proc_appointment_id: appointmentId,
                         proc_name: procedure.proc_name,
                         proc_duration_minutes: procedure.proc_duration_minutes,
@@ -120,7 +118,6 @@ export const createAppointment = async (req, res)=>{
                             {
                                 pay_id: uuid(),
                                 pay_appointment_id: appointmentId,
-                                pay_patient_id: req.body.app_patient_id,
                                 pay_amount: app_pay_field.pay_amount,
                                 pay_date: new Date(app_pay_field.pay_date).toMysqlFormat(),
                                 pay_change: app_pay_field.pay_change,

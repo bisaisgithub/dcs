@@ -177,8 +177,14 @@ const AppointmentTable = () => {
             set_app_start_time(new Date(new Date(resAppointment.data.app_start_time).toString()+' UTC'));
             set_app_status(resAppointment.data.app_status);
             set_app_type(resAppointment.data.app_type);
-            set_app_proc_fields([]);
             set_app_proc_fields(resAppointment.data.resProceduresById);
+            set_app_pay_fields(()=>{
+                resAppointment.data.resPaymentsById.map((field)=>{
+                    field.pay_date = new Date(new Date(field.pay_date).toString()+' UTC')
+                    return null;
+                })
+                return resAppointment.data.resPaymentsById
+            })
 
             let totalMinutes = 0;
             let totalCost = 0;

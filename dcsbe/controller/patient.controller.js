@@ -23,15 +23,17 @@ export const getPatientList = async (req, res)=>{
 };
 
 export const createPatient = async (req, res)=>{
+    const patient_id = uuid();
     try {
         const response = await db('patient').insert({
-            patient_id: uuid(),
-            patient_name: req.body.patient_name,
-            patient_mobile: req.body.patient_mobile,
-            patient_gender: req.body.patient_gender,
-            patient_dob: req.body.patient_dob,
-            patient_allergen: req.body.patient_allergen,
-            patient_status: req.body.patient_status,
+            ...req.body, patient_id
+            // patient_id,
+            // patient_name: req.body.patient_name,
+            // patient_mobile: req.body.patient_mobile,
+            // patient_gender: req.body.patient_gender,
+            // patient_dob: req.body.patient_dob,
+            // patient_allergen: req.body.patient_allergen,
+            // patient_status: req.body.patient_status,
         });
         res.json({insertOk: true});
     } catch (error) {
