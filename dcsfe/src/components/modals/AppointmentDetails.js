@@ -37,6 +37,9 @@ const AppointmentDetails = ({
     app_patient_name_id,
     app_id,
     app_pay_fields, set_app_pay_fields,
+    updateAppointmentFunction,
+    set_app_proc_fields_delete, app_proc_fields_delete,
+    app_pay_fields_delete, set_app_pay_fields_delete,
 
     }) => {
     if (!app_details_is_open) {
@@ -136,7 +139,7 @@ const AppointmentDetails = ({
 
             set_app_end_time(
                 new Date(
-                    new Date(new Date(app_date).setMinutes(new Date(app_date).getMinutes()+totalMinutes))
+                    new Date(new Date(app_start_time).setMinutes(new Date(app_start_time).getMinutes()+totalMinutes))
                         ));
             
         } else {
@@ -264,12 +267,18 @@ const AppointmentDetails = ({
                                                 <button className='add-remove-button' 
                                                 // onClick={()=>{removeProcedureFieldFunction(index, app_proc_field.proc_duration_minutes, app_proc_field.proc_cost)}}
                                                 onClick={async ()=>{
+                                                    
+                                                    if (app_proc_field.proc_id) {   
+                                                        if (window.confirm('Delete this procedure in the database?')) {
+                                                            await set_app_proc_fields_delete((prev)=>{
+                                                                const newValue = [...prev, app_proc_field.proc_id]
+                                                                return newValue;
+                                                            });
+                                                        }else return false;
+                                                        
+                                                    }
                                                     console.log('app_proc_field: ', app_proc_field)
-                                                    // if (app_proc_field.proc_id) {
-                                                        
-                                                    // } else {
-                                                        
-                                                    // }
+                                                    
                                                     await set_app_proc_fields( (prev)=>{  
                                                         let totalCost = 0;
                                                         let totalMinutes = 0;
@@ -316,7 +325,7 @@ const AppointmentDetails = ({
                         <div className='display-flex'>
                             <div className='details-details-modal-body-button-proc_name'>                                               
                                 <button className='add-remove-button height-80p' onClick={()=>{
-                                    set_app_proc_fields((prev)=>{return [...prev, {proc_name: '', proc_duration_minutes: 0, proc_cost: 0}]})
+                                    set_app_proc_fields((prev)=>{return [...prev, {proc_name: '', proc_duration_minutes: 0, proc_cost: 0, proc_id: null, is_deleted: 0}]})
                                     }}>+</button>
                             </div>
                             <div className="details-details-modal-body-input-box">
@@ -378,6 +387,14 @@ const AppointmentDetails = ({
                                                         handleChangeInputPayment(index, e)
                                                     }} />
                                                     <button className='add-remove-button height-80p' onClick={()=>{
+                                                        if (payfield.pay_id) {
+                                                            if (window.confirm('Delete this payment in the database?')) {
+                                                                set_app_pay_fields_delete((prev)=>{
+                                                                    const newValue = [...prev, payfield.pay_id];
+                                                                    return newValue;
+                                                                })
+                                                            }else return false;
+                                                        }
                                                         const values = [...app_pay_fields];
                                                         values.splice(index, 1);
                                                         set_app_pay_fields(values);
@@ -439,7 +456,7 @@ const AppointmentDetails = ({
 
                         <button className='add-payment-button height-80p' onClick={()=>{
                             // addPaymentFieldFunction()
-                            set_app_pay_fields([...app_pay_fields, {pay_amount: '', pay_date: new Date(), pay_change: '', pay_balance: '', pay_id: null}])
+                            set_app_pay_fields([...app_pay_fields, {pay_amount: '', pay_date: new Date(), pay_change: '', pay_balance: '', pay_id: null, is_deleted: 0}])
                             }}>Add Payment
                             {/* {showAddPayment? 'Hide Add Payment' : 'Add Payment'} */}
                         </button>
@@ -448,7 +465,12 @@ const AppointmentDetails = ({
                     <div className='details-details-modal-body-button'>                    
                         {/* {userId? (<input type="submit" onClick={updateUser} value='Update' className='percent-40'/>):
                         (<input type="submit" onClick={addUser} value='Add' className='percent-40'/>)}   */}
-                        <button className='button-w70' onClick={()=>{addAppointmentFunction()}}>{app_patient_name_id.value? 'Update Appointment': 'Add Appointment'}</button>                               
+                        <button className='button-w70' onClick={()=>{
+                            app_id? 
+                            updateAppointmentFunction()
+                            : 
+                            addAppointmentFunction() 
+                            }}>{app_id? 'Update Appointment': 'Add Appointment'}</button>                               
                         <button className='button-w20' onClick={()=>{set_app_details_is_open(false); set_app_date(new Date())}}>Close</button>
                     </div>
                 </div>

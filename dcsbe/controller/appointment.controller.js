@@ -175,71 +175,28 @@ export const createAppointment = async (req, res)=>{
     }
 };
 
-// export const getPatientByID = async (req, res)=>{
-//     // const singleUser = users.filter((user)=>user.id === req.params.id);
-//     const singlePatientReponse = await db('patient').where('id', req.params.id)
-//     res.send(singlePatientReponse);
-// }
-
-// export const getPatientBySearch = async (req, res)=>{
-//     // const singleUser = users.filter((user)=>user.id === req.params.id);
-//     const singlePatientReponse = await db('patient').where('name', 'like', `%${req.params.search}%`)
-//     .orWhere('status_', 'like', `%${req.params.search}%`);
-//     res.send(singlePatientReponse);
-// }
-
-// export const getPatientsBySearch2 = async (req, res)=>{
-//     // const singleUser = users.filter((user)=>user.id === req.params.id);
-//     const singlePatientReponse = await db('patient').where('name', 'like', `%${req.body.name}%`)
-//     .where('status_', 'like', `%${req.body.status_}%`).orderBy('name', 'asc');
-//     // console.log('req.body', req.body)
-//     res.send(singlePatientReponse);
-// }
-
-// export const deleteUser = async (req, res)=>{
-//     // users = users.filter((user)=>user.id !== req.params.id);
-//     try {
-//         const deleteUserResponse = await db('users').where('id', req.params.id).del();
-//          res.send('user deleted');
-//     } catch (error) {
-//         console.log('error deleting: ', error);
-//     }
-    
-// }
-
-// export const updatePatient = async (req, res)=>{
-//     // res.json({nameSendingIs: req.body.name })
-
-//     try {
-//         const userUpdateResponse = await db('patient').where('id', req.params.id).update({
-//             name: req.body.name,
-//             mobile: req.body.mobile,
-//             gender: req.body.gender,
-//             dob: req.body.dob,
-//             allergen: req.body.allergen,
-//             status_: req.body.status_,
-//         });
-//         if (userUpdateResponse) {
-//             res.json({updateOk: true});
-//         } else {
-//             console.log('upating to the database returned 0 or false');
-//             res.json({updateOk: false});
-//         }
-    
-//         // console.log(user);
-//         // user.name = req.body.name;
-//         // user.contact = req.body.contact;
-//         // user.email = req.body.email;
-    
-//         // res.json({updateOk: true});
-//         // res.json(userUpdateResponse)
-//     } catch (error) {
-//         console.log('updatePatient trycatch reponse error: ', error)
-//         res.json({updateOk: false});
-//     }
-
-    
-// }
+export const updateAppointment = async (req, res)=>{
+    try {
+        const appointmentUpdateResponse = await db('appointment').where('app_id', req.params.id)
+        .update({
+            app_patient_id: req.body.app_patient_id,
+            app_user_doctor_id: req.body.app_user_doctor_id,
+            app_date: new Date(req.body.app_date).toMysqlFormat(),
+            app_start_time: new Date(req.body.app_start_time).toMysqlFormat(),
+            app_end_time: new Date(req.body.app_end_time).toMysqlFormat(),
+            app_status: req.body.app_status,
+            app_type: req.body.app_type
+        });
+    if (appointmentUpdateResponse) {
+        res.json({appointmentUpdateOk: true});
+    } else {
+        res.json({appointmentUpdateOk: false});
+    }
+    } catch (error) {
+        res.json({appointmentUpdateOk: false});
+        console.log('update appointment error: ', error);
+    }
+}
 
 // export const refreshToken = async (req, res)=>{
 //     const token = req.cookies.jid;

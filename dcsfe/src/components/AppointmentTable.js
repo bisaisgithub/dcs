@@ -24,8 +24,9 @@ const AppointmentTable = () => {
     const [app_proc_name, set_app_proc_name] = useState('');
     const [app_proc_duration_minutes, set_app_proc_duration_minutes] = useState('');
     const [app_proc_fields, set_app_proc_fields] = useState(()=>{return [{
-        proc_name: '', proc_duration_minutes: 0, proc_cost: 0, proc_id: null, isDeleted: false},
+        proc_name: '', proc_duration_minutes: 0, proc_cost: 0, proc_id: null, is_deleted: 0},
         ]});
+    const [app_proc_fields_delete, set_app_proc_fields_delete] = useState([]);
     const [app_start_time, set_app_start_time] = useState(null);
     const [app_end_time, set_app_end_time] = useState(null);
     const [app_status, set_app_status] = useState('');
@@ -36,7 +37,8 @@ const AppointmentTable = () => {
     const [app_pay_balance, set_app_pay_balance] = useState('');
     const [app_pay_change, set_app_pay_change] = useState('');
     const [app_pay_date, set_app_pay_date] = useState(new Date());
-    const [app_pay_fields, set_app_pay_fields] = useState([])
+    const [app_pay_fields, set_app_pay_fields] = useState([]);
+    const [app_pay_fields_delete, set_app_pay_fields_delete] = useState([]);
     const [showAddPayment, set_showAddPayment] =useState(false);
     const [app_id, set_app_id] = useState(null);
     const [render, set_render] = useState(0);
@@ -48,9 +50,17 @@ const AppointmentTable = () => {
     }, [render]);
 
     const addAppointmentFunction = async ()=>{
-        function validateEmptyObjectField(array){
+        function validateEmptyObjectProcField(array){
             for (var i=0; i < array.length; i++) {
                 if (array[i].proc_name === "") {
+                    return false;
+                }
+            }
+            return true;
+        }
+        function validateEmptyObjectPayfield(array){
+            for (var i=0; i < array.length; i++) {
+                if (array[i].pay_amount === "") {
                     return false;
                 }
             }
@@ -62,9 +72,9 @@ const AppointmentTable = () => {
             alert('Empty field/s')
         }else{
 
-            if (!validateEmptyObjectField(app_proc_fields) || !app_proc_fields.length) {
-                console.log('validateEmptyObjectField: ', validateEmptyObjectField(app_proc_fields))
-                alert("Empty Procedure/s")
+            if (!validateEmptyObjectProcField(app_proc_fields) || !app_proc_fields.length || !validateEmptyObjectPayfield(app_pay_fields)) {
+
+                alert("Empty Procedure/s or Payment/s")
             } else {
                 const response = await axios.post(`${process.env.REACT_APP_BE_LINK}appointment`, {
                     app_patient_id: app_patient_id,
@@ -85,6 +95,62 @@ const AppointmentTable = () => {
                     set_app_details_is_open(false);
                 }else{
                     alert('Failed Adding Appointment');
+                }
+            }
+        }  
+    }
+
+    const updateAppointmentFunction = async ()=>{
+        function validateEmptyObjectField(array){
+            for (var i=0; i < array.length; i++) {
+                if (array[i].proc_name === "") {
+                    return false;
+                }
+            }
+            return true;
+        }
+        function validateEmptyObjectPayfield(array){
+            for (var i=0; i < array.length; i++) {
+                if (array[i].pay_amount === "") {
+                    return false;
+                }
+            }
+            return true;
+        }
+        if (
+            !app_patient_id || !app_user_doctor_id || !app_date ||
+            // !app_start_time || 
+            !app_status || !app_type
+            ) {
+            alert('Empty field/s')
+        }else{
+
+            if (!validateEmptyObjectField(app_proc_fields) || !app_proc_fields.length || !validateEmptyObjectPayfield(app_pay_fields)) {
+                alert("Empty Procedure/s or Payment/s")
+            } else {
+                let updateAppointmentData = {
+                    app_patient_id: app_patient_id,
+                    app_user_doctor_id: app_user_doctor_id,
+                    app_date: formatDateYYYYMMDD(app_date),
+                    app_start_time: app_start_time,
+                    app_end_time: app_end_time,
+                    app_status: app_status,
+                    app_type: app_type,
+                    app_proc_fields: app_proc_fields,
+                    app_pay_fields: app_pay_fields,
+                    app_proc_fields_delete: app_proc_fields_delete,
+                    app_pay_fields_delete: app_pay_fields_delete
+                }
+                console.log('updateAppointmentData:  ', updateAppointmentData);
+                const response = await axios.put(`${process.env.REACT_APP_BE_LINK}appointment/${app_id}`, updateAppointmentData);   
+
+                if (response.data.appointmentUpdateOk) { 
+                    alert('Succesfully Updating Appoinment');
+                    await set_render(prev=>prev+1);
+                    console.log(render);
+                    set_app_details_is_open(false);
+                }else{
+                    alert('Failed Updating Appointment');
                 }
             }
         }  
@@ -124,6 +190,8 @@ const AppointmentTable = () => {
 
     const newAppointment = ()=>{
         console.log('app_patient_name_id: ', app_patient_name_id);
+        set_app_proc_fields_delete([]);
+        set_app_pay_fields_delete([]);
         set_app_id(null);
         getUserDoctorList();
         getPatientList();
@@ -168,6 +236,8 @@ const AppointmentTable = () => {
     }
 
     const AppointmentDetailsFunction = async (app_id, patient_name)=>{
+        set_app_pay_fields_delete([]);
+        set_app_proc_fields_delete([]);
         set_app_proc_fields([]);
         set_app_id(app_id);
         set_app_patient_name_id({value: app_id, label: patient_name});
@@ -176,6 +246,7 @@ const AppointmentTable = () => {
         if (resAppointment.data.app_patient_id) {
             getPatientList(resAppointment.data.app_patient_id);
             set_app_details_is_open(true);
+            set_app_patient_id(resAppointment.data.app_patient_id);
             set_app_user_doctor_id(resAppointment.data.app_user_doctor_id);
             set_app_date(new Date(new Date(resAppointment.data.app_date).toString()+' UTC'));
             set_app_start_time(new Date(new Date(resAppointment.data.app_start_time).toString()+' UTC'));
@@ -243,6 +314,10 @@ const AppointmentTable = () => {
             app_patient_name_id={app_patient_name_id}
             app_id={app_id}
             app_pay_fields={app_pay_fields} set_app_pay_fields={set_app_pay_fields}
+            updateAppointmentFunction={updateAppointmentFunction}
+            set_app_proc_fields_delete={set_app_proc_fields_delete} app_proc_fields_delete={app_proc_fields_delete}
+            set_app_pay_fields_delete={set_app_pay_fields_delete} app_pay_fields_delete={app_pay_fields_delete}
+
 
             ></AppointmentDetails>
             

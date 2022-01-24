@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createAppointment, getAppointmentById, getAppointments, getAppointmentsBySearch } from "../controller/appointment.controller.js";
+import { createAppointment, getAppointmentById, getAppointments, getAppointmentsBySearch, updateAppointment } from "../controller/appointment.controller.js";
 
 
 
@@ -21,7 +21,7 @@ appointmentRouter.post('/appointment', createAppointment);
 
 // appointmentRouter.delete('/user/:id', deleteUser);
 
-// appointmentRouter.put('/user/:id', updateUser);
+appointmentRouter.put('/appointment/:id', updateAppointment);
 
 // appointmentRouter.post('/login', loginUser);
 
