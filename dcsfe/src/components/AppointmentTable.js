@@ -131,7 +131,8 @@ const AppointmentTable = () => {
                 let updateAppointmentData = {
                     app_patient_id: app_patient_id,
                     app_user_doctor_id: app_user_doctor_id,
-                    app_date: formatDateYYYYMMDD(app_date),
+                    app_date: app_date,
+                    // app_date: formatDateYYYYMMDD(app_date),
                     app_start_time: app_start_time,
                     app_end_time: app_end_time,
                     app_status: app_status,

@@ -89,7 +89,7 @@ export const createAppointment = async (req, res)=>{
             app_id: appointmentId,
             app_patient_id: req.body.app_patient_id,
             app_user_doctor_id: req.body.app_user_doctor_id,
-            app_date: req.body.app_date,
+            app_date: new Date(req.body.app_date).toMysqlFormat(),
             app_start_time: new Date(req.body.app_start_time).toMysqlFormat(),
             app_end_time: new Date(req.body.app_end_time).toMysqlFormat(),
             app_status: req.body.app_status,
@@ -188,7 +188,27 @@ export const updateAppointment = async (req, res)=>{
             app_type: req.body.app_type
         });
     if (appointmentUpdateResponse) {
-        res.json({appointmentUpdateOk: true});
+        if (req.body.app_proc_fields.length>0) {
+            let addProcedure = [];
+            let updateProcedure = [];
+            req.body.app_proc_fields.map((field)=>{
+                if (!field.proc_id) {
+                    field.proc_id = uuid();
+                    field.proc_appointment_id = req.params.id;
+                    addProcedure = [...addProcedure, field];
+                }else{
+                    updateProcedure = [...updateProcedure, field]
+                }
+            });
+            const addProcedureResponse = await db('procedure').insert(addProcedure);
+            if (addProcedureResponse) {
+                res.json({appointmentUpdateOk: true});
+            }
+            console.log('addProcedure: ', addProcedure);
+            // console.log('updateProcedure: ', updateProcedure);
+        }else{
+            res.json({appointmentUpdateOk: false});
+        }
     } else {
         res.json({appointmentUpdateOk: false});
     }
