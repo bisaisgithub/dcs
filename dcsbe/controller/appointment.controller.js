@@ -14,13 +14,15 @@ export const getAppointmentById = async (req, res)=>{
         if (resAppointmentById) {
             const resProceduresById = await db('procedure')
             .where('proc_appointment_id', req.params.id)
-            .where('is_deleted', 0);
+            .where('is_deleted', 0)
+            .orderBy('created_at');
             if (resProceduresById) {
                 data = {...data, resProceduresById}
             }
             const resPaymentsById = await db('payment')
             .where('pay_appointment_id', req.params.id)
-            .where('is_deleted', 0);
+            .where('is_deleted', 0)
+            .orderBy('created_at');
             // console.log('resPaymentsById: ', resPaymentsById);
             if (resProceduresById) {
                 data = {...data, resPaymentsById}

@@ -79,8 +79,14 @@ const AppointmentDetails = ({
 
             
         }else{
+            // var currentDateObj = date;
+            // var numberOfMlSeconds = currentDateObj.getTime();
+            // // var addMlSeconds = 60 * 60 * 1000;
+            // var addMlSeconds = 480 * 60 * 1000
+            // var newDateObj = new Date(numberOfMlSeconds - addMlSeconds);
             const values = [...app_pay_fields];
             values[index][ename] = date;
+            // values[index][ename] = newDateObj;
             console.log('values: ', values);
             await set_app_pay_fields(values);
         }

@@ -87,6 +87,9 @@ const AppointmentTable = () => {
                     app_proc_fields: app_proc_fields,
                     app_pay_fields: app_pay_fields
                  });   
+                
+                console.log('app_date: ', app_date);
+                console.log('pay_date: ', app_pay_fields);
 
                 if (response.data.appointmentInsertOk) { 
                     alert('Appointment Added');
@@ -240,10 +243,12 @@ const AppointmentTable = () => {
         set_app_pay_fields_delete([]);
         set_app_proc_fields_delete([]);
         set_app_proc_fields([]);
+        set_app_pay_fields([]);
         set_app_id(app_id);
         set_app_patient_name_id({value: app_id, label: patient_name});
         const resAppointment = await axios.get(`${process.env.REACT_APP_BE_LINK}appointment/${app_id}`);
         console.log('resAppointment: ', resAppointment);
+        console.log('data length: ', resAppointment.data.length);
         if (resAppointment.data.app_patient_id) {
             getPatientList(resAppointment.data.app_patient_id);
             set_app_details_is_open(true);
@@ -255,14 +260,21 @@ const AppointmentTable = () => {
             set_app_type(resAppointment.data.app_type);
             set_app_proc_fields(resAppointment.data.resProceduresById);
             set_app_pay_fields(()=>{
-               const newValue = resAppointment.data.resPaymentsById.map((field)=>{
-                    // field.pay_date = new Date(new Date(field.pay_date).toString()+' UTC');
-                    field.pay_date = new Date(field.pay_date);
-                    return field;
-                })
-                console.log('value: ', newValue);
-                return newValue;
-            })
+                let field2 = [];
+                const newValue = resAppointment.data.resPaymentsById.map((field)=>{
+                   field2 = [...field2, {
+                    is_deleted: field.is_deleted,
+                    pay_amount: field.pay_amount,
+                    pay_appointment_id: field.pay_appointment_id,
+                    pay_balance: field.pay_balance,
+                    pay_change: field.pay_change,
+                    pay_id: field.pay_id,
+                    pay_date: new Date(new Date(field.pay_date).toString()+' UTC')
+                   }];
+                    return null;
+                });
+                return field2;
+            });
 
             let totalMinutes = 0;
             let totalCost = 0;
