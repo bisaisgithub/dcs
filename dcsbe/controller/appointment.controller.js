@@ -200,10 +200,25 @@ export const updateAppointment = async (req, res)=>{
                     updateProcedure = [...updateProcedure, field]
                 }
             });
-            const addProcedureResponse = await db('procedure').insert(addProcedure);
-            if (addProcedureResponse) {
-                res.json({appointmentUpdateOk: true});
-            }
+            updateProcedure.map(async (field)=>{
+                let field2 = {...field};
+                delete field2.proc_id;
+                delete field2.created_at;
+                delete field2.updated_at;
+                delete field2. proc_appointment_id;
+                const updateProcedureResponse = await db('procedure')
+                    .where('proc_id', field.proc_id)
+                    .update(field2);
+                if (!updateProcedureResponse) {
+                    res.json({appointmentUpdateOk: false});
+                    return false;
+                }
+            });
+            
+            // if (!addProcedureResponse) {
+            //     res.json({appointmentUpdateOk: false});
+            //     return false;
+            // }
             console.log('addProcedure: ', addProcedure);
             // console.log('updateProcedure: ', updateProcedure);
         }else{
