@@ -7,4 +7,6 @@ pay fields calc - done
 appointment add with payfields - done 
 fe date to dcsbe date need to check - done
 delete function for procedure - done
-appointment update on date - working
+appointment update on date - done
+
+appointment pay date -- working

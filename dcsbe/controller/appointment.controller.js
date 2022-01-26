@@ -7,18 +7,21 @@ export const getAppointmentById = async (req, res)=>{
     let data = {};
     try {
         const resAppointmentById = await db('appointment')
-        .where('app_id', req.params.id).first();
+        .where('app_id', req.params.id)
+        .first();
         // res.json(resAppointmentById);
         data = await resAppointmentById;
         if (resAppointmentById) {
             const resProceduresById = await db('procedure')
-            .where('proc_appointment_id', req.params.id);
+            .where('proc_appointment_id', req.params.id)
+            .where('is_deleted', 0);
             if (resProceduresById) {
                 data = {...data, resProceduresById}
             }
             const resPaymentsById = await db('payment')
-            .where('pay_appointment_id', req.params.id);
-            console.log('resPaymentsById: ', resPaymentsById);
+            .where('pay_appointment_id', req.params.id)
+            .where('is_deleted', 0);
+            // console.log('resPaymentsById: ', resPaymentsById);
             if (resProceduresById) {
                 data = {...data, resPaymentsById}
             }
@@ -200,27 +203,94 @@ export const updateAppointment = async (req, res)=>{
                     updateProcedure = [...updateProcedure, field]
                 }
             });
-            updateProcedure.map(async (field)=>{
-                let field2 = {...field};
-                delete field2.proc_id;
-                delete field2.created_at;
-                delete field2.updated_at;
-                delete field2. proc_appointment_id;
-                const updateProcedureResponse = await db('procedure')
-                    .where('proc_id', field.proc_id)
-                    .update(field2);
-                if (!updateProcedureResponse) {
+            if (updateProcedure.length>0) {
+                updateProcedure.map(async (field)=>{
+                    let field2 = {...field};
+                    delete field2.proc_id;
+                    delete field2.created_at;
+                    delete field2.updated_at;
+                    delete field2. proc_appointment_id;
+                    const updateProcedureResponse = await db('procedure')
+                        .where('proc_id', field.proc_id)
+                        .update(field2);
+                    if (!updateProcedureResponse) {
+                        res.json({appointmentUpdateOk: false});
+                        return false;
+                    }
+                });
+            }
+            if (addProcedure.length>0) {
+                const addProcedureResponse = await db('procedure').insert(addProcedure);
+                if (!addProcedureResponse) {
+                    res.json({appointmentUpdateOk: false});
+                    return false;
+            }
+            }
+            if (req.body.app_proc_fields_delete.length>0) {
+                req.body.app_proc_fields_delete.map( async (field)=>{
+                    let field2 = {is_deleted: true}
+                    const deleteProcResponse = await db('procedure')
+                        .where('proc_id', field)
+                        .update(field2);
+                    if (!deleteProcResponse) {
+                        res.json({appointmentUpdateOk: false});
+                        return false;
+                    }
+                });
+            }
+            let addPayment = [];
+            let updatePayment = [];
+            req.body.app_pay_fields.map((field)=>{
+                if (!field.pay_id) {
+                    field.pay_id = uuid();
+                    field.pay_appointment_id = req.params.id;
+                    field.pay_date = new Date(field.pay_date).toMysqlFormat();
+                    addPayment = [...addPayment, field];
+                } else {
+                    updatePayment = [...updatePayment, field];
+                }
+            });
+            if (updatePayment.length>0) {
+                updatePayment.map(async (field)=>{
+                    let field2 = {...field};
+                    delete field2.pay_id;
+                    delete field2.created_at;
+                    delete field2.updated_at;
+                    delete field2.app_appointment_id;
+                    field2.pay_date = new Date(field2.pay_date).toMysqlFormat();
+                    console.log('updatePayment field2: ', field2);
+                    const updatePaymentResponse = await db('payment')
+                        .where('pay_id', field.pay_id)
+                        .update(field2);
+                    if (!updatePaymentResponse) {
+                        res.json({appointmentUpdateOk: false});
+                        return false;
+                    }
+                });
+            }
+            if (addPayment.length>0) {
+                // console.log('addPayment: ', addPayment);
+                const addPaymentReponse = await db('payment').insert(addPayment);
+                if (!addPaymentReponse) {
                     res.json({appointmentUpdateOk: false});
                     return false;
                 }
-            });
-            
-            // if (!addProcedureResponse) {
-            //     res.json({appointmentUpdateOk: false});
-            //     return false;
-            // }
-            console.log('addProcedure: ', addProcedure);
+            }
+            if (req.body.app_pay_fields_delete.length>0) {
+                req.body.app_pay_fields_delete.map(async (field)=>{
+                    let field2 = {is_deleted: true}
+                    const deletePayResponse = await db('payment')
+                        .where('pay_id', field)
+                        .update(field2);
+                    if (!deletePayResponse) {
+                        res.json({appointmentUpdateOk: false});
+                        return false;
+                    }
+                })
+            }
+            // console.log('addProcedure: ', addProcedure);
             // console.log('updateProcedure: ', updateProcedure);
+            res.json({appointmentUpdateOk: true});
         }else{
             res.json({appointmentUpdateOk: false});
         }

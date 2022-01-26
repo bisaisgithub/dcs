@@ -255,11 +255,13 @@ const AppointmentTable = () => {
             set_app_type(resAppointment.data.app_type);
             set_app_proc_fields(resAppointment.data.resProceduresById);
             set_app_pay_fields(()=>{
-                resAppointment.data.resPaymentsById.map((field)=>{
-                    field.pay_date = new Date(new Date(field.pay_date).toString()+' UTC')
-                    return null;
+               const newValue = resAppointment.data.resPaymentsById.map((field)=>{
+                    // field.pay_date = new Date(new Date(field.pay_date).toString()+' UTC');
+                    field.pay_date = new Date(field.pay_date);
+                    return field;
                 })
-                return resAppointment.data.resPaymentsById
+                console.log('value: ', newValue);
+                return newValue;
             })
 
             let totalMinutes = 0;
