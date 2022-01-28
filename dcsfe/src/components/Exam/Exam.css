@@ -1,14 +1,23 @@
 .exam-container{
     width: 100%x;
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
 }
-.exam-table{
-    width: 90%;
+.exam-container div{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
-.exam-table tbody tr td{
-    /* border: 1px solid #dee2e685; */
-    /* border-collapse: collapse; */
+.exam-container div select{
+    margin: 0 1px;
+    font-size: 14px;
+    /* font-weight: bold; */
+}
+.exam-container div img{
+    height: 150px;
+}
+.exam-container div span{
     text-align: center;
+    font-weight: bold;
+    font-size: 18px;
 }
