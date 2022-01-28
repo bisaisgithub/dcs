@@ -14,10 +14,14 @@
     /* font-weight: bold; */
 }
 .exam-container div img{
-    height: 150px;
+    height: 100px;
+    width: 40px;
 }
 .exam-container div span{
     text-align: center;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 16px;
+}
+.border-left{
+    border-left: 2px solid;
 }

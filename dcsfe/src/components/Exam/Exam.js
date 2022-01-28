@@ -122,7 +122,7 @@ const Exam = ({
                 <img src={t11} alt='11'/>
                 <span>11</span>
             </div>
-            <div>
+            <div className='border-left'>
                 <div>
                     <select>
                         <option>ZZ</option>
