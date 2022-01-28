@@ -1,0 +1,14 @@
+.exam-container{
+    width: 100%x;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.exam-table{
+    width: 90%;
+}
+.exam-table tbody tr td{
+    /* border: 1px solid #dee2e685; */
+    /* border-collapse: collapse; */
+    text-align: center;
+}

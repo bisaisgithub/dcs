@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import setHours from 'date-fns/setHours';
 import setMinutes from 'date-fns/setMinutes';
 import Select from 'react-select';
+import Exam from '../Exam/Exam';
 // import DatePicker, { registerLocale } from "react-datepicker";
 // import el from "date-fns/locale/"; // the locale you want
 // registerLocale("el", el); // register it with the name you want
@@ -250,9 +251,13 @@ const AppointmentDetails = ({
                             
                         </div>
 
+                        <Exam is_exam_open={is_exam_open} set_is_exam_open={set_is_exam_open}
+                            // style={is_exam_open?  {} :{display: 'none'} } 
+                            />
+
                         <div 
-                        style={is_exam_open? {display: 'none'} : {}}
-                        >
+                            style={is_exam_open? {display: 'none'} : {}}
+                            >
                             {
                                 app_proc_fields.map((app_proc_field, index)=>{
                                     return (
