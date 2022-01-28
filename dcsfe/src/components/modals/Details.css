@@ -192,6 +192,13 @@ input[type="text"]{
     font-size: 15px;
     background: linear-gradient(135deg, #71b7e6, #9b59b6);
 }
+.add-remove-button-exam{
+
+    margin: 5px 15px 5px 5px;
+    font-size: 15px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #71b7e6, #9b59b6);
+}
 @media(max-height: 370px) {
     .details-details-modal-body-container{
         max-height: 300px ;

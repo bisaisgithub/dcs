@@ -42,6 +42,7 @@ const AppointmentTable = () => {
     const [showAddPayment, set_showAddPayment] =useState(false);
     const [app_id, set_app_id] = useState(null);
     const [render, set_render] = useState(0);
+    const [is_exam_open, set_is_exam_open] = useState(false);
 
     useEffect(()=>{
         
@@ -261,7 +262,7 @@ const AppointmentTable = () => {
             set_app_proc_fields(resAppointment.data.resProceduresById);
             set_app_pay_fields(()=>{
                 let field2 = [];
-                const newValue = resAppointment.data.resPaymentsById.map((field)=>{
+                resAppointment.data.resPaymentsById.map((field)=>{
                    field2 = [...field2, {
                     is_deleted: field.is_deleted,
                     pay_amount: field.pay_amount,
@@ -332,6 +333,7 @@ const AppointmentTable = () => {
             updateAppointmentFunction={updateAppointmentFunction}
             set_app_proc_fields_delete={set_app_proc_fields_delete} app_proc_fields_delete={app_proc_fields_delete}
             set_app_pay_fields_delete={set_app_pay_fields_delete} app_pay_fields_delete={app_pay_fields_delete}
+            is_exam_open={is_exam_open} set_is_exam_open={set_is_exam_open}
 
 
             ></AppointmentDetails>

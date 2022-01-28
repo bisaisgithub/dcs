@@ -40,11 +40,13 @@ const AppointmentDetails = ({
     updateAppointmentFunction,
     set_app_proc_fields_delete, app_proc_fields_delete,
     app_pay_fields_delete, set_app_pay_fields_delete,
+    is_exam_open, set_is_exam_open
 
     }) => {
     if (!app_details_is_open) {
         return null;
     }
+    
     const handleChangeInputPayment = async (index, event, date, ename)=>{
         if (event) {
             const values = [...app_pay_fields];
@@ -194,290 +196,302 @@ const AppointmentDetails = ({
                                     <option value="">-Select Doctor-</option>
                                 </select>
                             </div>
-                            <div className='details-details-modal-body-input-box'>
-                                <span>Date</span>
-                                <DatePicker 
-                                showTimeSelect
-                                minDate={new Date()} 
-                                // minTime={setHours(setMinutes(new Date(), 0), 0)}
-                                yearDropdownItemNumber={90} 
-                                showYearDropdown 
-                                scrollableYearDropdown={true} 
-                                dateFormat='MMMM d, yyyy' 
-                                className='date-picker' 
-                                placeholderText="Select Date" 
-                                selected={app_date} 
-                                onChange={(date)=>{
-                                    set_app_date(()=>{
-                                        let totalMinutes = 0;
-                                            app_proc_fields.map((app_proc_field)=>{
-                                                totalMinutes = totalMinutes + parseInt(app_proc_field.proc_duration_minutes);
-                                                return null;
-                                            });
-                                            set_app_start_time(
-                                                new Date(
-                                                    new Date(new Date(date).setMinutes(new Date(date).getMinutes()))
-                                                        ));
-                                            set_app_end_time(
-                                                new Date(
-                                                    new Date(new Date(date).setMinutes(new Date(date).getMinutes()+totalMinutes))
-                                                        ));
-                                            return date;
-                                    });
-                                    }} />
-                                
-                            </div>
-                            <div className='details-details-modal-body-input-box'>
-                                <span>Start Time</span>
-                                <DatePicker
-                                    disabled
-                                    selected={app_start_time}
+                                <div style={{display: 'flex', width: '100%'}}>
+                                    <div className='details-details-modal-body-input-box'>
+                                    <span>Date</span>
+                                    <DatePicker 
                                     showTimeSelect
-                                    showTimeSelectOnly
-                                    timeIntervals={15}
-                                    minTime={setHours(setMinutes(new Date(), 0), 8)}
-                                    maxTime={setHours(setMinutes(new Date(), 30), 18)}
-                                    placeholderText="Select Start Time"
-                                    timeCaption="Time"
-                                    dateFormat="h:mm aa"
-                                />
-                            </div>
-                        </div>
-                        {
-                            app_proc_fields.map((app_proc_field, index)=>{
-                                return (
+                                    minDate={new Date()} 
+                                    // minTime={setHours(setMinutes(new Date(), 0), 0)}
+                                    yearDropdownItemNumber={90} 
+                                    showYearDropdown 
+                                    scrollableYearDropdown={true} 
+                                    dateFormat='MMMM d, yyyy' 
+                                    className='date-picker' 
+                                    placeholderText="Select Date" 
+                                    selected={app_date} 
+                                    onChange={(date)=>{
+                                        set_app_date(()=>{
+                                            let totalMinutes = 0;
+                                                app_proc_fields.map((app_proc_field)=>{
+                                                    totalMinutes = totalMinutes + parseInt(app_proc_field.proc_duration_minutes);
+                                                    return null;
+                                                });
+                                                set_app_start_time(
+                                                    new Date(
+                                                        new Date(new Date(date).setMinutes(new Date(date).getMinutes()))
+                                                            ));
+                                                set_app_end_time(
+                                                    new Date(
+                                                        new Date(new Date(date).setMinutes(new Date(date).getMinutes()+totalMinutes))
+                                                            ));
+                                                return date;
+                                        });
+                                        }} />
                                     
-                                    <div style={{marginTop:'0'}} className='details-details-modal-body' key={index}>
-                                        <div className="details-details-modal-body-input-box3">
-                                            <span style={index? {display: 'none'}:{}}>Procedure</span>
-                                            <select name="proc_name" value={app_proc_field.proc_name} onChange={(event)=>{handleChangeInput(index, event)}}>
-                                                <option value="">-Select Procedure-</option>
-                                                <option value="Consultation">Consultation</option>
-                                                <option value="Extraction">Extraction</option>
-                                                <option value="Cleaning">Cleaning</option>
-                                            </select>       
-                                        </div>
-                                        <div className="details-details-modal-body-input-box3">
-                                            <span style={index? {display: 'none'}:{}}>Duration Minutes</span>
-                                                <select name="proc_duration_minutes" value={app_proc_field.proc_duration_minutes} onChange={(event)=>{handleChangeInput(index, event)}}>
-                                                    <option value={0}>-Select Minutes-</option>
-                                                    <option value={15}>15</option>
-                                                    <option value={30}>30</option>
-                                                    <option value={60}>60</option>
-                                                </select>
-                                        </div>
-                                        <div className="details-details-modal-body-input-box3">
-                                            <span style={index? {display: 'none'}:{}}>Cost</span>
-                                            <div className='duration-minutes-container'>
-                                                <input type='number' name="proc_cost" value={app_proc_field.proc_cost} onChange={(event)=>{handleChangeInput(index, event)}}/>
-                                                <button className='add-remove-button' 
-                                                // onClick={()=>{removeProcedureFieldFunction(index, app_proc_field.proc_duration_minutes, app_proc_field.proc_cost)}}
-                                                onClick={async ()=>{
-                                                    
-                                                    if (app_proc_field.proc_id) {   
-                                                        if (window.confirm('Delete this procedure in the database?')) {
-                                                            await set_app_proc_fields_delete((prev)=>{
-                                                                const newValue = [...prev, app_proc_field.proc_id]
-                                                                return newValue;
-                                                            });
-                                                        }else return false;
-                                                        
-                                                    }
-                                                    console.log('app_proc_field: ', app_proc_field)
-                                                    
-                                                    await set_app_proc_fields( (prev)=>{  
-                                                        let totalCost = 0;
-                                                        let totalMinutes = 0;
-                                                        const values = [...prev];
-                                                        values.splice(index, 1);
-                                                        values.map((value)=>{
-                                                            if (value.proc_cost > -1) {
-                                                               totalCost = totalCost+parseFloat(value.proc_cost); 
-                                                            }
-                                                            if (value.proc_duration_minutes> -1) {
-                                                                totalMinutes = totalMinutes+parseInt(value.proc_duration_minutes);
-                                                            }
-                                                            return null;
-                                                        });
-                                                        set_app_end_time(
-                                                            new Date(
-                                                                new Date(new Date(app_start_time).setMinutes(new Date(app_start_time).getMinutes()+totalMinutes))
-                                                                    )); 
-                                                        set_app_total_proc_cost(totalCost);
-                                                        if (app_pay_amount) {
-                                                            if (parseFloat(totalCost-app_pay_amount)>0) {
-                                                               set_app_pay_change(0);
-                                                               set_app_pay_balance(parseFloat(totalCost-app_pay_amount))
-                                                            }else{
-                                                                set_app_pay_change(parseFloat(app_pay_amount-totalCost));
-                                                                set_app_pay_balance(0)
-                                                            }
-                                                        }else{
-                                                            set_app_pay_balance(totalCost);
-                                                        }
-                                                         
-                                                        return values;
-                                                    });
-
-                                                }}
-                                                >-</button>
-                                            </div>                                    
-                                        </div>
-                                    </div>
-                                );
-                            })
-                        }
-                        
-                        <div className='display-flex'>
-                            <div className='details-details-modal-body-button-proc_name'>                                               
-                                <button className='add-remove-button height-80p' onClick={()=>{
-                                    set_app_proc_fields((prev)=>{return [...prev, {proc_name: '', proc_duration_minutes: 0, proc_cost: 0, proc_id: null, is_deleted: 0}]})
-                                    }}>+</button>
-                            </div>
-                            <div className="details-details-modal-body-input-box">
-                                <span>Total Cost</span>
-                                <input type='number' value={app_total_proc_cost} disabled />
-                                
-                            </div>
-                            <div className="details-details-modal-body-input-box">
-                                <span>End Time</span>
-                                <div className='duration-minutes-container'>
-                                    {/* <input value={app_end_time} disabled/> */}
+                                </div>
+                                <div className='details-details-modal-body-input-box'>
+                                    <span>Start Time</span>
                                     <DatePicker
-                                        selected={app_end_time}
-                                        onChange={(date) => set_app_end_time(date)}
+                                        disabled
+                                        selected={app_start_time}
                                         showTimeSelect
                                         showTimeSelectOnly
-                                        // timeIntervals={30}
-                                        // minTime={setHours(setMinutes(new Date(), 0), 8)}
-                                        // maxTime={setHours(setMinutes(new Date(), 30), 18)}
-                                        // placeholderText="Select Start Time"
+                                        timeIntervals={15}
+                                        minTime={setHours(setMinutes(new Date(), 0), 8)}
+                                        maxTime={setHours(setMinutes(new Date(), 30), 18)}
+                                        placeholderText="Select Start Time"
                                         timeCaption="Time"
                                         dateFormat="h:mm aa"
-                                        disabled
                                     />
-                                </div> 
-                                
+                                </div>
+                                <button className='add-remove-button-exam' onClick={()=>{set_is_exam_open(!is_exam_open)}}>{is_exam_open? 'Hide Exam':'Show Exam'}</button>
                             </div>
+                            
                         </div>
 
-                        <div className='display-flex'>
-                            <div className="details-details-modal-body-input-box">
-                                <span>Status</span>
-                                <select name="status" value={app_status} onChange={(e)=>{set_app_status(e.target.value)}}>
-                                    <option value="">-Select Status-</option>
-                                    <option value="On Schedule">On Schedule</option>
-                                </select>       
-                            </div>
-                            <div className="details-details-modal-body-input-box">
-                                <span>Type</span>
-                                <select name="status" value={app_type} onChange={(e)=>{set_app_type(e.target.value)}}>
-                                    <option value="">-Select Type-</option>
-                                    <option value="Scheduled">Scheduled</option>
-                                    <option value="Walk-in">Walk-in</option>
-                                </select>       
-                            </div>
-                        </div>
-
-                        {
-                            app_pay_fields.map((payfield, index)=>{
-                                return (
-                                    <div key={index}>
-                                        <div className='display-flex' style={{marginTop:'0px'}} >
-                                            <div className='details-details-modal-body-input-box'>
-                                                <span style={false? {display: 'none'}:{}} >Payment</span>
-                                                <div className='display-flex'>
-                                                    
-                                                    <input type='number' name='pay_amount' value={payfield.pay_amount}
-                                                    onChange={(e)=>{
-                                                        handleChangeInputPayment(index, e)
-                                                    }} />
-                                                    <button className='add-remove-button height-80p' onClick={()=>{
-                                                        if (payfield.pay_id) {
-                                                            if (window.confirm('Delete this payment in the database?')) {
-                                                                set_app_pay_fields_delete((prev)=>{
-                                                                    const newValue = [...prev, payfield.pay_id];
+                        <div 
+                        style={is_exam_open? {display: 'none'} : {}}
+                        >
+                            {
+                                app_proc_fields.map((app_proc_field, index)=>{
+                                    return (
+                                        
+                                        <div style={{marginTop:'0'}} className='details-details-modal-body' key={index}>
+                                            <div className="details-details-modal-body-input-box3">
+                                                <span style={index? {display: 'none'}:{}}>Procedure</span>
+                                                <select name="proc_name" value={app_proc_field.proc_name} onChange={(event)=>{handleChangeInput(index, event)}}>
+                                                    <option value="">-Select Procedure-</option>
+                                                    <option value="Consultation">Consultation</option>
+                                                    <option value="Extraction">Extraction</option>
+                                                    <option value="Cleaning">Cleaning</option>
+                                                </select>       
+                                            </div>
+                                            <div className="details-details-modal-body-input-box3">
+                                                <span style={index? {display: 'none'}:{}}>Duration Minutes</span>
+                                                    <select name="proc_duration_minutes" value={app_proc_field.proc_duration_minutes} onChange={(event)=>{handleChangeInput(index, event)}}>
+                                                        <option value={0}>-Select Minutes-</option>
+                                                        <option value={15}>15</option>
+                                                        <option value={30}>30</option>
+                                                        <option value={60}>60</option>
+                                                    </select>
+                                            </div>
+                                            <div className="details-details-modal-body-input-box3">
+                                                <span style={index? {display: 'none'}:{}}>Cost</span>
+                                                <div className='duration-minutes-container'>
+                                                    <input type='number' name="proc_cost" value={app_proc_field.proc_cost} onChange={(event)=>{handleChangeInput(index, event)}}/>
+                                                    <button className='add-remove-button' 
+                                                    // onClick={()=>{removeProcedureFieldFunction(index, app_proc_field.proc_duration_minutes, app_proc_field.proc_cost)}}
+                                                    onClick={async ()=>{
+                                                        
+                                                        if (app_proc_field.proc_id) {   
+                                                            if (window.confirm('Delete this procedure in the database?')) {
+                                                                await set_app_proc_fields_delete((prev)=>{
+                                                                    const newValue = [...prev, app_proc_field.proc_id]
                                                                     return newValue;
-                                                                })
+                                                                });
                                                             }else return false;
+                                                            
                                                         }
-                                                        const values = [...app_pay_fields];
-                                                        values.splice(index, 1);
-                                                        set_app_pay_fields(values);
-                                                        if (parseFloat(payfield.pay_amount)>0) {
-                                                            set_app_pay_balance(parseFloat(app_pay_balance + parseFloat(payfield.pay_amount))); 
-                                                        }else{
-                                                            console.log(' else proc_cost:', payfield.pay_amount)
-                                                        }
-                                                        }}>-</button>
+                                                        console.log('app_proc_field: ', app_proc_field)
+                                                        
+                                                        await set_app_proc_fields( (prev)=>{  
+                                                            let totalCost = 0;
+                                                            let totalMinutes = 0;
+                                                            const values = [...prev];
+                                                            values.splice(index, 1);
+                                                            values.map((value)=>{
+                                                                if (value.proc_cost > -1) {
+                                                                totalCost = totalCost+parseFloat(value.proc_cost); 
+                                                                }
+                                                                if (value.proc_duration_minutes> -1) {
+                                                                    totalMinutes = totalMinutes+parseInt(value.proc_duration_minutes);
+                                                                }
+                                                                return null;
+                                                            });
+                                                            set_app_end_time(
+                                                                new Date(
+                                                                    new Date(new Date(app_start_time).setMinutes(new Date(app_start_time).getMinutes()+totalMinutes))
+                                                                        )); 
+                                                            set_app_total_proc_cost(totalCost);
+                                                            if (app_pay_amount) {
+                                                                if (parseFloat(totalCost-app_pay_amount)>0) {
+                                                                set_app_pay_change(0);
+                                                                set_app_pay_balance(parseFloat(totalCost-app_pay_amount))
+                                                                }else{
+                                                                    set_app_pay_change(parseFloat(app_pay_amount-totalCost));
+                                                                    set_app_pay_balance(0)
+                                                                }
+                                                            }else{
+                                                                set_app_pay_balance(totalCost);
+                                                            }
+                                                            
+                                                            return values;
+                                                        });
+
+                                                    }}
+                                                    >-</button>
+                                                </div>                                    
+                                            </div>
+                                        </div>
+                                    );
+                                })
+                            }
+                            
+                            <div className='display-flex'>
+                                <div className='details-details-modal-body-button-proc_name'>                                               
+                                    <button className='add-remove-button height-80p' onClick={()=>{
+                                        set_app_proc_fields((prev)=>{return [...prev, {proc_name: '', proc_duration_minutes: 0, proc_cost: 0, proc_id: null, is_deleted: 0}]})
+                                        }}>+</button>
+                                </div>
+                                <div className="details-details-modal-body-input-box">
+                                    <span>Total Cost</span>
+                                    <input type='number' value={app_total_proc_cost} disabled />
+                                    
+                                </div>
+                                <div className="details-details-modal-body-input-box">
+                                    <span>End Time</span>
+                                    <div className='duration-minutes-container'>
+                                        {/* <input value={app_end_time} disabled/> */}
+                                        <DatePicker
+                                            selected={app_end_time}
+                                            onChange={(date) => set_app_end_time(date)}
+                                            showTimeSelect
+                                            showTimeSelectOnly
+                                            // timeIntervals={30}
+                                            // minTime={setHours(setMinutes(new Date(), 0), 8)}
+                                            // maxTime={setHours(setMinutes(new Date(), 30), 18)}
+                                            // placeholderText="Select Start Time"
+                                            timeCaption="Time"
+                                            dateFormat="h:mm aa"
+                                            disabled
+                                        />
+                                    </div> 
+                                    
+                                </div>
+                            </div>
+
+                            <div className='display-flex'>
+                                <div className="details-details-modal-body-input-box">
+                                    <span>Status</span>
+                                    <select name="status" value={app_status} onChange={(e)=>{set_app_status(e.target.value)}}>
+                                        <option value="">-Select Status-</option>
+                                        <option value="On Schedule">On Schedule</option>
+                                    </select>       
+                                </div>
+                                <div className="details-details-modal-body-input-box">
+                                    <span>Type</span>
+                                    <select name="status" value={app_type} onChange={(e)=>{set_app_type(e.target.value)}}>
+                                        <option value="">-Select Type-</option>
+                                        <option value="Scheduled">Scheduled</option>
+                                        <option value="Walk-in">Walk-in</option>
+                                    </select>       
+                                </div>
+                            </div>
+
+                            {
+                                app_pay_fields.map((payfield, index)=>{
+                                    return (
+                                        <div key={index}>
+                                            <div className='display-flex' style={{marginTop:'0px'}} >
+                                                <div className='details-details-modal-body-input-box'>
+                                                    <span style={false? {display: 'none'}:{}} >Payment</span>
+                                                    <div className='display-flex'>
+                                                        
+                                                        <input type='number' name='pay_amount' value={payfield.pay_amount}
+                                                        onChange={(e)=>{
+                                                            handleChangeInputPayment(index, e)
+                                                        }} />
+                                                        <button className='add-remove-button height-80p' onClick={()=>{
+                                                            if (payfield.pay_id) {
+                                                                if (window.confirm('Delete this payment in the database?')) {
+                                                                    set_app_pay_fields_delete((prev)=>{
+                                                                        const newValue = [...prev, payfield.pay_id];
+                                                                        return newValue;
+                                                                    })
+                                                                }else return false;
+                                                            }
+                                                            const values = [...app_pay_fields];
+                                                            values.splice(index, 1);
+                                                            set_app_pay_fields(values);
+                                                            if (parseFloat(payfield.pay_amount)>0) {
+                                                                set_app_pay_balance(parseFloat(app_pay_balance + parseFloat(payfield.pay_amount))); 
+                                                            }else{
+                                                                console.log(' else proc_cost:', payfield.pay_amount)
+                                                            }
+                                                            }}>-</button>
+                                                    </div>
+                                                </div>
+                                                    
+                                                    
+                                                <div className='details-details-modal-body-input-box'>
+                                                    <span style={false? {display: 'none'}:{}}>Date of Payment</span>
+                                                        
+                                                    <DatePicker 
+                                                    name='pay_date'
+                                                    maxDate={new Date()} 
+                                                    yearDropdownItemNumber={90}
+                                                    showTimeSelect
+                                                    showYearDropdown 
+                                                    scrollableYearDropdown={true} 
+                                                    dateFormat='MMMM d, yyyy h:mm aa' 
+                                                    className='date-picker' 
+                                                    placeholderText="Select Date" 
+                                                    selected={payfield.pay_date} 
+                                                    onChange={(date)=>{
+                                                        handleChangeInputPayment(index, false, date, 'pay_date')
+                                                        // set_app_pay_date(date)
+                                                    }} 
+                                                    />
+                                                </div>
+                                            </div>
+                                            
+                                            <div className='display-flex' style={{marginTop:'0px'}} >
+                                                <div className="details-details-modal-body-input-box">
+                                                    <span>Change</span>
+                                                    <input
+                                                    style={payfield.pay_change>0? {color: 'green', fontWeight: '600', fontSize:'14px'} : {}} 
+                                                    disabled value={payfield.pay_change} 
+                                                    />
+                                                </div>
+                                                <div className="details-details-modal-body-input-box">
+                                                    <span>Balance</span>
+                                                    <input 
+                                                    style={payfield.pay_balance>0? {color: 'red', fontWeight: '600', fontSize:'14px'} : {}} 
+                                                    disabled value={payfield.pay_balance} 
+                                                    />
                                                 </div>
                                             </div>
                                                 
-                                                
-                                            <div className='details-details-modal-body-input-box'>
-                                                <span style={false? {display: 'none'}:{}}>Date of Payment</span>
-                                                    
-                                                <DatePicker 
-                                                name='pay_date'
-                                                maxDate={new Date()} 
-                                                yearDropdownItemNumber={90}
-                                                showTimeSelect
-                                                showYearDropdown 
-                                                scrollableYearDropdown={true} 
-                                                dateFormat='MMMM d, yyyy h:mm aa' 
-                                                className='date-picker' 
-                                                placeholderText="Select Date" 
-                                                selected={payfield.pay_date} 
-                                                onChange={(date)=>{
-                                                    handleChangeInputPayment(index, false, date, 'pay_date')
-                                                    // set_app_pay_date(date)
-                                                }} 
-                                                />
-                                            </div>
                                         </div>
-                                        
-                                        <div className='display-flex' style={{marginTop:'0px'}} >
-                                            <div className="details-details-modal-body-input-box">
-                                                <span>Change</span>
-                                                <input
-                                                style={payfield.pay_change>0? {color: 'green', fontWeight: '600', fontSize:'14px'} : {}} 
-                                                disabled value={payfield.pay_change} 
-                                                />
-                                            </div>
-                                            <div className="details-details-modal-body-input-box">
-                                                <span>Balance</span>
-                                                <input 
-                                                style={payfield.pay_balance>0? {color: 'red', fontWeight: '600', fontSize:'14px'} : {}} 
-                                                disabled value={payfield.pay_balance} 
-                                                />
-                                            </div>
-                                        </div>
+                                    );
+                                })
+                            }
                                             
-                                    </div>
-                                );
-                            })
-                        }
-                                        
+                            
+
+                            <button className='add-payment-button height-80p' onClick={()=>{
+                                // addPaymentFieldFunction()
+                                set_app_pay_fields([...app_pay_fields, {pay_amount: '', pay_date: new Date(), pay_change: '', pay_balance: '', pay_id: null, is_deleted: 0}])
+                                }}>Add Payment
+                                {/* {showAddPayment? 'Hide Add Payment' : 'Add Payment'} */}
+                            </button>
+                            {/* <p>app_proc_fields: {app_proc_fields}</p> */}
+                        </div>
+
+                    </div>
                         
 
-                        <button className='add-payment-button height-80p' onClick={()=>{
-                            // addPaymentFieldFunction()
-                            set_app_pay_fields([...app_pay_fields, {pay_amount: '', pay_date: new Date(), pay_change: '', pay_balance: '', pay_id: null, is_deleted: 0}])
-                            }}>Add Payment
-                            {/* {showAddPayment? 'Hide Add Payment' : 'Add Payment'} */}
-                        </button>
-                        {/* <p>app_proc_fields: {app_proc_fields}</p> */}
-                    </div>                    
                     <div className='details-details-modal-body-button'>                    
                         {/* {userId? (<input type="submit" onClick={updateUser} value='Update' className='percent-40'/>):
                         (<input type="submit" onClick={addUser} value='Add' className='percent-40'/>)}   */}
-                        <button className='button-w70' onClick={()=>{
+                        <button className='button-w70' disabled={is_exam_open} onClick={()=>{
                             app_id? 
                             updateAppointmentFunction()
                             : 
                             addAppointmentFunction() 
-                            }}>{app_id? 'Update Appointment': 'Add Appointment'}</button>                               
-                        <button className='button-w20' onClick={()=>{set_app_details_is_open(false); set_app_date(new Date())}}>Close</button>
+                            }}>{app_id? 'Upd Appointment': 'Add Appointment'}</button>                               
+                        <button className='button-w20' disabled={is_exam_open} onClick={()=>{set_app_details_is_open(false); set_app_date(new Date())}}>Close</button>
                     </div>
                 </div>
             </div>

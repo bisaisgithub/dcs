@@ -2,11 +2,11 @@ dotenv for be ip address - done
 recalc for proc and pay fields -done
 proc fields calc - done
 pay fields calc - done
-
- re write the date code on be and fe to support UTC format to backend-done
+re write the date code on be and fe to support UTC format to backend-done
 appointment add with payfields - done 
 fe date to dcsbe date need to check - done
 delete function for procedure - done
 appointment update on date - done
+appointment pay date --done
 
-appointment pay date -- working
+modal for examnination
