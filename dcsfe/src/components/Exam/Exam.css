@@ -2,6 +2,7 @@
     width: 100%x;
     display: flex;
     justify-content: center;
+    margin: 5px 0 5px 0;
     
 }
 .exam-container div{
@@ -9,18 +10,24 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    background: #fff;
 }
 .exam-container div select{
     font-size: 16px;
     font-weight: 550;
     height: 30px;
+    width: 30px;
     appearance: none;
     text-align: center;
-    margin: 2px 0px 0px 0px;
+    /* margin: 2px 0px 0px 0px; */
 }
 .exam-container div img{
-    height: 100px;
-    width: 40px;
+    /* height: 100px;
+    width: 40px; */
+    /* height: 80px;
+    width: 35px; */
+    height: 60px;
+    width: 30px;
 }
 .exam-container div span{
     text-align: center;
@@ -28,7 +35,7 @@
     font-size: 16px;
 }
 .border-left{
-    border-left: 2px solid;
+    margin-left: 5px;
 }
 .exam-container div input{
     height: 30px;
