@@ -31,6 +31,26 @@ import t35 from './35.png'
 import t36 from './36.png'
 import t37 from './37.png'
 import t38 from './38.png'
+import t55 from './55.png'
+import t54 from './54.png'
+import t53 from './53.png'
+import t52 from './52.png'
+import t51 from './51.png'
+import t61 from './61.png'
+import t62 from './62.png'
+import t63 from './63.png'
+import t64 from './64.png'
+import t65 from './65.png'
+import t85 from './85.png'
+import t84 from './84.png'
+import t83 from './83.png'
+import t82 from './82.png'
+import t81 from './81.png'
+import t71 from './71.png'
+import t72 from './72.png'
+import t73 from './73.png'
+import t74 from './74.png'
+import t75 from './75.png'
 
 
 const Exam = ({
@@ -53,7 +73,7 @@ const Exam = ({
     console.log('tooth_check_box', tooth_check_box.t18);
     return (
         <div>
-            <button className='exam-button' onClick={()=>{set_is_baby_teeth(!is_baby_teeth)}}>Baby Teeth</button>
+            <button className='exam-button' onClick={()=>{set_is_baby_teeth(!is_baby_teeth)}}>{is_baby_teeth? 'Baby Teeth Chart':'Permanent Teeth Chart'}</button>
             {!is_baby_teeth? (
                 <div>
                     <div className='exam-container'>
@@ -784,7 +804,469 @@ const Exam = ({
                     </div>
                 </div>
             ):(
-                'TEST'
+                // Baby Tooth Chart
+
+                <div>
+                    <div className='exam-container2'>
+                       
+                        <div>
+                            <div>
+                                <input type='checkbox' value='t55'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t55} />
+                                <select value={tooth_remark.t55} name='t55'
+                                    onChange={(e)=>{
+                                            set_tooth_remark((prev)=>{
+                                                let newValue = {...prev}
+                                                newValue[e.target.name] = e.target.value;
+                                                return newValue;
+                                            })
+                                        }}>
+                                    {
+                                        tooth_select.map((select, index)=>{
+                                            return (<option key={index} value={select}>{select}</option>);
+                                        })
+                                    }
+                                    <option value={''}></option>
+                                </select>
+                            </div>
+                            <img src={t55} alt='t55'/>
+                            <span>55</span>
+                        </div>
+                        <div>
+                            <div>
+                                <input type='checkbox' value='t54'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t54} />
+                                <select value={tooth_remark.t54} name='t54'
+                                    onChange={(e)=>{
+                                            set_tooth_remark((prev)=>{
+                                                let newValue = {...prev}
+                                                newValue[e.target.name] = e.target.value;
+                                                return newValue;
+                                            })
+                                        }}>
+                                    {
+                                        tooth_select.map((select, index)=>{
+                                            return (<option key={index} value={select}>{select}</option>);
+                                        })
+                                    }
+                                    <option value={''}></option>
+                                </select>
+                            </div>
+                            <img src={t54} alt='t54'/>
+                            <span>54</span>
+                        </div>
+                        <div>
+                            <div>
+                                <input type='checkbox' value='t53'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t53} />
+                                <select value={tooth_remark.t53} name='t53'
+                                    onChange={(e)=>{
+                                            set_tooth_remark((prev)=>{
+                                                let newValue = {...prev}
+                                                newValue[e.target.name] = e.target.value;
+                                                return newValue;
+                                            })
+                                        }}>
+                                    {
+                                        tooth_select.map((select, index)=>{
+                                            return (<option key={index} value={select}>{select}</option>);
+                                        })
+                                    }
+                                    <option value={''}></option>
+                                </select>
+                            </div>
+                            <img src={t53} alt='t53'/>
+                            <span>53</span>
+                        </div>
+                        <div>
+                            <div>
+                                <input type='checkbox' value='t52'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t52} />
+                                <select value={tooth_remark.t52} name='t52'
+                                    onChange={(e)=>{
+                                            set_tooth_remark((prev)=>{
+                                                let newValue = {...prev}
+                                                newValue[e.target.name] = e.target.value;
+                                                return newValue;
+                                            })
+                                        }}>
+                                    {
+                                        tooth_select.map((select, index)=>{
+                                            return (<option key={index} value={select}>{select}</option>);
+                                        })
+                                    }
+                                    <option value={''}></option>
+                                </select>
+                            </div>
+                            <img src={t52} alt='t52'/>
+                            <span>52</span>
+                        </div>
+                        <div>
+                            <div>
+                                <input type='checkbox' value='t51'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t51} />
+                                <select value={tooth_remark.t51} name='t51'
+                                    onChange={(e)=>{
+                                            set_tooth_remark((prev)=>{
+                                                let newValue = {...prev}
+                                                newValue[e.target.name] = e.target.value;
+                                                return newValue;
+                                            })
+                                        }}>
+                                    {
+                                        tooth_select.map((select, index)=>{
+                                            return (<option key={index} value={select}>{select}</option>);
+                                        })
+                                    }
+                                    <option value={''}></option>
+                                </select>
+                            </div>
+                            <img src={t51} alt='t51'/>
+                            <span>51</span>
+                        </div>
+                        <div className='border-left'>
+                            <div>
+                                <input type='checkbox' value='t61'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t61} />
+                                <select value={tooth_remark.t61} name='t61'
+                                    onChange={(e)=>{
+                                            set_tooth_remark((prev)=>{
+                                                let newValue = {...prev}
+                                                newValue[e.target.name] = e.target.value;
+                                                return newValue;
+                                            })
+                                        }}>
+                                    {
+                                        tooth_select.map((select, index)=>{
+                                            return (<option key={index} value={select}>{select}</option>);
+                                        })
+                                    }
+                                    <option value={''}></option>
+                                </select>
+                            </div>
+                            <img src={t61} alt='t61'/>
+                            <span>61</span>
+                        </div>
+                        <div>
+                            <div>
+                                <input type='checkbox' value='t62'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t62} />
+                                <select value={tooth_remark.t62} name='t62'
+                                    onChange={(e)=>{
+                                            set_tooth_remark((prev)=>{
+                                                let newValue = {...prev}
+                                                newValue[e.target.name] = e.target.value;
+                                                return newValue;
+                                            })
+                                        }}>
+                                    {
+                                        tooth_select.map((select, index)=>{
+                                            return (<option key={index} value={select}>{select}</option>);
+                                        })
+                                    }
+                                    <option value={''}></option>
+                                </select>
+                            </div>
+                            <img src={t62} alt='t62'/>
+                            <span>62</span>
+                        </div>
+                        <div>
+                            <div>
+                                <input type='checkbox' value='t63'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t63} />
+                                <select value={tooth_remark.t63} name='t63'
+                                    onChange={(e)=>{
+                                            set_tooth_remark((prev)=>{
+                                                let newValue = {...prev}
+                                                newValue[e.target.name] = e.target.value;
+                                                return newValue;
+                                            })
+                                        }}>
+                                    {
+                                        tooth_select.map((select, index)=>{
+                                            return (<option key={index} value={select}>{select}</option>);
+                                        })
+                                    }
+                                    <option value={''}></option>
+                                </select>
+                            </div>
+                            <img src={t63} alt='t63'/>
+                            <span>63</span>
+                        </div>
+                        <div>
+                            <div>
+                                <input type='checkbox' value='t64'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t64} />
+                                <select value={tooth_remark.t64} name='t64'
+                                    onChange={(e)=>{
+                                            set_tooth_remark((prev)=>{
+                                                let newValue = {...prev}
+                                                newValue[e.target.name] = e.target.value;
+                                                return newValue;
+                                            })
+                                        }}>
+                                    {
+                                        tooth_select.map((select, index)=>{
+                                            return (<option key={index} value={select}>{select}</option>);
+                                        })
+                                    }
+                                    <option value={''}></option>
+                                </select>
+                            </div>
+                            <img src={t64} alt='t64'/>
+                            <span>64</span>
+                        </div>
+                        <div>
+                            <div>
+                                <input type='checkbox' value='t65'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t65} />
+                                <select value={tooth_remark.t65} name='t65'
+                                    onChange={(e)=>{
+                                            set_tooth_remark((prev)=>{
+                                                let newValue = {...prev}
+                                                newValue[e.target.name] = e.target.value;
+                                                return newValue;
+                                            })
+                                        }}>
+                                    {
+                                        tooth_select.map((select, index)=>{
+                                            return (<option key={index} value={select}>{select}</option>);
+                                        })
+                                    }
+                                    <option value={''}></option>
+                                </select>
+                            </div>
+                            <img src={t65} alt='t65'/>
+                            <span>65</span>
+                        </div>
+                        
+                    </div>
+                    
+                    {/* bottom */}
+                    <div className='exam-container2'>
+                        
+                        <div>
+                            <span>85</span>
+                            <img src={t85} alt='t85'/>
+                            <div>
+                                
+                                <select value={tooth_remark.t85} name='t85'
+                                    onChange={(e)=>{
+                                            set_tooth_remark((prev)=>{
+                                                let newValue = {...prev}
+                                                newValue[e.target.name] = e.target.value;
+                                                return newValue;
+                                            })
+                                        }}>
+                                    {
+                                        tooth_select.map((select, index)=>{
+                                            return (<option key={index} value={select}>{select}</option>);
+                                        })
+                                    }
+                                    <option value={''}></option>
+                                </select>
+                                <input type='checkbox' value='t85'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t85} />
+                            </div>
+                        </div>
+                        <div>
+                            <span>84</span>
+                            <img src={t84} alt='t84'/>
+                            <div>
+                                
+                                <select value={tooth_remark.t84} name='t84'
+                                    onChange={(e)=>{
+                                            set_tooth_remark((prev)=>{
+                                                let newValue = {...prev}
+                                                newValue[e.target.name] = e.target.value;
+                                                return newValue;
+                                            })
+                                        }}>
+                                    {
+                                        tooth_select.map((select, index)=>{
+                                            return (<option key={index} value={select}>{select}</option>);
+                                        })
+                                    }
+                                    <option value={''}></option>
+                                </select>
+                                <input type='checkbox' value='t84'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t84} />
+                            </div>
+                        </div>
+                        <div>
+                            <span>83</span>
+                            <img src={t83} alt='t83'/>
+                            <div>
+                                
+                                <select value={tooth_remark.t83} name='t83'
+                                    onChange={(e)=>{
+                                            set_tooth_remark((prev)=>{
+                                                let newValue = {...prev}
+                                                newValue[e.target.name] = e.target.value;
+                                                return newValue;
+                                            })
+                                        }}>
+                                    {
+                                        tooth_select.map((select, index)=>{
+                                            return (<option key={index} value={select}>{select}</option>);
+                                        })
+                                    }
+                                    <option value={''}></option>
+                                </select>
+                                <input type='checkbox' value='t83'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t83} />
+                            </div>
+                        </div>
+                        <div>
+                            <span>82</span>
+                            <img src={t82} alt='t82'/>
+                            <div>
+                                
+                                <select value={tooth_remark.t82} name='t82'
+                                    onChange={(e)=>{
+                                            set_tooth_remark((prev)=>{
+                                                let newValue = {...prev}
+                                                newValue[e.target.name] = e.target.value;
+                                                return newValue;
+                                            })
+                                        }}>
+                                    {
+                                        tooth_select.map((select, index)=>{
+                                            return (<option key={index} value={select}>{select}</option>);
+                                        })
+                                    }
+                                    <option value={''}></option>
+                                </select>
+                                <input type='checkbox' value='t82'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t82} />
+                            </div>
+                        </div>
+                        <div>
+                            <span>81</span>
+                            <img src={t81} alt='t81'/>
+                            <div>
+                                
+                                <select value={tooth_remark.t81} name='t81'
+                                    onChange={(e)=>{
+                                            set_tooth_remark((prev)=>{
+                                                let newValue = {...prev}
+                                                newValue[e.target.name] = e.target.value;
+                                                return newValue;
+                                            })
+                                        }}>
+                                    {
+                                        tooth_select.map((select, index)=>{
+                                            return (<option key={index} value={select}>{select}</option>);
+                                        })
+                                    }
+                                    <option value={''}></option>
+                                </select>
+                                <input type='checkbox' value='t81'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t81} />
+                            </div>
+                        </div>
+                        <div className='border-left'>
+                            <span>71</span>
+                            <img src={t71} alt='t71'/>
+                            <div>
+                                
+                                <select value={tooth_remark.t71} name='t71'
+                                    onChange={(e)=>{
+                                            set_tooth_remark((prev)=>{
+                                                let newValue = {...prev}
+                                                newValue[e.target.name] = e.target.value;
+                                                return newValue;
+                                            })
+                                        }}>
+                                    {
+                                        tooth_select.map((select, index)=>{
+                                            return (<option key={index} value={select}>{select}</option>);
+                                        })
+                                    }
+                                    <option value={''}></option>
+                                </select>
+                                <input type='checkbox' value='t71'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t71} />
+                            </div>
+                        </div>
+                        <div>
+                            <span>72</span>
+                            <img src={t72} alt='t72'/>
+                            <div>
+                                
+                                <select value={tooth_remark.t72} name='t72'
+                                    onChange={(e)=>{
+                                            set_tooth_remark((prev)=>{
+                                                let newValue = {...prev}
+                                                newValue[e.target.name] = e.target.value;
+                                                return newValue;
+                                            })
+                                        }}>
+                                    {
+                                        tooth_select.map((select, index)=>{
+                                            return (<option key={index} value={select}>{select}</option>);
+                                        })
+                                    }
+                                    <option value={''}></option>
+                                </select>
+                                <input type='checkbox' value='t72'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t72} />
+                            </div>
+                        </div>
+                        <div>
+                            <span>73</span>
+                            <img src={t73} alt='t73'/>
+                            <div>
+                                
+                                <select value={tooth_remark.t73} name='t73'
+                                    onChange={(e)=>{
+                                            set_tooth_remark((prev)=>{
+                                                let newValue = {...prev}
+                                                newValue[e.target.name] = e.target.value;
+                                                return newValue;
+                                            })
+                                        }}>
+                                    {
+                                        tooth_select.map((select, index)=>{
+                                            return (<option key={index} value={select}>{select}</option>);
+                                        })
+                                    }
+                                    <option value={''}></option>
+                                </select>
+                                <input type='checkbox' value='t73'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t73} />
+                            </div>
+                        </div>
+                        <div>
+                            <span>74</span>
+                            <img src={t74} alt='t74'/>
+                            <div>
+                                
+                                <select value={tooth_remark.t74} name='t74'
+                                    onChange={(e)=>{
+                                            set_tooth_remark((prev)=>{
+                                                let newValue = {...prev}
+                                                newValue[e.target.name] = e.target.value;
+                                                return newValue;
+                                            })
+                                        }}>
+                                    {
+                                        tooth_select.map((select, index)=>{
+                                            return (<option key={index} value={select}>{select}</option>);
+                                        })
+                                    }
+                                    <option value={''}></option>
+                                </select>
+                                <input type='checkbox' value='t74'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t74} />
+                            </div>
+                        </div>
+                        <div>
+                            <span>75</span>
+                            <img src={t75} alt='t75'/>
+                            <div>
+                                
+                                <select value={tooth_remark.t75} name='t75'
+                                    onChange={(e)=>{
+                                            set_tooth_remark((prev)=>{
+                                                let newValue = {...prev}
+                                                newValue[e.target.name] = e.target.value;
+                                                return newValue;
+                                            })
+                                        }}>
+                                    {
+                                        tooth_select.map((select, index)=>{
+                                            return (<option key={index} value={select}>{select}</option>);
+                                        })
+                                    }
+                                    <option value={''}></option>
+                                </select>
+                                <input type='checkbox' value='t75'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t75} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             )}
                 
             
