@@ -43,7 +43,17 @@ const AppointmentTable = () => {
     const [app_id, set_app_id] = useState(null);
     const [render, set_render] = useState(0);
     const [is_exam_open, set_is_exam_open] = useState(false);
-    const [tooth_check_box, set_tooth_check_box] = useState({t18: false})
+    const [tooth_check_box, set_tooth_check_box] = useState({
+        t18: false, t17: false, t16: false, t15: false, t14: false, t13: false, t12: false, t11: false,
+        t28: false, t27: false, t26: false, t25: false, t24: false, t23: false, t22: false, t21: false,
+        t38: false, t37: false, t36: false, t35: false, t34: false, t33: false, t32: false, t31: false,
+        t48: false, t47: false, t46: false, t45: false, t44: false, t43: false, t42: false, t41: false,
+    });
+    const [tooth_select, set_tooth_select] = useState(['ZZ','YY','WW']);
+    const [tooth_remark, set_tooth_remark] = useState({
+        t18: '', t17: '', t16: '', t15: '', t14: '', t13: '', t12: '', t11: '',
+
+    });
 
     useEffect(()=>{
         
@@ -336,6 +346,8 @@ const AppointmentTable = () => {
             set_app_pay_fields_delete={set_app_pay_fields_delete} app_pay_fields_delete={app_pay_fields_delete}
             is_exam_open={is_exam_open} set_is_exam_open={set_is_exam_open}
             tooth_check_box={tooth_check_box} set_tooth_check_box={set_tooth_check_box}
+            tooth_select={tooth_select} set_tooth_select={set_tooth_select}
+            tooth_remark={tooth_remark} set_tooth_remark={set_tooth_remark}
 
             ></AppointmentDetails>
             

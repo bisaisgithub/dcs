@@ -11,9 +11,12 @@
     align-items: center;
 }
 .exam-container div select{
-    margin: 0 1px;
-    font-size: 14px;
-    /* font-weight: bold; */
+    font-size: 16px;
+    font-weight: 550;
+    height: 30px;
+    appearance: none;
+    text-align: center;
+    margin: 2px 0px 0px 0px;
 }
 .exam-container div img{
     height: 100px;
@@ -28,6 +31,6 @@
     border-left: 2px solid;
 }
 .exam-container div input{
-    height: 20px;
-    width: 20px;
+    height: 30px;
+    width: 30px;
 }

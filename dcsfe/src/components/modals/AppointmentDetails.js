@@ -42,7 +42,9 @@ const AppointmentDetails = ({
     set_app_proc_fields_delete, app_proc_fields_delete,
     app_pay_fields_delete, set_app_pay_fields_delete,
     is_exam_open, set_is_exam_open,
-    tooth_check_box, set_tooth_check_box
+    tooth_check_box, set_tooth_check_box,
+    tooth_select, set_tooth_select,
+    tooth_remark, set_tooth_remark,
 
     }) => {
     if (!app_details_is_open) {
@@ -255,6 +257,8 @@ const AppointmentDetails = ({
                         <Exam 
                             is_exam_open={is_exam_open} set_is_exam_open={set_is_exam_open}
                             tooth_check_box={tooth_check_box} set_tooth_check_box={set_tooth_check_box}
+                            tooth_select={tooth_select} set_tooth_select={set_tooth_select}
+                            tooth_remark={tooth_remark} set_tooth_remark={set_tooth_remark}
                             // style={is_exam_open?  {} :{display: 'none'} } 
                             />
 

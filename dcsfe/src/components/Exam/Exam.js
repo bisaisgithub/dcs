@@ -34,7 +34,9 @@ import t38 from './28.png'
 
 
 const Exam = ({
-    is_exam_open, tooth_check_box, set_tooth_check_box
+    is_exam_open, tooth_check_box, set_tooth_check_box,
+    tooth_select, set_tooth_select,
+    tooth_remark, set_tooth_remark,
     // set_is_exam_open
 })=>{
     if (!is_exam_open) {
@@ -53,10 +55,20 @@ const Exam = ({
             <div>
                 <div>
                     <input type='checkbox' value='t18'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t18} />
-                    
-                    <select>
-                        <option></option>
-                        <option>ZZ</option>
+                    <select value={tooth_remark.t18} name='t18'
+                        onChange={(e)=>{
+                                set_tooth_remark((prev)=>{
+                                    let newValue = {...prev}
+                                    newValue[e.target.name] = e.target.value;
+                                    return newValue;
+                                })
+                            }}>
+                        {
+                            tooth_select.map((select, index)=>{
+                                return (<option key={index} value={select}>{select}</option>);
+                            })
+                        }
+                        <option value={null}></option>
                     </select>
                 </div>
                 <img src={t18} alt='18'/>
