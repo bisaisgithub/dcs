@@ -15,25 +15,49 @@ import t25 from './25.png'
 import t26 from './26.png'
 import t27 from './27.png'
 import t28 from './28.png'
+import t48 from './28.png'
+import t47 from './28.png'
+import t46 from './28.png'
+import t45 from './28.png'
+import t44 from './28.png'
+import t43 from './28.png'
+import t42 from './28.png'
+import t41 from './28.png'
+import t31 from './28.png'
+import t32 from './28.png'
+import t33 from './28.png'
+import t34 from './28.png'
+import t35 from './28.png'
+import t36 from './28.png'
+import t37 from './28.png'
+import t38 from './28.png'
 
 
 const Exam = ({
-    is_exam_open, 
+    is_exam_open, tooth_check_box, set_tooth_check_box
     // set_is_exam_open
 })=>{
     if (!is_exam_open) {
         return null;
     }
+    const checkBoxFunction = async (e)=>{
+        await set_tooth_check_box((prev)=>{
+           let newValue = {...prev}
+           newValue[e.target.value] = e.target.checked;
+           return newValue;
+        })
+    }
+    console.log('tooth_check_box', tooth_check_box.t18);
     return (
         <div className='exam-container'>
             <div>
                 <div>
+                    <input type='checkbox' value='t18'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t18} />
+                    
                     <select>
+                        <option></option>
                         <option>ZZ</option>
                     </select>
-                    <select>
-                        <option>ZZ</option>
-                    </select> 
                 </div>
                 <img src={t18} alt='18'/>
                 <span>18</span>

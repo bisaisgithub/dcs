@@ -43,6 +43,7 @@ const AppointmentTable = () => {
     const [app_id, set_app_id] = useState(null);
     const [render, set_render] = useState(0);
     const [is_exam_open, set_is_exam_open] = useState(false);
+    const [tooth_check_box, set_tooth_check_box] = useState({t18: false})
 
     useEffect(()=>{
         
@@ -334,7 +335,7 @@ const AppointmentTable = () => {
             set_app_proc_fields_delete={set_app_proc_fields_delete} app_proc_fields_delete={app_proc_fields_delete}
             set_app_pay_fields_delete={set_app_pay_fields_delete} app_pay_fields_delete={app_pay_fields_delete}
             is_exam_open={is_exam_open} set_is_exam_open={set_is_exam_open}
-
+            tooth_check_box={tooth_check_box} set_tooth_check_box={set_tooth_check_box}
 
             ></AppointmentDetails>
             
