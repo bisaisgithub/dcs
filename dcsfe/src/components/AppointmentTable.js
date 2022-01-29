@@ -57,6 +57,7 @@ const AppointmentTable = () => {
         t48: '', t47: '', t46: '', t45: '', t44: '', t43: '', t42: '', t41: '',
 
     });
+    const [is_baby_teeth, set_is_baby_teeth] = useState(false);
 
     useEffect(()=>{
         
@@ -351,6 +352,7 @@ const AppointmentTable = () => {
             tooth_check_box={tooth_check_box} set_tooth_check_box={set_tooth_check_box}
             tooth_select={tooth_select} set_tooth_select={set_tooth_select}
             tooth_remark={tooth_remark} set_tooth_remark={set_tooth_remark}
+            is_baby_teeth={is_baby_teeth} set_is_baby_teeth={set_is_baby_teeth}
 
             ></AppointmentDetails>
             

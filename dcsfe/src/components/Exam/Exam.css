@@ -41,3 +41,17 @@
     height: 30px;
     width: 30px;
 }
+@media (max-width: 360px) {
+    .exam-container{
+        justify-content: flex-start;
+    }
+}
+.exam-button{
+    padding: 7px;
+    font-size: 15px;
+    font-weight: bold;
+    background: linear-gradient(135deg,#71b7e6, #9b59b6);
+    border-radius: 5px;
+    border: none;
+    margin: 3px;
+}
