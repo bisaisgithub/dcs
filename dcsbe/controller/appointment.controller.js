@@ -30,7 +30,7 @@ export const getAppointmentById = async (req, res)=>{
             const examByIdResponse = await 
               db.select('exam_remark', 'exam_check_box', 'exam_id')
                 .from('exam')
-                .where('exam_appointment_id', req.params.id).first();
+                .where('exam_appointment_id', req.params.id);
             if (examByIdResponse) {
                 data = {...data, examByIdResponse}
             }

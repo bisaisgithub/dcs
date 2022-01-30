@@ -312,6 +312,7 @@ const AppointmentTable = () => {
         set_app_patient_name_id({value: app_id, label: patient_name});
         const resAppointment = await axios.get(`${process.env.REACT_APP_BE_LINK}appointment/${app_id}`);
         console.log('resAppointment: ', resAppointment);
+        console.log('exam response lenght: ',resAppointment.data.examByIdResponse.length)
         if (resAppointment.data.app_patient_id) {
             getPatientList(resAppointment.data.app_patient_id);
             set_app_details_is_open(true);
@@ -359,10 +360,32 @@ const AppointmentTable = () => {
             set_app_total_proc_cost(totalCost);
 
             getUserDoctorList();
-            if (Object.keys(resAppointment.data.examByIdResponse.exam_remark).length) {
-                set_tooth_check_box(resAppointment.data.examByIdResponse.exam_check_box);
-                set_tooth_remark(resAppointment.data.examByIdResponse.exam_remark);
-                set_exam_id(resAppointment.data.examByIdResponse.exam_id);
+            if (resAppointment.data.examByIdResponse.length) {
+                set_tooth_check_box(resAppointment.data.examByIdResponse[0].exam_check_box);
+                set_tooth_remark(resAppointment.data.examByIdResponse[0].exam_remark);
+                set_exam_id(resAppointment.data.examByIdResponse[0].exam_id);
+            }else{
+                set_tooth_check_box({
+                    t18: false, t17: false, t16: false, t15: false, t14: false, t13: false, t12: false, t11: false,
+                    t28: false, t27: false, t26: false, t25: false, t24: false, t23: false, t22: false, t21: false,
+                    t38: false, t37: false, t36: false, t35: false, t34: false, t33: false, t32: false, t31: false,
+                    t48: false, t47: false, t46: false, t45: false, t44: false, t43: false, t42: false, t41: false,
+                    t55: false, t54: false, t53: false, t52: false, t51: false,
+                    t65: false, t64: false, t63: false, t62: false, t61: false,
+                    t75: false, t74: false, t73: false, t72: false, t71: false,
+                    t85: false, t84: false, t83: false, t82: false, t81: false,
+                });
+                set_tooth_remark({
+                    t18: '', t17: '', t16: '', t15: '', t14: '', t13: '', t12: '', t11: '',
+                    t28: '', t27: '', t26: '', t25: '', t24: '', t23: '', t22: '', t21: '',
+                    t38: '', t37: '', t36: '', t35: '', t34: '', t33: '', t32: '', t31: '',
+                    t48: '', t47: '', t46: '', t45: '', t44: '', t43: '', t42: '', t41: '',
+                    t55: '', t54: '', t53: '', t52: '', t51: '',
+                    t65: '', t64: '', t63: '', t62: '', t61: '',
+                    t75: '', t74: '', t73: '', t72: '', t71: '',
+                    t85: '', t84: '', t83: '', t82: '', t81: '',
+                });
+                set_exam_id(null);
             }
             
         } else {
