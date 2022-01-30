@@ -305,6 +305,24 @@ export const updateAppointment = async (req, res)=>{
     }
 }
 
+export const saveExam = async (req, res)=>{
+    try {
+        const saveExamResponse = await db('exam').insert({
+            exam_id: uuid(),
+            exam_appointment_id: req.body.app_id,
+            exam_remark: JSON.stringify(req.body.tooth_remark),
+            exam_check_box: JSON.stringify(req.body.tooth_check_box)
+        });
+        if (saveExamResponse) {
+            res.json({examInsertOk: true});
+        } else {
+            res.json({examInsertOk: false});
+        }
+    } catch (error) {
+        console.log('save exam error: ', error)
+    }
+}
+
 // export const refreshToken = async (req, res)=>{
 //     const token = req.cookies.jid;
 //     console.log(token);

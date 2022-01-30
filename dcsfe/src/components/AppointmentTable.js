@@ -48,6 +48,10 @@ const AppointmentTable = () => {
         t28: false, t27: false, t26: false, t25: false, t24: false, t23: false, t22: false, t21: false,
         t38: false, t37: false, t36: false, t35: false, t34: false, t33: false, t32: false, t31: false,
         t48: false, t47: false, t46: false, t45: false, t44: false, t43: false, t42: false, t41: false,
+        t55: false, t54: false, t53: false, t52: false, t51: false,
+        t65: false, t64: false, t63: false, t62: false, t61: false,
+        t75: false, t74: false, t73: false, t72: false, t71: false,
+        t85: false, t84: false, t83: false, t82: false, t81: false,
     });
     const [tooth_select, set_tooth_select] = useState(['M','F','MO']);
     const [tooth_remark, set_tooth_remark] = useState({
@@ -55,6 +59,10 @@ const AppointmentTable = () => {
         t28: '', t27: '', t26: '', t25: '', t24: '', t23: '', t22: '', t21: '',
         t38: '', t37: '', t36: '', t35: '', t34: '', t33: '', t32: '', t31: '',
         t48: '', t47: '', t46: '', t45: '', t44: '', t43: '', t42: '', t41: '',
+        t55: '', t54: '', t53: '', t52: '', t51: '',
+        t65: '', t64: '', t63: '', t62: '', t61: '',
+        t75: '', t74: '', t73: '', t72: '', t71: '',
+        t85: '', t84: '', t83: '', t82: '', t81: '',
 
     });
     const [is_baby_teeth, set_is_baby_teeth] = useState(false);
@@ -62,8 +70,28 @@ const AppointmentTable = () => {
     useEffect(()=>{
         
         getAppointments();
+        if(tooth_remark.t55 !== ''){
+            set_is_baby_teeth(true);
+        }
 
-    }, [render]);
+    }, [render,is_baby_teeth]);
+
+    const saveExam = async ()=>{
+        try {
+            const saveExamResponse = await axios.post(`${process.env.REACT_APP_BE_LINK}exam`, {
+                app_id,
+                tooth_remark,
+                tooth_check_box,
+            });
+            if (saveExamResponse.data.examInsertOk) {
+                alert('Exam Sucessfully Saved')
+            }else{
+                alert('Failed Saving Exam');
+            }
+        } catch (error) {
+            console.log('save exam error: ', error)
+        }
+    }
 
     const addAppointmentFunction = async ()=>{
         function validateEmptyObjectProcField(array){
@@ -353,6 +381,7 @@ const AppointmentTable = () => {
             tooth_select={tooth_select} set_tooth_select={set_tooth_select}
             tooth_remark={tooth_remark} set_tooth_remark={set_tooth_remark}
             is_baby_teeth={is_baby_teeth} set_is_baby_teeth={set_is_baby_teeth}
+            saveExam={saveExam}
 
             ></AppointmentDetails>
             

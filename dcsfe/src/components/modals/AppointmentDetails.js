@@ -46,6 +46,7 @@ const AppointmentDetails = ({
     tooth_select, set_tooth_select,
     tooth_remark, set_tooth_remark,
     is_baby_teeth, set_is_baby_teeth,
+    saveExam,
 
     }) => {
     if (!app_details_is_open) {
@@ -250,7 +251,9 @@ const AppointmentDetails = ({
                                         dateFormat="h:mm aa"
                                     />
                                 </div>
-                                <button className='add-remove-button-exam' onClick={()=>{set_is_exam_open(!is_exam_open)}}>{is_exam_open? 'Hide Exam':'Show Exam'}</button>
+                                {app_id && 
+                                    <button className='add-remove-button-exam' onClick={()=>{set_is_exam_open(!is_exam_open)}}>{is_exam_open? 'Hide Exam':'Show Exam'}</button>
+                                }
                             </div>
                             
                         </div>
@@ -261,8 +264,9 @@ const AppointmentDetails = ({
                             tooth_select={tooth_select} set_tooth_select={set_tooth_select}
                             tooth_remark={tooth_remark} set_tooth_remark={set_tooth_remark}
                             is_baby_teeth={is_baby_teeth} set_is_baby_teeth={set_is_baby_teeth}
+                            saveExam={saveExam}
                             // style={is_exam_open?  {} :{display: 'none'} } 
-                            />
+                                />
 
                         <div 
                             style={is_exam_open? {display: 'none'} : {}}
@@ -499,13 +503,31 @@ const AppointmentDetails = ({
                     <div className='details-details-modal-body-button'>                    
                         {/* {userId? (<input type="submit" onClick={updateUser} value='Update' className='percent-40'/>):
                         (<input type="submit" onClick={addUser} value='Add' className='percent-40'/>)}   */}
-                        <button className='button-w70' disabled={is_exam_open} onClick={()=>{
-                            app_id? 
-                            updateAppointmentFunction()
-                            : 
-                            addAppointmentFunction() 
-                            }}>{app_id? 'Upd Appointment': 'Add Appointment'}</button>                               
-                        <button className='button-w20' disabled={is_exam_open} onClick={()=>{set_app_details_is_open(false); set_app_date(new Date())}}>Close</button>
+                        
+                        <button className='button-w70' 
+                            // disabled={is_exam_open} 
+                            onClick={()=>{
+                                if (!is_exam_open) {
+                                    app_id? 
+                                    updateAppointmentFunction()
+                                    : 
+                                    addAppointmentFunction() 
+                                } else {
+                                    alert('Hide exam first');
+                                }
+                            
+                            }}>{app_id? 'Upd Appointment': 'Add Appointment'}</button>     
+
+                        <button className='button-w20' 
+                            // disabled={is_exam_open} 
+                            onClick={()=>{
+                                if (!is_exam_open) {
+                                    set_app_details_is_open(false); set_app_date(new Date());
+                                } else {
+                                    alert('Hide exam first');
+                                }
+                            }}
+                        >Close</button>
                     </div>
                 </div>
             </div>

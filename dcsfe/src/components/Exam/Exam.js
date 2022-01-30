@@ -58,6 +58,7 @@ const Exam = ({
     tooth_select, set_tooth_select,
     tooth_remark, set_tooth_remark,
     is_baby_teeth, set_is_baby_teeth,
+    saveExam
     // set_is_exam_open
 })=>{
     if (!is_exam_open) {
@@ -70,16 +71,33 @@ const Exam = ({
            return newValue;
         })
     }
-    console.log('tooth_check_box', tooth_check_box.t18);
+    
+    
     return (
         <div>
-            <button className='exam-button' onClick={()=>{set_is_baby_teeth(!is_baby_teeth)}}>{is_baby_teeth? 'Baby Teeth Chart':'Permanent Teeth Chart'}</button>
-            {!is_baby_teeth? (
-                <div>
+            <button className='exam-button' 
+                onClick={()=>{
+                    let checkRemark = true;
+                    for(let t in tooth_remark){
+                        if (tooth_remark[t] !== '') {
+                            checkRemark = false;
+                        }
+                    }
+                    if (checkRemark) {
+                        set_is_baby_teeth(!is_baby_teeth);
+                    }else{
+                        alert('All conditions must be clear before changing chart');
+                    }
+                    
+                 }}
+            >{is_baby_teeth? 'Permanent Teeth Chart': 'Baby Teeth Chart'}</button>
+
+
+                <div style={is_baby_teeth? {display: 'none'}: {}}>
                     <div className='exam-container'>
                         <div>
                             <div>
-                                <input type='checkbox' value='t18'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t18} />
+                                <input type='checkbox' value='t18'onChange={(e)=>{tooth_remark.t18 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t18} />
                                 <select value={tooth_remark.t18} name='t18'
                                     onChange={(e)=>{
                                             set_tooth_remark((prev)=>{
@@ -803,10 +821,9 @@ const Exam = ({
                         </div>        
                     </div>
                 </div>
-            ):(
-                // Baby Tooth Chart
 
-                <div>
+
+                <div style={is_baby_teeth? {}:{display: 'none'}}>
                     <div className='exam-container2'>
                        
                         <div>
@@ -1032,7 +1049,8 @@ const Exam = ({
                         
                     </div>
                     
-                    {/* bottom */}
+                    {/* Bottom */}
+
                     <div className='exam-container2'>
                         
                         <div>
@@ -1266,10 +1284,24 @@ const Exam = ({
                             </div>
                         </div>
                     </div>
+                    
                 </div>
-            )}
-                
-            
+
+            <div className='exam-container2'>
+                <button className='exam-button' onClick={()=>{
+                    let checkRemark = false;
+                    for (let t in tooth_remark) {
+                        if (tooth_remark[t] !== '') {
+                            checkRemark = true;
+                        }
+                    }
+                    if (checkRemark) {
+                        saveExam();
+                    }else{
+                        alert('atleast one condition box must not be empty')
+                    }
+                }}>Save Exam</button>
+            </div>
         </div>
         
     );

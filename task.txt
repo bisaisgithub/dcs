@@ -8,5 +8,6 @@ fe date to dcsbe date need to check - done
 delete function for procedure - done
 appointment update on date - done
 appointment pay date --done
+modal for examnination- done
 
-modal for examnination
+create and insert save exam tooth chart -- curently working
