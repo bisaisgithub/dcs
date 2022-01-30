@@ -75,6 +75,7 @@ export const updateUser = async (req, res)=>{
         user_status: req.body.user_status,
     });
     if (userUpdateResponse) {
+        console.log('user updated: ',userUpdateResponse )
         res.json({userUpdateOk: true});
     } else {
         res.json({userUpdateOk: false});

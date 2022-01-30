@@ -9,5 +9,6 @@ delete function for procedure - done
 appointment update on date - done
 appointment pay date --done
 modal for examnination- done
+create and insert save exam tooth chart-done
 
-create and insert save exam tooth chart -- curently working
+continue restricton exam check box - currently working

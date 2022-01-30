@@ -63,9 +63,9 @@ const AppointmentTable = () => {
         t65: '', t64: '', t63: '', t62: '', t61: '',
         t75: '', t74: '', t73: '', t72: '', t71: '',
         t85: '', t84: '', t83: '', t82: '', t81: '',
-
     });
     const [is_baby_teeth, set_is_baby_teeth] = useState(false);
+    const [exam_id, set_exam_id]=useState(null);
 
     useEffect(()=>{
         
@@ -76,21 +76,41 @@ const AppointmentTable = () => {
 
     }, [render,is_baby_teeth]);
 
-    const saveExam = async ()=>{
-        try {
-            const saveExamResponse = await axios.post(`${process.env.REACT_APP_BE_LINK}exam`, {
-                app_id,
-                tooth_remark,
-                tooth_check_box,
-            });
-            if (saveExamResponse.data.examInsertOk) {
-                alert('Exam Sucessfully Saved')
-            }else{
-                alert('Failed Saving Exam');
+    const saveExam = async (id)=>{
+        if (id) {
+            console.log('exam updating...')
+            try {
+                const updateExamResponse = await axios.put(`${process.env.REACT_APP_BE_LINK}exam/${id}`, {
+                    tooth_remark,
+                    tooth_check_box,
+                 });
+                 console.log('update exam response: ', updateExamResponse)
+                if (updateExamResponse.data.examUpdateOk) {
+                    alert('Exam Sucessfully Updated')
+                }else{
+                    alert('Failed Updating Exam');
+                }
+            } catch (error) {
+                console.log('update exam error: ', error);
             }
-        } catch (error) {
-            console.log('save exam error: ', error)
+            
+        } else {
+            try {
+                const saveExamResponse = await axios.post(`${process.env.REACT_APP_BE_LINK}exam`, {
+                    app_id,
+                    tooth_remark,
+                    tooth_check_box,
+                });
+                if (saveExamResponse.data.examInsertOk) {
+                    alert('Exam Sucessfully Saved')
+                }else{
+                    alert('Failed Saving Exam');
+                }
+            } catch (error) {
+                console.log('save exam error: ', error)
+            }
         }
+        
     }
 
     const addAppointmentFunction = async ()=>{
@@ -292,7 +312,6 @@ const AppointmentTable = () => {
         set_app_patient_name_id({value: app_id, label: patient_name});
         const resAppointment = await axios.get(`${process.env.REACT_APP_BE_LINK}appointment/${app_id}`);
         console.log('resAppointment: ', resAppointment);
-        console.log('data length: ', resAppointment.data.length);
         if (resAppointment.data.app_patient_id) {
             getPatientList(resAppointment.data.app_patient_id);
             set_app_details_is_open(true);
@@ -340,6 +359,11 @@ const AppointmentTable = () => {
             set_app_total_proc_cost(totalCost);
 
             getUserDoctorList();
+            if (Object.keys(resAppointment.data.examByIdResponse.exam_remark).length) {
+                set_tooth_check_box(resAppointment.data.examByIdResponse.exam_check_box);
+                set_tooth_remark(resAppointment.data.examByIdResponse.exam_remark);
+                set_exam_id(resAppointment.data.examByIdResponse.exam_id);
+            }
             
         } else {
             alert('patient ID not Found');
@@ -381,7 +405,7 @@ const AppointmentTable = () => {
             tooth_select={tooth_select} set_tooth_select={set_tooth_select}
             tooth_remark={tooth_remark} set_tooth_remark={set_tooth_remark}
             is_baby_teeth={is_baby_teeth} set_is_baby_teeth={set_is_baby_teeth}
-            saveExam={saveExam}
+            saveExam={saveExam} exam_id={exam_id}
 
             ></AppointmentDetails>
             

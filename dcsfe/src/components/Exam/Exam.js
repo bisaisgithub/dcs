@@ -58,7 +58,7 @@ const Exam = ({
     tooth_select, set_tooth_select,
     tooth_remark, set_tooth_remark,
     is_baby_teeth, set_is_baby_teeth,
-    saveExam
+    saveExam, exam_id
     // set_is_exam_open
 })=>{
     if (!is_exam_open) {
@@ -1296,7 +1296,7 @@ const Exam = ({
                         }
                     }
                     if (checkRemark) {
-                        saveExam();
+                        saveExam(exam_id);
                     }else{
                         alert('atleast one condition box must not be empty')
                     }

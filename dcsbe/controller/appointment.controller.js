@@ -27,6 +27,13 @@ export const getAppointmentById = async (req, res)=>{
             if (resProceduresById) {
                 data = {...data, resPaymentsById}
             }
+            const examByIdResponse = await 
+              db.select('exam_remark', 'exam_check_box', 'exam_id')
+                .from('exam')
+                .where('exam_appointment_id', req.params.id).first();
+            if (examByIdResponse) {
+                data = {...data, examByIdResponse}
+            }
             res.json(data);
         } else {
             res.json({message: 'Appointment Not Found'})
@@ -319,7 +326,27 @@ export const saveExam = async (req, res)=>{
             res.json({examInsertOk: false});
         }
     } catch (error) {
+        res.json({examInsertOk: false});
         console.log('save exam error: ', error)
+    }
+}
+
+export const updateExam = async (req, res)=>{
+    try {
+        const updateExamResponse = await db('exam').where('exam_id', req.params.id)
+            .update({
+                exam_remark: JSON.stringify(req.body.tooth_remark),
+                exam_check_box: JSON.stringify(req.body.tooth_check_box),
+            });
+        if (updateExamResponse) {
+            console.log('update response backend: ', updateExamResponse)
+            res.json({examUpdateOk: true});
+        } else {
+            res.json({examUpdateOk: false});
+        }
+    } catch (error) {
+        res.json({examUpdateOk: false});
+        console.log('update exam error: ', error)
     }
 }
 

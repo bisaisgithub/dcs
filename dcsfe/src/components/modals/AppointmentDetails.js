@@ -46,7 +46,7 @@ const AppointmentDetails = ({
     tooth_select, set_tooth_select,
     tooth_remark, set_tooth_remark,
     is_baby_teeth, set_is_baby_teeth,
-    saveExam,
+    saveExam,exam_id
 
     }) => {
     if (!app_details_is_open) {
@@ -264,7 +264,7 @@ const AppointmentDetails = ({
                             tooth_select={tooth_select} set_tooth_select={set_tooth_select}
                             tooth_remark={tooth_remark} set_tooth_remark={set_tooth_remark}
                             is_baby_teeth={is_baby_teeth} set_is_baby_teeth={set_is_baby_teeth}
-                            saveExam={saveExam}
+                            saveExam={saveExam} exam_id={exam_id}
                             // style={is_exam_open?  {} :{display: 'none'} } 
                                 />
 

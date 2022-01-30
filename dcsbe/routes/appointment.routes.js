@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createAppointment, getAppointmentById, getAppointments, getAppointmentsBySearch, saveExam, updateAppointment } from "../controller/appointment.controller.js";
+import { createAppointment, getAppointmentById, getAppointments, getAppointmentsBySearch, saveExam, updateAppointment, updateExam } from "../controller/appointment.controller.js";
 
 
 
@@ -16,6 +16,8 @@ appointmentRouter.post('/appointments', getAppointmentsBySearch);
 appointmentRouter.post('/appointment', createAppointment);
 
 appointmentRouter.post('/exam', saveExam);
+
+appointmentRouter.put('/exam/:id', updateExam);
 
 // appointmentRouter.post('/users', getUsersBySearch2);
 
