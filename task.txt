@@ -10,5 +10,5 @@ appointment update on date - done
 appointment pay date --done
 modal for examnination- done
 create and insert save exam tooth chart-done
-
-continue restricton exam check box - currently working
+continue restricton exam check box -done
+put all condition in exam tooth select - currently working

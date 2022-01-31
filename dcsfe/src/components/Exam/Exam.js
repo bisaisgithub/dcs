@@ -119,7 +119,7 @@ const Exam = ({
                         </div>
                         <div>
                             <div>
-                                <input type='checkbox' value='t17'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t17} />
+                                <input type='checkbox' value='t17'onChange={(e)=>{tooth_remark.t17 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t17} />
                                 <select value={tooth_remark.t17} name='t17'
                                     onChange={(e)=>{
                                             set_tooth_remark((prev)=>{
@@ -141,7 +141,7 @@ const Exam = ({
                         </div>
                         <div>
                             <div>
-                                <input type='checkbox' value='t16'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t16} />
+                                <input type='checkbox' value='t16'onChange={(e)=>{tooth_remark.t16 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t16} />
                                 <select value={tooth_remark.t16} name='t16'
                                     onChange={(e)=>{
                                             set_tooth_remark((prev)=>{
@@ -163,7 +163,7 @@ const Exam = ({
                         </div>
                         <div>
                             <div>
-                                <input type='checkbox' value='t15'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t15} />
+                                <input type='checkbox' value='t15'onChange={(e)=>{tooth_remark.t15 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t15} />
                                 <select value={tooth_remark.t15} name='t15'
                                     onChange={(e)=>{
                                             set_tooth_remark((prev)=>{
@@ -185,7 +185,7 @@ const Exam = ({
                         </div>
                         <div>
                             <div>
-                                <input type='checkbox' value='t14'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t14} />
+                                <input type='checkbox' value='t14'onChange={(e)=>{tooth_remark.t14 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t14} />
                                 <select value={tooth_remark.t14} name='t14'
                                     onChange={(e)=>{
                                             set_tooth_remark((prev)=>{
@@ -207,7 +207,7 @@ const Exam = ({
                         </div>
                         <div>
                             <div>
-                                <input type='checkbox' value='t13'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t13} />
+                                <input type='checkbox' value='t13'onChange={(e)=>{tooth_remark.t13 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t13} />
                                 <select value={tooth_remark.t13} name='t13'
                                     onChange={(e)=>{
                                             set_tooth_remark((prev)=>{
@@ -229,7 +229,7 @@ const Exam = ({
                         </div>
                         <div>
                             <div>
-                                <input type='checkbox' value='t12'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t12} />
+                                <input type='checkbox' value='t12'onChange={(e)=>{tooth_remark.t12 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t12} />
                                 <select value={tooth_remark.t12} name='t12'
                                     onChange={(e)=>{
                                             set_tooth_remark((prev)=>{
@@ -251,7 +251,7 @@ const Exam = ({
                         </div>
                         <div>
                             <div>
-                                <input type='checkbox' value='t11'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t11} />
+                                <input type='checkbox' value='t11'onChange={(e)=>{tooth_remark.t11 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t11} />
                                 <select value={tooth_remark.t11} name='t11'
                                     onChange={(e)=>{
                                             set_tooth_remark((prev)=>{
@@ -273,7 +273,7 @@ const Exam = ({
                         </div>
                         <div className='border-left'>
                             <div>
-                                <input type='checkbox' value='t21'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t21} />
+                                <input type='checkbox' value='t21'onChange={(e)=>{tooth_remark.t21 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t21} />
                                 <select value={tooth_remark.t21} name='t21'
                                     onChange={(e)=>{
                                             set_tooth_remark((prev)=>{
@@ -295,7 +295,7 @@ const Exam = ({
                         </div>
                         <div>
                             <div>
-                                <input type='checkbox' value='t22'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t22} />
+                                <input type='checkbox' value='t22'onChange={(e)=>{tooth_remark.t22 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t22} />
                                 <select value={tooth_remark.t22} name='t22'
                                     onChange={(e)=>{
                                             set_tooth_remark((prev)=>{
@@ -317,7 +317,7 @@ const Exam = ({
                         </div>
                         <div>
                             <div>
-                                <input type='checkbox' value='t23'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t23} />
+                                <input type='checkbox' value='t23'onChange={(e)=>{tooth_remark.t23 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t23} />
                                 <select value={tooth_remark.t23} name='t23'
                                     onChange={(e)=>{
                                             set_tooth_remark((prev)=>{
@@ -339,7 +339,7 @@ const Exam = ({
                         </div>
                         <div>
                             <div>
-                                <input type='checkbox' value='t24'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t24} />
+                                <input type='checkbox' value='t24'onChange={(e)=>{tooth_remark.t24 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t24} />
                                 <select value={tooth_remark.t24} name='t24'
                                     onChange={(e)=>{
                                             set_tooth_remark((prev)=>{
@@ -361,7 +361,7 @@ const Exam = ({
                         </div>
                         <div>
                             <div>
-                                <input type='checkbox' value='t25'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t25} />
+                                <input type='checkbox' value='t25'onChange={(e)=>{tooth_remark.t25 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t25} />
                                 <select value={tooth_remark.t25} name='t25'
                                     onChange={(e)=>{
                                             set_tooth_remark((prev)=>{
@@ -383,7 +383,7 @@ const Exam = ({
                         </div>
                         <div>
                             <div>
-                                <input type='checkbox' value='t26'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t26} />
+                                <input type='checkbox' value='t26'onChange={(e)=>{tooth_remark.t26 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t26} />
                                 <select value={tooth_remark.t26} name='t26'
                                     onChange={(e)=>{
                                             set_tooth_remark((prev)=>{
@@ -405,7 +405,7 @@ const Exam = ({
                         </div>
                         <div>
                             <div>
-                                <input type='checkbox' value='t27'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t27} />
+                                <input type='checkbox' value='t27'onChange={(e)=>{tooth_remark.t27 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t27} />
                                 <select value={tooth_remark.t27} name='t27'
                                     onChange={(e)=>{
                                             set_tooth_remark((prev)=>{
@@ -427,7 +427,7 @@ const Exam = ({
                         </div>
                         <div>
                             <div>
-                                <input type='checkbox' value='t28'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t28} />
+                                <input type='checkbox' value='t28'onChange={(e)=>{tooth_remark.t28 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t28} />
                                 <select value={tooth_remark.t28} name='t28'
                                     onChange={(e)=>{
                                             set_tooth_remark((prev)=>{
@@ -471,7 +471,7 @@ const Exam = ({
                                     }
                                     <option value={''}></option>
                                 </select>
-                                <input type='checkbox' value='t48'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t48} />
+                                <input type='checkbox' value='t48'onChange={(e)=>{tooth_remark.t48 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t48} />
                             </div>
                         </div>
                         <div>
@@ -494,7 +494,7 @@ const Exam = ({
                                     }
                                     <option value={''}></option>
                                 </select>
-                                <input type='checkbox' value='t47'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t47} />
+                                <input type='checkbox' value='t47'onChange={(e)=>{tooth_remark.t47 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t47} />
                             </div>
                         </div>
                         <div>
@@ -517,7 +517,7 @@ const Exam = ({
                                     }
                                     <option value={''}></option>
                                 </select>
-                                <input type='checkbox' value='t46'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t46} />
+                                <input type='checkbox' value='t46'onChange={(e)=>{tooth_remark.t46 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t46} />
                             </div>
                         </div>
                         <div>
@@ -540,7 +540,7 @@ const Exam = ({
                                     }
                                     <option value={''}></option>
                                 </select>
-                                <input type='checkbox' value='t45'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t45} />
+                                <input type='checkbox' value='t45'onChange={(e)=>{tooth_remark.t45 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t45} />
                             </div>
                         </div>
                         <div>
@@ -563,7 +563,7 @@ const Exam = ({
                                     }
                                     <option value={''}></option>
                                 </select>
-                                <input type='checkbox' value='t44'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t44} />
+                                <input type='checkbox' value='t44'onChange={(e)=>{tooth_remark.t44 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t44} />
                             </div>
                         </div>
                         <div>
@@ -586,7 +586,7 @@ const Exam = ({
                                     }
                                     <option value={''}></option>
                                 </select>
-                                <input type='checkbox' value='t43'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t43} />
+                                <input type='checkbox' value='t43'onChange={(e)=>{tooth_remark.t43 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t43} />
                             </div>
                         </div>
                         <div>
@@ -609,7 +609,7 @@ const Exam = ({
                                     }
                                     <option value={''}></option>
                                 </select>
-                                <input type='checkbox' value='t42'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t42} />
+                                <input type='checkbox' value='t42'onChange={(e)=>{tooth_remark.t42 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t42} />
                             </div>
                         </div>
                         <div>
@@ -632,7 +632,7 @@ const Exam = ({
                                     }
                                     <option value={''}></option>
                                 </select>
-                                <input type='checkbox' value='t41'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t41} />
+                                <input type='checkbox' value='t41'onChange={(e)=>{tooth_remark.t41 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t41} />
                             </div>
                         </div>
                         <div className='border-left'>
@@ -655,7 +655,7 @@ const Exam = ({
                                     }
                                     <option value={''}></option>
                                 </select>
-                                <input type='checkbox' value='t31'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t31} />
+                                <input type='checkbox' value='t31'onChange={(e)=>{tooth_remark.t31 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t31} />
                             </div>
                         </div>
                         <div>
@@ -678,7 +678,7 @@ const Exam = ({
                                     }
                                     <option value={''}></option>
                                 </select>
-                                <input type='checkbox' value='t32'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t32} />
+                                <input type='checkbox' value='t32'onChange={(e)=>{tooth_remark.t32 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t32} />
                             </div>
                         </div>
                         <div>
@@ -701,7 +701,7 @@ const Exam = ({
                                     }
                                     <option value={''}></option>
                                 </select>
-                                <input type='checkbox' value='t33'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t33} />
+                                <input type='checkbox' value='t33'onChange={(e)=>{tooth_remark.t33 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t33} />
                             </div>
                         </div>
                         <div>
@@ -724,7 +724,7 @@ const Exam = ({
                                     }
                                     <option value={''}></option>
                                 </select>
-                                <input type='checkbox' value='t34'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t34} />
+                                <input type='checkbox' value='t34'onChange={(e)=>{tooth_remark.t34 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t34} />
                             </div>
                         </div>
                         <div>
@@ -747,7 +747,7 @@ const Exam = ({
                                     }
                                     <option value={''}></option>
                                 </select>
-                                <input type='checkbox' value='t35'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t35} />
+                                <input type='checkbox' value='t35'onChange={(e)=>{tooth_remark.t35 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t35} />
                             </div>
                         </div>
                         <div>
@@ -770,7 +770,7 @@ const Exam = ({
                                     }
                                     <option value={''}></option>
                                 </select>
-                                <input type='checkbox' value='t36'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t36} />
+                                <input type='checkbox' value='t36'onChange={(e)=>{tooth_remark.t36 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t36} />
                             </div>
                         </div>
                         <div>
@@ -793,7 +793,7 @@ const Exam = ({
                                     }
                                     <option value={''}></option>
                                 </select>
-                                <input type='checkbox' value='t37'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t37} />
+                                <input type='checkbox' value='t37'onChange={(e)=>{tooth_remark.t37 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t37} />
                             </div>
                         </div>
                         <div>
@@ -816,19 +816,19 @@ const Exam = ({
                                     }
                                     <option value={''}></option>
                                 </select>
-                                <input type='checkbox' value='t38'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t38} />
+                                <input type='checkbox' value='t38'onChange={(e)=>{tooth_remark.t38 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t38} />
                             </div>
                         </div>        
                     </div>
                 </div>
-
+                                    {/* baby teeth */}
 
                 <div style={is_baby_teeth? {}:{display: 'none'}}>
                     <div className='exam-container2'>
                        
                         <div>
                             <div>
-                                <input type='checkbox' value='t55'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t55} />
+                                <input type='checkbox' value='t55'onChange={(e)=>{tooth_remark.t55 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t55} />
                                 <select value={tooth_remark.t55} name='t55'
                                     onChange={(e)=>{
                                             set_tooth_remark((prev)=>{
@@ -850,7 +850,7 @@ const Exam = ({
                         </div>
                         <div>
                             <div>
-                                <input type='checkbox' value='t54'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t54} />
+                                <input type='checkbox' value='t54'onChange={(e)=>{tooth_remark.t54 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t54} />
                                 <select value={tooth_remark.t54} name='t54'
                                     onChange={(e)=>{
                                             set_tooth_remark((prev)=>{
@@ -872,7 +872,7 @@ const Exam = ({
                         </div>
                         <div>
                             <div>
-                                <input type='checkbox' value='t53'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t53} />
+                                <input type='checkbox' value='t53'onChange={(e)=>{tooth_remark.t53 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t53} />
                                 <select value={tooth_remark.t53} name='t53'
                                     onChange={(e)=>{
                                             set_tooth_remark((prev)=>{
@@ -894,7 +894,7 @@ const Exam = ({
                         </div>
                         <div>
                             <div>
-                                <input type='checkbox' value='t52'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t52} />
+                                <input type='checkbox' value='t52'onChange={(e)=>{tooth_remark.t52 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t52} />
                                 <select value={tooth_remark.t52} name='t52'
                                     onChange={(e)=>{
                                             set_tooth_remark((prev)=>{
@@ -916,7 +916,7 @@ const Exam = ({
                         </div>
                         <div>
                             <div>
-                                <input type='checkbox' value='t51'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t51} />
+                                <input type='checkbox' value='t51'onChange={(e)=>{tooth_remark.t51 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t51} />
                                 <select value={tooth_remark.t51} name='t51'
                                     onChange={(e)=>{
                                             set_tooth_remark((prev)=>{
@@ -938,7 +938,7 @@ const Exam = ({
                         </div>
                         <div className='border-left'>
                             <div>
-                                <input type='checkbox' value='t61'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t61} />
+                                <input type='checkbox' value='t61'onChange={(e)=>{tooth_remark.t61 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t61} />
                                 <select value={tooth_remark.t61} name='t61'
                                     onChange={(e)=>{
                                             set_tooth_remark((prev)=>{
@@ -960,7 +960,7 @@ const Exam = ({
                         </div>
                         <div>
                             <div>
-                                <input type='checkbox' value='t62'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t62} />
+                                <input type='checkbox' value='t62'onChange={(e)=>{tooth_remark.t62 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t62} />
                                 <select value={tooth_remark.t62} name='t62'
                                     onChange={(e)=>{
                                             set_tooth_remark((prev)=>{
@@ -982,7 +982,7 @@ const Exam = ({
                         </div>
                         <div>
                             <div>
-                                <input type='checkbox' value='t63'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t63} />
+                                <input type='checkbox' value='t63'onChange={(e)=>{tooth_remark.t63 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t63} />
                                 <select value={tooth_remark.t63} name='t63'
                                     onChange={(e)=>{
                                             set_tooth_remark((prev)=>{
@@ -1004,7 +1004,7 @@ const Exam = ({
                         </div>
                         <div>
                             <div>
-                                <input type='checkbox' value='t64'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t64} />
+                                <input type='checkbox' value='t64'onChange={(e)=>{tooth_remark.t64 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t64} />
                                 <select value={tooth_remark.t64} name='t64'
                                     onChange={(e)=>{
                                             set_tooth_remark((prev)=>{
@@ -1026,7 +1026,7 @@ const Exam = ({
                         </div>
                         <div>
                             <div>
-                                <input type='checkbox' value='t65'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t65} />
+                                <input type='checkbox' value='t65'onChange={(e)=>{tooth_remark.t65 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t65} />
                                 <select value={tooth_remark.t65} name='t65'
                                     onChange={(e)=>{
                                             set_tooth_remark((prev)=>{
@@ -1073,7 +1073,7 @@ const Exam = ({
                                     }
                                     <option value={''}></option>
                                 </select>
-                                <input type='checkbox' value='t85'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t85} />
+                                <input type='checkbox' value='t85'onChange={(e)=>{tooth_remark.t85 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t85} />
                             </div>
                         </div>
                         <div>
@@ -1096,7 +1096,7 @@ const Exam = ({
                                     }
                                     <option value={''}></option>
                                 </select>
-                                <input type='checkbox' value='t84'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t84} />
+                                <input type='checkbox' value='t84'onChange={(e)=>{tooth_remark.t84 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t84} />
                             </div>
                         </div>
                         <div>
@@ -1119,7 +1119,7 @@ const Exam = ({
                                     }
                                     <option value={''}></option>
                                 </select>
-                                <input type='checkbox' value='t83'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t83} />
+                                <input type='checkbox' value='t83'onChange={(e)=>{tooth_remark.t83 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t83} />
                             </div>
                         </div>
                         <div>
@@ -1142,7 +1142,7 @@ const Exam = ({
                                     }
                                     <option value={''}></option>
                                 </select>
-                                <input type='checkbox' value='t82'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t82} />
+                                <input type='checkbox' value='t82'onChange={(e)=>{tooth_remark.t82 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t82} />
                             </div>
                         </div>
                         <div>
@@ -1165,7 +1165,7 @@ const Exam = ({
                                     }
                                     <option value={''}></option>
                                 </select>
-                                <input type='checkbox' value='t81'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t81} />
+                                <input type='checkbox' value='t81'onChange={(e)=>{tooth_remark.t81 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t81} />
                             </div>
                         </div>
                         <div className='border-left'>
@@ -1188,7 +1188,7 @@ const Exam = ({
                                     }
                                     <option value={''}></option>
                                 </select>
-                                <input type='checkbox' value='t71'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t71} />
+                                <input type='checkbox' value='t71'onChange={(e)=>{tooth_remark.t71 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t71} />
                             </div>
                         </div>
                         <div>
@@ -1211,7 +1211,7 @@ const Exam = ({
                                     }
                                     <option value={''}></option>
                                 </select>
-                                <input type='checkbox' value='t72'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t72} />
+                                <input type='checkbox' value='t72'onChange={(e)=>{tooth_remark.t72 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t72} />
                             </div>
                         </div>
                         <div>
@@ -1234,7 +1234,7 @@ const Exam = ({
                                     }
                                     <option value={''}></option>
                                 </select>
-                                <input type='checkbox' value='t73'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t73} />
+                                <input type='checkbox' value='t73'onChange={(e)=>{tooth_remark.t73 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t73} />
                             </div>
                         </div>
                         <div>
@@ -1257,7 +1257,7 @@ const Exam = ({
                                     }
                                     <option value={''}></option>
                                 </select>
-                                <input type='checkbox' value='t74'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t74} />
+                                <input type='checkbox' value='t74'onChange={(e)=>{tooth_remark.t74 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t74} />
                             </div>
                         </div>
                         <div>
@@ -1280,7 +1280,7 @@ const Exam = ({
                                     }
                                     <option value={''}></option>
                                 </select>
-                                <input type='checkbox' value='t75'onChange={(e)=>{checkBoxFunction(e)}} checked={tooth_check_box.t75} />
+                                <input type='checkbox' value='t75'onChange={(e)=>{tooth_remark.t75 !== ''?checkBoxFunction(e) : alert('select condition first')}} checked={tooth_check_box.t75} />
                             </div>
                         </div>
                     </div>

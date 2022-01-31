@@ -53,7 +53,9 @@ const AppointmentTable = () => {
         t75: false, t74: false, t73: false, t72: false, t71: false,
         t85: false, t84: false, t83: false, t82: false, t81: false,
     });
-    const [tooth_select, set_tooth_select] = useState(['M','F','MO']);
+    const [tooth_select, set_tooth_select] = useState([
+        'C','M','F','I','RF','MO','Im','J','A','AB','P','In','Fx','S','Rm','X','XO','Cm','Sp'
+    ]);
     const [tooth_remark, set_tooth_remark] = useState({
         t18: '', t17: '', t16: '', t15: '', t14: '', t13: '', t12: '', t11: '',
         t28: '', t27: '', t26: '', t25: '', t24: '', t23: '', t22: '', t21: '',
