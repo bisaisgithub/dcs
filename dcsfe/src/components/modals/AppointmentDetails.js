@@ -291,7 +291,11 @@ const AppointmentDetails = ({
                                                         <option value={0}>-Select Minutes-</option>
                                                         <option value={15}>15</option>
                                                         <option value={30}>30</option>
+                                                        <option value={45}>45</option>
                                                         <option value={60}>60</option>
+                                                        <option value={75}>75</option>
+                                                        <option value={90}>90</option>
+                                                        <option value={120}>120</option>
                                                     </select>
                                             </div>
                                             <div className="details-details-modal-body-input-box3">

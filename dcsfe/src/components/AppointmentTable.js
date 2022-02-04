@@ -235,6 +235,7 @@ const AppointmentTable = () => {
         } else {
             const response = await axios.get(`${process.env.REACT_APP_BE_LINK}appointments`);
             if (response.data) {
+                // console.log(response.data);
                 setAppointmentsData(response.data)
             }
         }    
@@ -469,6 +470,7 @@ const AppointmentTable = () => {
                             : app_search_date === ''? '' : formatDateYYYYMMDD(app_search_date)
                             ,
                             })}}>Find</p></th>
+                         <th><input placeholder='Status' value={app_search_patient_name} onChange={(e)=>{set_app_search_patient_name(e.target.value)}}/></th>
                         <th><p onClick={()=>newAppointment()}>New</p></th>
                         
                     </tr>
@@ -479,6 +481,7 @@ const AppointmentTable = () => {
                         <th>Doctor</th>
                         <th>Date</th>
                         <th>Time</th>
+                        <th>Status</th>
                         <th>No</th>
                     </tr>
                 </thead>
@@ -499,6 +502,7 @@ const AppointmentTable = () => {
                                         new Date(new Date(appointment.app_end_time).toString()+ ' UTC').toLocaleString('en-PH', timeOptions)
                                     }</button>
                                 </td>
+                                <td>{appointment.app_status}</td>
                                 <td><button style={{background:'#e9115bf0'}} onClick={()=>{AppointmentDetailsFunction(appointment.app_id, appointment.patient_name)}}>{index+1}</button></td>
                             </tr>
                         );

@@ -56,7 +56,7 @@ export const getAppointments = async (req, res)=>{
         //     );
      
         const response = await db.from('appointment').select(
-            'patient.patient_name', 'user.user_name', 'appointment.app_date',
+            'patient.patient_name', 'user.user_name', 'appointment.app_date', 'appointment.app_status',
             'appointment.app_start_time', 'appointment.app_end_time', 'appointment.app_id'
             )
             .innerJoin('user', 'appointment.app_user_doctor_id', 'user.user_id')

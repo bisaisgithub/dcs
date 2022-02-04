@@ -87,6 +87,9 @@
     width: 0.5%;
 }
 .table-table2-table-thead-tr th:nth-child(5) {
+    width: 0.5%;
+}
+.table-table2-table-thead-tr th:nth-child(6) {
     width: 0.2%;
 }
 .table-table2-table-tbody-tr td{
